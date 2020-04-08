@@ -53,30 +53,7 @@
 								<input class="input" type="number" name="harga_barang" placeholder="Harga Barang">
 							</div>
 							<div class="form-group">
-								<div id="datetimepicker" class="input-append date">
-									<input class="input" type="text" name="waktu" placeholder="Waktu Habis" required oninvalid="this.setCustomValidity('waktu selesai tidak boleh kosong')" oninput="setCustomValidity('')"></input>
-									<span class="add-on">
-										<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-									</span>
-								</div>
-								<script type="text/javascript"
-								 src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
-								</script>
-								<script type="text/javascript"
-								 src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
-								</script>
-								<script type="text/javascript"
-								 src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
-								</script>
-								<script type="text/javascript"
-								 src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
-								</script>
-								<script type="text/javascript">
-									$('#datetimepicker').datetimepicker({
-										format: 'yyyy-MM-dd hh:mm:ss',
-										language: 'en'
-									});
-								</script>
+								<input type="text" class="input" id="datetime" name="waktu_lelang" placeholder="Waktu Habis" readonly>
 							</div>
 						</div>
 						<!-- /Billing Details -->
