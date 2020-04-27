@@ -25,5 +25,9 @@ class Akun_model extends CI_Model {
     $query = $this->db->get();
     return $query;
   }
+  function updateProfil($data,$where){
+    $this->db->where($where);
+    $this->db->update('akun',$data);
+  }
 }
 ?>

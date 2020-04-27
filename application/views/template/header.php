@@ -25,7 +25,7 @@
               <?php echo $data->nama_akun; ?>
             </a>
             <div class="lidrop-content">
-              <a class="lidrop-a" href="#">Profil</a>
+              <a class="lidrop-a" href="Profil">Profil</a>
               <a class="lidrop-a" href="#">Chat</a>
             </div>
           </li>

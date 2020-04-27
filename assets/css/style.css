@@ -2042,6 +2042,11 @@ textarea.input {
   margin-top: 30px;
 }
 
+.order-details .order-submit-form {
+  display: block;
+  margin-top: 30px;
+}
+
 /*=========================================================
 	10 -> NEWSLETTER
 ===========================================================*/

@@ -24,5 +24,12 @@ class Jenis_model extends CI_Model {
     $this->db->update('jenis_barang',$data);
     $this->db->where('id_jenis_barang',$idjenis);
   }
+  function idJenis($where){
+    $this->db->select('*');
+    $this->db->from('jenis_barang');
+    $this->db->where('nama_jenis_barang',$where['nama_jenis_barang']);
+    $query = $this->db->get();
+    return $query;
+  }
 }
 ?>
