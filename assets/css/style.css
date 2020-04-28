@@ -912,6 +912,79 @@ textarea.input {
 }
 
 /*=========================================================
+	04 -> CATEGORY TOPUP
+===========================================================*/
+
+.topup {
+  position: relative;
+  overflow: hidden;
+  margin: 15px 0px;
+}
+
+.topup:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0px;
+  width: 60%;
+  background: #D10024;
+  opacity: 0.1;
+  -webkit-transform: skewX(-45deg);
+  -ms-transform: skewX(-45deg);
+  transform: skewX(-45deg);
+}
+
+.topup:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 1px;
+  width: 100%;
+  background: #D10024;
+  opacity: 0.6;
+  -webkit-transform: skewX(-45deg) translateX(-100%);
+  -ms-transform: skewX(-45deg) translateX(-100%);
+  transform: skewX(-45deg) translateX(-100%);
+}
+
+.topup .topup-img {
+  position: relative;
+  background-color: #E4E7ED;
+  z-index: -1;
+}
+
+.topup .topup-img>img {
+  width: 100%;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+}
+
+.topup:hover .topup-img>img {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.topup .topup-body {
+  position: absolute;
+  top: 0.1px;
+  width: 75%;
+  padding: 30px;
+  z-index: 10;
+}
+
+.topup .topup-body h3 {
+  color: #FFF;
+}
+
+.topup .topup-body .cta-btn {
+  color: #FFF;
+  text-transform: uppercase;
+}
+
+/*=========================================================
 	05 -> HOT DEAL
 ===========================================================*/
 
