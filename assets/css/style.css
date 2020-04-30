@@ -1409,6 +1409,10 @@ textarea.input {
 	07 -> PRODUCTS PAGE
 ===========================================================*/
 
+.spanred {
+  color: #D10024;
+}
+
 /*----------------------------*\
 	Aside
 \*----------------------------*/
@@ -1781,7 +1785,7 @@ textarea.input {
 }
 
 .product-details .add-to-cart .qty-label .input-number {
-  width: 90px;
+  width: 154px;
   display: inline-block;
 }
 

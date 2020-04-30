@@ -14,8 +14,8 @@
               Rp. <?php echo $data->saldo_akun; ?>
             </a>
             <div class="lidrop-content">
-              <a class="lidrop-a" href="#">Topup</a>
-              <a class="lidrop-a" href="#">Upload Bukti</a>
+              <a class="lidrop-a" href="<?php echo base_url('Topup'); ?>">Topup</a>
+              <a class="lidrop-a" href="#">Pembayaran</a>
               <a class="lidrop-a" href="#">Riwayat Topup</a>
             </div>
           </li>
@@ -25,11 +25,11 @@
               <?php echo $data->nama_akun; ?>
             </a>
             <div class="lidrop-content">
-              <a class="lidrop-a" href="Profil">Profil</a>
+              <a class="lidrop-a" href="<?php echo base_url('Profil'); ?>">Profil</a>
               <a class="lidrop-a" href="#">Chat</a>
             </div>
           </li>
-          <li><a href="Main/logout"><i class="fa fa-sign-out"></i>Logout</a></li>
+          <li><a href="<?php echo base_url('Main/logout'); ?>"><i class="fa fa-sign-out"></i>Logout</a></li>
           <?php
           }
           ?>
@@ -98,7 +98,7 @@
                     <a href="#">Kirim <i class="fa fa-truck"></i><div class="qty">2</div></a>
                   </div>
                   <div class="lelang-btnbl">
-                    <a href="Tambah_Barang">Tambah Barang <i class="fa fa-plus-square"></i></a>
+                    <a href="<?php echo base_url('Tambah_Barang'); ?>">Tambah Barang <i class="fa fa-plus-square"></i></a>
                   </div>
                 </div>
               </div>

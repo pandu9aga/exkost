@@ -11,7 +11,7 @@
 					<div class="col-md-12">
 						<h3 class="breadcrumb-header">Tambah Barang</h3>
 						<ul class="breadcrumb-tree">
-							<li><a href="Home">Home</a></li>
+							<li><a href="<?php echo base_url('Home'); ?>">Home</a></li>
 							<li class="active">Tambah Barang</li>
 						</ul>
 					</div>
@@ -36,7 +36,7 @@
 								<h3 class="title">Lelang Barang</h3>
 							</div>
 
-							<form method="post" name="form_uploadproduk" action="Tambah_Barang/prosesUpload" enctype="multipart/form-data">
+							<form method="post" name="form_uploadproduk" action="<?php echo base_url('Tambah_Barang/prosesUpload'); ?>" enctype="multipart/form-data">
 
 							<div class="form-group">
                 <select class="input-select-jen-up" name="jenis_barang" required oninvalid="this.setCustomValidity('pilih jenis barang yang ada!')" oninput="setCustomValidity('')">
@@ -83,7 +83,7 @@
 						</div>
 						<label>Masukkan Foto:</label><br>
 						<button class="primary-btn" disabled>
-							<input type="file" name="gambar" required oninvalid="this.setCustomValidity('gambar ikan tidak boleh kosong dan merupakan jenis file jpg, jpeg, & png')" oninput="setCustomValidity('')">
+							<input type="file" name="gambar" required oninvalid="this.setCustomValidity('gambar barang tidak boleh kosong dan merupakan jenis file jpg, jpeg, & png')" oninput="setCustomValidity('')">
 						</button>
 						<button class="primary-btn order-submit-form"><i class="fa fa-plus-square"></i> Upload Barang</button>
 					</div>

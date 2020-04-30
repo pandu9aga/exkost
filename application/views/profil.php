@@ -11,7 +11,7 @@
       <div class="col-md-12">
         <h3 class="breadcrumb-header">Profil</h3>
         <ul class="breadcrumb-tree">
-          <li><a href="Home">Home</a></li>
+          <li><a href="<?php echo base_url('Home'); ?>">Home</a></li>
           <li class="active">Profil</li>
         </ul>
       </div>
@@ -35,10 +35,10 @@
         <img src="<?php echo base_url('assets/profil/'.$profil->pp_akun); ?>" class="img-circle" width="250"/>
         <h4 class="card-title m-t-10"><?php echo $profil->nama_akun; ?></h4>
         <div>
-        <form method="post" name="form_uploadpp" action="Profil/uploadPP" enctype="multipart/form-data">
+        <form method="post" name="form_uploadpp" action="<?php echo base_url('Profil/uploadPP'); ?>" enctype="multipart/form-data">
           <center>
             <button class="primary-btn" disabled>
-              <input type="file" name="file_gambar" accept="image/*">
+              <input type="file" name="file_gambar" accept="image/*" required>
             </button>
           </center>
           <br><input type="hidden" name="id" value="<?php echo $profil->id_akun; ?>">
@@ -53,7 +53,7 @@
           <div class="section-title">
             PROFIL
           </div>
-          <form method="post" name="form_uploadprofil" action="Profil/uploadProfil">
+          <form method="post" name="form_uploadprofil" action="<?php echo base_url('Profil/uploadProfil'); ?>">
           <div class="form-group">
             <input class="input" type="text" name="nama" placeholder="Nama" value="<?php echo $profil->nama_akun; ?>" required oninvalid="this.setCustomValidity('nama tidak boleh kosong')" oninput="setCustomValidity('')">
           </div>
@@ -96,19 +96,6 @@
   <!-- /container -->
 </div>
 <!-- /SECTION -->
-<script type="text/javascript">
-        $(function () {
-            $("#updateprofile").click(function () {
-                var password = $("#txtPassword").val();
-                var confirmPassword = $("#txtConfirmPassword").val();
-                if (password != confirmPassword) {
-                    alert("Password tidak sama, ulangi..");
-                    return false;
-                }
-                return true;
-            });
-        });
-</script>
 
 <?php $this->load->view("template/footer.php") ?>
 <?php $this->load->view("template/js.php") ?>
