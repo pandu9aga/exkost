@@ -68,5 +68,29 @@ class template {
       $data['js'] = $this->_ci->load->view('template/js', $data, TRUE);
       $this->_ci->load->view('barang', $data);
   }
+  function lelang($template = NULL, $data = NULL) {
+      $data['head'] = $this->_ci->load->view('template/head', $data, TRUE);
+      $data['header'] = $this->_ci->load->view('template/header', $data, TRUE);
+      $data['navigation'] = $this->_ci->load->view('template/navigation', $data, TRUE);
+      $data['footer'] = $this->_ci->load->view('template/footer', $data, TRUE);
+      $data['js'] = $this->_ci->load->view('template/js', $data, TRUE);
+      $this->_ci->load->view('lelang', $data);
+  }
+  function lelangku($template = NULL, $data = NULL) {
+      $data['head'] = $this->_ci->load->view('template/head', $data, TRUE);
+      $data['header'] = $this->_ci->load->view('template/header', $data, TRUE);
+      $data['navigation'] = $this->_ci->load->view('template/navigation', $data, TRUE);
+      $data['footer'] = $this->_ci->load->view('template/footer', $data, TRUE);
+      $data['js'] = $this->_ci->load->view('template/js', $data, TRUE);
+      $this->_ci->load->view('lelangku', $data);
+  }
+  function lelangs($template = NULL, $data = NULL) {
+      $data['head'] = $this->_ci->load->view('template/head', $data, TRUE);
+      $data['header'] = $this->_ci->load->view('template/header', $data, TRUE);
+      $data['navigation'] = $this->_ci->load->view('template/navigation', $data, TRUE);
+      $data['footer'] = $this->_ci->load->view('template/footer', $data, TRUE);
+      $data['js'] = $this->_ci->load->view('template/js', $data, TRUE);
+      $this->_ci->load->view('lelang_selesai', $data);
+  }
 }
 ?>

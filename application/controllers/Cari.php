@@ -127,7 +127,7 @@ class Cari extends CI_Controller {
     $this->load->database();
     $jumlah_data = $this->Barang_model->jumlah_FS($kategori,$min,$max,$sort,$where);
     $this->load->library('pagination');
-    $config['base_url'] = base_url().'index.php/cari/index/';
+    $config['base_url'] = base_url().'index.php/cari/hasil/';
     $config['total_rows'] = $jumlah_data;
     $config['per_page'] = 1;
     $config['uri_segment'] = 3;

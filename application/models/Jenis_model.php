@@ -6,6 +6,15 @@ class Jenis_model extends CI_Model {
     $query = $this->db->get();
     return $query;
   }
+  function jenismyBarang($id){
+    $this->db->select('*');
+    $this->db->from('jenis_barang');
+    $this->db->join('barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.id_akun = ',$id);
+    $this->db->group_by('barang.id_jenis_barang');
+    $query = $this->db->get();
+    return $query;
+  }
   function jenisLimit($lim){
     $this->db->select('*');
     $this->db->from('jenis_barang');

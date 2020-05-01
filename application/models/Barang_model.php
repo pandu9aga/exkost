@@ -62,5 +62,61 @@ class Barang_model extends CI_Model {
     $this->db->where('barang.id_jenis_barang in ('.$val.')');
     return $this->db->get()->num_rows();
   }
+  function getmyAll($id){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by('barang.id_barang','DESC');
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->join('akun','akun.id_akun = barang.id_akun');
+    $this->db->where('barang.id_akun = ',$id);
+    $query = $this->db->get();
+    return $query;
+  }
+  function getmyPage($number,$offset,$id){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by('barang.id_barang','DESC');
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.id_akun = ',$id);
+    $this->db->limit($number, $offset);
+    $query = $this->db->get();
+    return $query;
+  }
+  function jumlah_mydata($id){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->where('barang.id_akun = ',$id);
+    return $this->db->get()->num_rows();
+  }
+  function getmyFS($number,$offset,$kategori,$min,$max,$sort,$where,$id){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by($where,$sort);
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.harga_barang >= ',$min);
+    $this->db->where('barang.harga_barang <= ',$max);
+    $this->db->where('barang.id_akun = ',$id);
+    $val = implode(",", $kategori);
+    $this->db->where('barang.id_jenis_barang in ('.$val.')');
+    $this->db->limit($number, $offset);
+    $query = $this->db->get();
+    return $query;
+  }
+  function jumlah_myFS($kategori,$min,$max,$sort,$where,$id){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by($where,$sort);
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.harga_barang >= ',$min);
+    $this->db->where('barang.harga_barang <= ',$max);
+    $this->db->where('barang.id_akun = ',$id);
+    $val = implode(",", $kategori);
+    $this->db->where('barang.id_jenis_barang in ('.$val.')');
+    return $this->db->get()->num_rows();
+  }
 }
 ?>

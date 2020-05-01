@@ -89,13 +89,13 @@
                 </a>
                 <div class="lelang-dropdown">
                   <div class="lelang-btns">
-                    <a href="#">Barang Lelang <i class="fa fa-hourglass-half"></i></a>
+                    <a href="<?php echo base_url('Lelang'); ?>">Barang Lelang <i class="fa fa-hourglass-half"></i></a>
                   </div>
                   <div class="lelang-btnbl">
-                    <a href="#">Telah Selesai <i class="fa fa-history"></i><div class="qty">9</div></a>
+                    <a href="#">Kirim <i class="fa fa-truck"></i><div class="qty">2</div></a>
                   </div>
                   <div class="lelang-btns">
-                    <a href="#">Kirim <i class="fa fa-truck"></i><div class="qty">2</div></a>
+                    <a href="<?php echo base_url('Lelang/selesai'); ?>">Telah Selesai <i class="fa fa-history"></i><div class="qty">9</div></a>
                   </div>
                   <div class="lelang-btnbl">
                     <a href="<?php echo base_url('Tambah_Barang'); ?>">Tambah Barang <i class="fa fa-plus-square"></i></a>
