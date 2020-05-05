@@ -49,6 +49,6 @@ class Checkout extends CI_Controller {
     foreach ($gettopup as $cektopup) {
       $idtopup = $cektopup->id_topup;
     }
-    redirect(base_url('Pembayaran/index/'.$idtopup));
+    redirect(base_url('Pembayaran/pembayaran/'.$idtopup));
   }
 }

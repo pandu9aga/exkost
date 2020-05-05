@@ -15,7 +15,7 @@
             </a>
             <div class="lidrop-content">
               <a class="lidrop-a" href="<?php echo base_url('Topup'); ?>">Topup</a>
-              <a class="lidrop-a" href="#">Pembayaran</a>
+              <a class="lidrop-a" href="<?php echo base_url('Pembayaran'); ?>">Pembayaran</a>
               <a class="lidrop-a" href="#">Riwayat Topup</a>
             </div>
           </li>
@@ -92,7 +92,7 @@
                     <a href="<?php echo base_url('Lelang'); ?>">Barang Lelang <i class="fa fa-hourglass-half"></i></a>
                   </div>
                   <div class="lelang-btnbl">
-                    <a href="#">Kirim <i class="fa fa-truck"></i><div class="qty">2</div></a>
+                    <a href="<?php echo base_url('Lelang/kirim'); ?>">Kirim <i class="fa fa-truck"></i><div class="qty">2</div></a>
                   </div>
                   <div class="lelang-btns">
                     <a href="<?php echo base_url('Lelang/selesai'); ?>">Telah Selesai <i class="fa fa-history"></i><div class="qty">9</div></a>

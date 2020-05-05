@@ -109,6 +109,45 @@ ul, ol {
   color: #FFF;
 }
 
+.primarys-btn {
+  display: inline-block;
+  padding: 12px 22px;
+  background-color: #000000;
+  border: none;
+  border-radius: 40px;
+  color: #FFF;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: center;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+}
+
+.primarys-btn:hover, .primarys-btn:focus {
+  opacity: 0.9;
+  color: #FFF;
+}
+
+.primaryab-btn {
+  width: 140px;
+  display: inline-block;
+  padding: 12px 22px;
+  background-color: #D10024;
+  border: none;
+  border-radius: 40px;
+  color: #FFF;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: center;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+}
+
+.primaryab-btn:hover, .primarys-btn:focus {
+  opacity: 0.9;
+  color: #FFF;
+}
+
 /*----------------------------*\
 	Inputs
 \*----------------------------*/

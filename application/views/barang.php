@@ -59,16 +59,24 @@ foreach ($barang as $tbarang) {
         </div>
       </div>
       <!-- /Product thumb imgs -->
-      <div class="col-md-1">
-      </div>
       <!-- Product details -->
-      <div class="col-md-3">
+      <div class="col-md-4">
         <div class="product-details">
           <h2 class="product-name"><?php echo $tbarang->nama_barang; ?></h2>
           <p><a href="#" onclick="document.forms['form_b'].submit(); return false;"><?php echo $tbarang->nama_jenis_barang; ?></a></p>
           <div>
             <h3 class="product-price">Rp. <?php echo $tbarang->harga_barang; ?></del></h3>
-            <span class="product-available"><?php echo $tbarang->status_lelang; ?></span>
+            <?php
+            if ($tbarang->status_lelang=="berlangsung") {
+            ?>
+            <span class="product-available">Berlangsung</span>
+            <?php
+            } else {
+            ?>
+            <span class="product-available">Selesai</span>
+            <?php
+            }
+            ?>
           </div>
           <div class="review-heading">
             <h5 class="name">Waktu Habis</h5>

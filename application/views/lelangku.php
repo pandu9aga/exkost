@@ -84,11 +84,38 @@ foreach ($barang as $tbarang) {
             </label>
           </div>
 
+          <?php
+          if ($tbarang->status_lelang=="berlangsung") {
+          ?>
           <div class="add-to-cart">
             <br>
             <button class="add-to-cart-btn"><i class="fa fa-pencil"></i> Edit</button>
             <button class="add-to-cart-btn"><i class="fa fa-close"></i> Hapus</button>
           </div>
+          <?php
+          } elseif ($tbarang->status_lelang=="selesai") {
+          ?>
+          <div class="add-to-cart">
+            <br>
+            <button class="add-to-cart-btn"><i class="fa fa-truck"></i> Kirim</button>
+          </div>
+          <?php
+          } elseif ($tbarang->status_lelang=="kirim") {
+          ?>
+          <div class="add-to-cart">
+            <br>
+            <button class="add-to-cart-btn"><i class="fa fa-truck"></i> Sedang Kirim</button>
+          </div>
+          <?php
+          } elseif ($tbarang->status_lelang=="terima") {
+          ?>
+          <div class="add-to-cart">
+            <br>
+            <button class="add-to-cart-btn"><i class="fa fa-check"></i> Selesai</button>
+          </div>
+          <?php
+          }
+          ?>
 
           <div class="review-heading">
             <h5 class="name"><?php echo $tbarang->nama_akun; ?></h5>

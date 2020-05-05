@@ -14,5 +14,34 @@ class Topup_model extends CI_Model {
     $query = $this->db->get();
     return $query;
   }
+  function getMytopup($data){
+    $this->db->select('*');
+    $this->db->from('topup');
+    $this->db->where('id_akun',$data);
+    $this->db->join('bank_admin','topup.id_bank_admin = bank_admin.id_bank_admin');
+    $query = $this->db->get();
+    return $query;
+  }
+  function jmlMybayar($data){
+    $this->db->select('*');
+    $this->db->from('topup');
+    $this->db->where('id_akun',$data);
+    $this->db->where('status_topup in ("belum","menunggu")');
+    //$this->db->where('status_topup','menunggu');
+    $this->db->join('bank_admin','topup.id_bank_admin = bank_admin.id_bank_admin');
+    $query = $this->db->get()->num_rows();
+    return $query;
+  }
+  function getPgbayar($number,$offset,$data){
+    $this->db->select('*');
+    $this->db->from('topup');
+    $this->db->where('id_akun',$data);
+    $this->db->where('status_topup in ("belum","menunggu")');
+    //$this->db->where('status_topup','menunggu');
+    $this->db->join('bank_admin','topup.id_bank_admin = bank_admin.id_bank_admin');
+    $this->db->limit($number, $offset);
+    $query = $this->db->get();
+    return $query;
+  }
 }
 ?>
