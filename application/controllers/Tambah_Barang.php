@@ -12,17 +12,21 @@ class Tambah_Barang extends CI_Controller {
     $this->load->model('Akun_model');
     $this->load->model('Jenis_model');
     $this->load->model('Barang_model');
+    $this->load->model('Topup_model');
     $this->load->library('upload');
 	}
 	function index(){
+    $this->Now->updateNow();
     $id_akun = $this->session->userdata('id_akun');
     $limbar = 6;
     $data['akun'] = $this->Akun_model->dataAkun($id_akun)->result();
     $data['jenis'] = $this->Jenis_model->jenisBarang()->result();
     $data['jenlimbar'] = $this->Jenis_model->jenisLimit($limbar)->result();
+    $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 		$this->template->tambahBarang('tambah_barang',$data);
 	}
   function prosesUpload(){
+    $this->Now->updateNow();
     $jenis = $this->input->post('jenis_barang');
     $nama = $this->input->post('nama_barang');
     $harga = $this->input->post('harga_barang');

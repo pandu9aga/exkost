@@ -118,5 +118,94 @@ class Barang_model extends CI_Model {
     $this->db->where('barang.id_jenis_barang in ('.$val.')');
     return $this->db->get()->num_rows();
   }
+  function getFSlim($number,$offset,$kategori,$min,$max,$sort,$where,$lim){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by($where,$sort);
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.harga_barang >= ',$min);
+    $this->db->where('barang.harga_barang <= ',$max);
+    $val = implode(",", $kategori);
+    $this->db->where('barang.id_jenis_barang in ('.$val.')');
+    $this->db->where($lim);
+    $this->db->limit($number, $offset);
+    $query = $this->db->get();
+    return $query;
+  }
+  function jumlah_FSlim($kategori,$min,$max,$sort,$where,$lim){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by($where,$sort);
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.harga_barang >= ',$min);
+    $this->db->where('barang.harga_barang <= ',$max);
+    $val = implode(",", $kategori);
+    $this->db->where('barang.id_jenis_barang in ('.$val.')');
+    $this->db->where($lim);
+    return $this->db->get()->num_rows();
+  }
+  function getmyAlllim($id,$lim){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by('barang.id_barang','DESC');
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->join('akun','akun.id_akun = barang.id_akun');
+    $this->db->where('barang.id_akun = ',$id);
+    $this->db->where($lim);
+    $query = $this->db->get();
+    return $query;
+  }
+  function getmyPagelim($number,$offset,$id,$lim){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by('barang.id_barang','DESC');
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.id_akun = ',$id);
+    $this->db->where($lim);
+    $this->db->limit($number, $offset);
+    $query = $this->db->get();
+    return $query;
+  }
+  function jumlah_mydatalim($id,$lim){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->where('barang.id_akun = ',$id);
+    $this->db->where($lim);
+    return $this->db->get()->num_rows();
+  }
+  function getmyFSlim($number,$offset,$kategori,$min,$max,$sort,$where,$id,$lim){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by($where,$sort);
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.harga_barang >= ',$min);
+    $this->db->where('barang.harga_barang <= ',$max);
+    $this->db->where('barang.id_akun = ',$id);
+    $val = implode(",", $kategori);
+    $this->db->where('barang.id_jenis_barang in ('.$val.')');
+    $this->db->where($lim);
+    $this->db->limit($number, $offset);
+    $query = $this->db->get();
+    return $query;
+  }
+  function jumlah_myFSlim($kategori,$min,$max,$sort,$where,$id,$lim){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by($where,$sort);
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.harga_barang >= ',$min);
+    $this->db->where('barang.harga_barang <= ',$max);
+    $this->db->where('barang.id_akun = ',$id);
+    $val = implode(",", $kategori);
+    $this->db->where('barang.id_jenis_barang in ('.$val.')');
+    $this->db->where($lim);
+    return $this->db->get()->num_rows();
+  }
 }
 ?>

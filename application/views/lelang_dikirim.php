@@ -12,7 +12,7 @@
 						<ul class="breadcrumb-tree">
 							<li><a href="<?php echo base_url('Home'); ?>">Home</a></li>
               <li>Lelang</li>
-							<li class="active">Lelang Kirim (227,490 Results)</li>
+							<li class="active">Lelang Sedang Dikirim (227,490 Results)</li>
 						</ul>
 					</div>
 				</div>
@@ -170,31 +170,31 @@
               <?php
 		            //$no = $this->uri->segment('3') + 1;
 		            foreach($barang as $b){
-                  if ($b->status_lelang=='selesai') {
-		          ?>
-							<!-- product -->
-							<div class="col-md-4 col-xs-6">
-								<div class="product">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/barang/'.$b->nama_gambar_barang); ?>" alt="">
-										<div class="product-label">
+                  if ($b->status_lelang=='kirim') {
+						   ?>
+								<!-- product -->
+								<div class="col-md-4 col-xs-6">
+									<div class="product">
+										<div class="product-img">
+											<img src="<?php echo base_url('assets/barang/'.$b->nama_gambar_barang); ?>" alt="">
+											<div class="product-label">
+											</div>
+										</div>
+										<div class="product-body">
+											<p class="product-category"><?php echo $b->nama_jenis_barang; ?></p>
+											<h3 class="product-name"><a href="<?php echo base_url('Barang/index/'.$b->id_barang); ?>"><?php echo $b->nama_barang; ?></a></h3>
+											<h4 class="product-price">Rp. <?php echo $b->harga_barang; ?></h4>
+											<h4 class="product-category"><i class="fa fa-hourglass-half"></i> <?php echo $b->waktu_lelang; ?></h4>
+										</div>
+										<div class="add-to-cart">
+											<a href="<?php echo base_url('Lelang/barang/'.$b->id_barang); ?>">
+												<button class="add-to-cart-btn"><i class="fa fa-search"></i> sedang dikirim</button>
+											</a>
 										</div>
 									</div>
-                  <div class="product-body">
-                    <p class="product-category"><?php echo $b->nama_jenis_barang; ?></p>
-                    <h3 class="product-name"><a href="<?php echo base_url('Barang/index/'.$b->id_barang); ?>"><?php echo $b->nama_barang; ?></a></h3>
-                    <h4 class="product-price">Rp. <?php echo $b->harga_barang; ?></h4>
-                    <h4 class="product-category"><i class="fa fa-hourglass-half"></i> <?php echo $b->waktu_lelang; ?></h4>
-                  </div>
-                  <div class="add-to-cart">
-                    <a href="<?php echo base_url('Lelang/barang/'.$b->id_barang); ?>">
-											<button class="add-to-cart-btn"><i class="fa fa-search"></i> kirim barang</button>
-										</a>
-                  </div>
 								</div>
-							</div>
-							<!-- /product -->
-            <?php
+								<!-- /product -->
+							<?php
 						}
             }
             ?>

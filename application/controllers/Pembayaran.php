@@ -16,11 +16,13 @@ class Pembayaran extends CI_Controller {
     $this->load->library('upload');
 	}
   function index(){
+    $this->Now->updateNow();
     $id_akun = $this->session->userdata('id_akun');
     $limbar = 6;
     $data['akun'] = $this->Akun_model->dataAkun($id_akun)->result();
     $data['jenis'] = $this->Jenis_model->jenisBarang()->result();
     $data['jenlimbar'] = $this->Jenis_model->jenisLimit($limbar)->result();
+    $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 
     $jumlah_data = $this->Topup_model->jmlMybayar($id_akun);
     $this->load->library('pagination');
@@ -67,11 +69,13 @@ class Pembayaran extends CI_Controller {
     $this->template->lpembayaran('list_pembayaran',$data);
   }
   function pembayaran($idtopup){
+    $this->Now->updateNow();
     $id_akun = $this->session->userdata('id_akun');
     $limbar = 6;
     $data['akun'] = $this->Akun_model->dataAkun($id_akun)->result();
     $data['jenis'] = $this->Jenis_model->jenisBarang()->result();
     $data['jenlimbar'] = $this->Jenis_model->jenisLimit($limbar)->result();
+    $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 
     $data['topup'] = $this->Topup_model->getTopup($idtopup)->result();
     foreach ($data['topup'] as $topup) {
@@ -81,6 +85,7 @@ class Pembayaran extends CI_Controller {
     $this->template->pembayaran('pembayaran',$data);
   }
   function prosesPembayaran(){
+    $this->Now->updateNow();
     $id = $this->input->post('id');
     $stat = $this->input->post('status');
 

@@ -8,17 +8,21 @@ class Main extends CI_Controller {
   }
 	public function index()
 	{
+		$this->Now->updateNow();
 		$this->load->view('main_view');
 	}
   public function main_menu()
   {
+		$this->Now->updateNow();
     $this->load->view('main_menu');
   }
 	public function login()
 	{
+		$this->Now->updateNow();
 		$this->load->view('login');
 	}
 	public function prosesLogin(){
+		$this->Now->updateNow();
 		$email = $this->input->post('email');
     $password = $this->input->post('password');
 
@@ -46,14 +50,17 @@ class Main extends CI_Controller {
 		}
 	}
 	function logout(){
+		$this->Now->updateNow();
 		$this->session->sess_destroy();
 		redirect(base_url('Main'));
 	}
 	public function register()
 	{
+		$this->Now->updateNow();
 		$this->load->view('register');
 	}
 	public function prosesRegister(){
+		$this->Now->updateNow();
     $nama = $this->input->post('nama');
     $alamat = $this->input->post('alamat');
     $notelepon = $this->input->post('notelepon');

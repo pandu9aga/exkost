@@ -15,7 +15,11 @@
             </a>
             <div class="lidrop-content">
               <a class="lidrop-a" href="<?php echo base_url('Topup'); ?>">Topup</a>
-              <a class="lidrop-a" href="<?php echo base_url('Pembayaran'); ?>">Pembayaran</a>
+              <a class="lidrop-a" href="<?php echo base_url('Pembayaran'); ?>">Pembayaran <?php if ($qtytopup>0) {
+              ?>
+              <div class="qty"><?php echo $qtytopup; ?></div></a>
+              <?php
+              } ?>
               <a class="lidrop-a" href="#">Riwayat Topup</a>
             </div>
           </li>
@@ -26,7 +30,6 @@
             </a>
             <div class="lidrop-content">
               <a class="lidrop-a" href="<?php echo base_url('Profil'); ?>">Profil</a>
-              <a class="lidrop-a" href="#">Chat</a>
             </div>
           </li>
           <li><a href="<?php echo base_url('Main/logout'); ?>"><i class="fa fa-sign-out"></i>Logout</a></li>
@@ -92,9 +95,15 @@
                     <a href="<?php echo base_url('Lelang'); ?>">Barang Lelang <i class="fa fa-hourglass-half"></i></a>
                   </div>
                   <div class="lelang-btnbl">
-                    <a href="<?php echo base_url('Lelang/kirim'); ?>">Kirim <i class="fa fa-truck"></i><div class="qty">2</div></a>
+                    <a href="<?php echo base_url('Lelang/kirim'); ?>">Kirim <i class="fa fa-cube"></i><div class="qty">2</div></a>
                   </div>
                   <div class="lelang-btns">
+                    <a href="<?php echo base_url('Lelang/dikirim'); ?>">Sedang Dikirim <i class="fa fa-truck"></i><div class="qty">9</div></a>
+                  </div>
+                  <div class="lelang-btnbl1">
+                    <a href="<?php echo base_url('Lelang/konfirm_transfer'); ?>">Konfirm Transfer <i class="fa fa-check"></i><div class="qty">9</div></a>
+                  </div>
+                  <div class="lelang-btns1">
                     <a href="<?php echo base_url('Lelang/selesai'); ?>">Telah Selesai <i class="fa fa-history"></i><div class="qty">9</div></a>
                   </div>
                   <div class="lelang-btnbl">
@@ -111,37 +120,22 @@
                   <span>Cart</span>
                   <div class="qty">3</div>
                 </a>
-                <div class="cart-dropdown">
-                  <div class="cart-list">
-                    <div class="product-widget">
-                      <div class="product-img">
-                        <img src="<?php echo base_url('assets/img/product01.png'); ?>" alt="">
-                      </div>
-                      <div class="product-body">
-                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                        <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-                      </div>
-                      <button class="delete"><i class="fa fa-close"></i></button>
-                    </div>
-
-                    <div class="product-widget">
-                      <div class="product-img">
-                        <img src="<?php echo base_url('assets/img/product02.png'); ?>" alt="">
-                      </div>
-                      <div class="product-body">
-                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                        <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-                      </div>
-                      <button class="delete"><i class="fa fa-close"></i></button>
-                    </div>
+                <div class="lelang-dropdown">
+                  <div class="lelang-btns">
+                    <a href="<?php echo base_url('Cart/berlangsung'); ?>">Berlangsung <i class="fa fa-hourglass-half"></i></a>
                   </div>
-                  <div class="cart-summary">
-                    <small>3 Item(s) selected</small>
-                    <h5>SUBTOTAL: $2940.00</h5>
+                  <div class="lelang-btnbldrop">
+                    <li class="btnlidrop">
+                      <a class="btnlidrop-toggle" data-toggle="btnlidrop" aria-expanded="true">Menang <i class="fa fa-trophy"></i><div class="qty">2</div></a>
+                      <div class="btnlidrop-content">
+                        <a class="btnlidrop-a" href="<?php echo base_url('Menang/tunggu_kirim'); ?>">Tunggu Dikirim <i class="fa fa-cube"></i><div class="qty">2</div></a>
+                        <a class="btnlidrop-a" href="<?php echo base_url('Menang/dikirim'); ?>">Dikirim <i class="fa fa-truck"></i><div class="qty1">2</div></a>
+                        <a class="btnlidrop-a" href="<?php echo base_url('Menang/selesai'); ?>">Selesai <i class="fa fa-check"></i></a>
+                      </div>
+                    </li>
                   </div>
-                  <div class="cart-btns">
-                    <a href="#">View Cart</a>
-                    <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                  <div class="lelang-btns">
+                    <a href="<?php echo base_url('Gagal'); ?>">Kalah <i class="fa fa-times-circle"></i></a>
                   </div>
                 </div>
               </div>

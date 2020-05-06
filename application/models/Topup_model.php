@@ -22,6 +22,14 @@ class Topup_model extends CI_Model {
     $query = $this->db->get();
     return $query;
   }
+  function jmlQtyBayar($data){
+    $this->db->select('*');
+    $this->db->from('topup');
+    $this->db->where('id_akun',$data);
+    $this->db->where('status_topup','belum');
+    $query = $this->db->get()->num_rows();
+    return $query;
+  }
   function jmlMybayar($data){
     $this->db->select('*');
     $this->db->from('topup');

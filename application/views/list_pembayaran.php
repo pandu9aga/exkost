@@ -95,7 +95,16 @@
             }?>
           </div>
           <div class="col-md-2">
+            <?php
+            if ($list->status_topup=="belum") {
+            ?>
             <button class="primarys-btn">Hapus</button>
+            <?php
+            } elseif ($list->status_topup=="menunggu") {
+            ?>
+            
+            <?php
+            }?>
           </div>
           <!-- /Review Form -->
         </div>

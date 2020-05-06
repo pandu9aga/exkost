@@ -11,17 +11,21 @@ class Profil extends CI_Controller {
 
     $this->load->model('Akun_model');
     $this->load->model('Jenis_model');
+    $this->load->model('Topup_model');
     $this->load->library('upload');
 	}
   function index(){
+    $this->Now->updateNow();
     $id_akun = $this->session->userdata('id_akun');
     $limbar = 6;
     $data['akun'] = $this->Akun_model->dataAkun($id_akun)->result();
     $data['jenis'] = $this->Jenis_model->jenisBarang()->result();
     $data['jenlimbar'] = $this->Jenis_model->jenisLimit($limbar)->result();
+    $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 		$this->template->profil('profil',$data);
 	}
   function uploadProfil(){
+    $this->Now->updateNow();
     $nama = $this->input->post('nama');
     $email = $this->input->post('email');
     $alamat = $this->input->post('alamat');
@@ -46,6 +50,7 @@ class Profil extends CI_Controller {
     redirect(base_url('Profil'));
   }
   function uploadPP(){
+    $this->Now->updateNow();
     $id = $this->input->post('id');
 
     $config['upload_path'] = './assets/profil/'; //path folder
