@@ -51,5 +51,23 @@ class Topup_model extends CI_Model {
     $query = $this->db->get();
     return $query;
   }
+  function getAll(){
+    $this->db->select('*');
+    $this->db->from('topup');
+    $this->db->join('akun','topup.id_akun = akun.id_akun');
+    $this->db->join('bank_admin','topup.id_bank_admin = bank_admin.id_bank_admin');
+    $query = $this->db->get();
+    return $query;
+  }
+  function getPgall($number,$offset){
+    $this->db->select('*');
+    $this->db->from('topup');
+    //$this->db->where('status_topup','menunggu');
+    $this->db->join('akun','topup.id_akun = akun.id_akun');
+    $this->db->join('bank_admin','topup.id_bank_admin = bank_admin.id_bank_admin');
+    $this->db->limit($number, $offset);
+    $query = $this->db->get();
+    return $query;
+  }
 }
 ?>
