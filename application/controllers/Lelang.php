@@ -13,6 +13,7 @@ class Lelang extends CI_Controller {
     $this->load->model('Jenis_model');
     $this->load->model('Barang_model');
     $this->load->model('Topup_model');
+    $this->load->model('Notif_model');
 	}
 	function index(){
     $this->Now->updateNow();
@@ -27,6 +28,7 @@ class Lelang extends CI_Controller {
     $data['jenlimcol'] = $this->Jenis_model->jenisLimit($limcol)->result();
     $data['jenlimnew'] = $this->Jenis_model->jenisLimit($limnew)->result();
     $data['jenlimtop'] = $this->Jenis_model->jenisLimit($limtop)->result();
+    $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 
     $this->load->database();
@@ -86,6 +88,7 @@ class Lelang extends CI_Controller {
     $data['jenlimcol'] = $this->Jenis_model->jenisLimit($limcol)->result();
     $data['jenlimnew'] = $this->Jenis_model->jenisLimit($limnew)->result();
     $data['jenlimtop'] = $this->Jenis_model->jenisLimit($limtop)->result();
+    $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 
     if ($this->input->post('checkall')) {
@@ -191,6 +194,7 @@ class Lelang extends CI_Controller {
     $data['jenlimcol'] = $this->Jenis_model->jenisLimit($limcol)->result();
     $data['jenlimnew'] = $this->Jenis_model->jenisLimit($limnew)->result();
     $data['jenlimtop'] = $this->Jenis_model->jenisLimit($limtop)->result();
+    $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
     $data['id_barang'] = $id;
     $data['barang'] = $this->Barang_model->getAll()->result();
@@ -209,6 +213,7 @@ class Lelang extends CI_Controller {
     $data['jenlimcol'] = $this->Jenis_model->jenisLimit($limcol)->result();
     $data['jenlimnew'] = $this->Jenis_model->jenisLimit($limnew)->result();
     $data['jenlimtop'] = $this->Jenis_model->jenisLimit($limtop)->result();
+    $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 
     $lim = array('status_lelang' => 'terima' );
@@ -270,6 +275,7 @@ class Lelang extends CI_Controller {
     $data['jenlimcol'] = $this->Jenis_model->jenisLimit($limcol)->result();
     $data['jenlimnew'] = $this->Jenis_model->jenisLimit($limnew)->result();
     $data['jenlimtop'] = $this->Jenis_model->jenisLimit($limtop)->result();
+    $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 
     $lim = array('status_lelang' => 'terima' );
@@ -378,6 +384,7 @@ class Lelang extends CI_Controller {
     $data['jenlimcol'] = $this->Jenis_model->jenisLimit($limcol)->result();
     $data['jenlimnew'] = $this->Jenis_model->jenisLimit($limnew)->result();
     $data['jenlimtop'] = $this->Jenis_model->jenisLimit($limtop)->result();
+    $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 
     $lim = array('status_lelang' => 'selesai' );
@@ -439,6 +446,7 @@ class Lelang extends CI_Controller {
     $data['jenlimcol'] = $this->Jenis_model->jenisLimit($limcol)->result();
     $data['jenlimnew'] = $this->Jenis_model->jenisLimit($limnew)->result();
     $data['jenlimtop'] = $this->Jenis_model->jenisLimit($limtop)->result();
+    $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 
     $lim = array('status_lelang' => 'selesai' );
@@ -546,6 +554,7 @@ class Lelang extends CI_Controller {
     $data['jenlimcol'] = $this->Jenis_model->jenisLimit($limcol)->result();
     $data['jenlimnew'] = $this->Jenis_model->jenisLimit($limnew)->result();
     $data['jenlimtop'] = $this->Jenis_model->jenisLimit($limtop)->result();
+    $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 
     $lim = array('status_lelang' => 'kirim' );
@@ -607,6 +616,7 @@ class Lelang extends CI_Controller {
     $data['jenlimcol'] = $this->Jenis_model->jenisLimit($limcol)->result();
     $data['jenlimnew'] = $this->Jenis_model->jenisLimit($limnew)->result();
     $data['jenlimtop'] = $this->Jenis_model->jenisLimit($limtop)->result();
+    $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 
     $lim = array('status_lelang' => 'kirim' );

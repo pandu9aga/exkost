@@ -530,9 +530,25 @@ textarea.input {
   background-color: #1e1f29;
 }
 
+.lidrop-content .lidrop-a .qty1 {
+  position: absolute;
+  right: 5px;
+  top: 90px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 10px;
+  color: #FFF;
+  background-color: #1e1f29;
+}
+
 .lidrop-content a:hover {background-color: #171717;}
 
 .lidrop-content .lidrop-a:hover .qty {background-color: #D10024;}
+
+.lidrop-content .lidrop-a:hover .qty1 {background-color: #D10024;}
 
 .lidrop:hover .lidrop-content {display: block;}
 
@@ -2563,6 +2579,10 @@ textarea.input {
 .custom-dots .slick-dots {
   position: static;
   margin: 15px 0px;
+}
+
+.riwayat {
+  background: #f09caa;
 }
 
 /*=========================================================

@@ -12,6 +12,7 @@ class Checkout extends CI_Controller {
     $this->load->model('Akun_model');
     $this->load->model('Jenis_model');
     $this->load->model('Topup_model');
+    $this->load->model('Notif_model');
     $this->load->model('Bankadmin_model');
 	}
   function index($nominal){
@@ -21,6 +22,7 @@ class Checkout extends CI_Controller {
     $data['akun'] = $this->Akun_model->dataAkun($id_akun)->result();
     $data['jenis'] = $this->Jenis_model->jenisBarang()->result();
     $data['jenlimbar'] = $this->Jenis_model->jenisLimit($limbar)->result();
+    $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
     if ($nominal>=1) {
       if ($nominal>6) {
@@ -54,10 +56,10 @@ class Checkout extends CI_Controller {
     );
 
     $this->Topup_model->tambahTopup($data,'topup');
-    $gettopup = $this->Topup_model->getTopup($data)->result();
+    $gettopup = $this->Topup_model->getidTopup($data)->result();
     foreach ($gettopup as $cektopup) {
       $idtopup = $cektopup->id_topup;
     }
-    redirect(base_url('Pembayaran/pembayaran/'.$idtopup));
+    redirect(base_url('Pembayaran/detail_pembayaran/'.$idtopup));
   }
 }

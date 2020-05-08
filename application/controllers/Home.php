@@ -13,6 +13,7 @@ class Home extends CI_Controller {
     $this->load->model('Jenis_model');
     $this->load->model('Barang_model');
     $this->load->model('Topup_model');
+    $this->load->model('Notif_model');
 	}
 	function index(){
     $this->Now->updateNow();
@@ -27,6 +28,7 @@ class Home extends CI_Controller {
     $data['jenlimcol'] = $this->Jenis_model->jenisLimit($limcol)->result();
     $data['jenlimnew'] = $this->Jenis_model->jenisLimit($limnew)->result();
     $data['jenlimtop'] = $this->Jenis_model->jenisLimit($limtop)->result();
+    $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
     $data['barang'] = $this->Barang_model->getAll()->result();
 		$this->template->home('home',$data);

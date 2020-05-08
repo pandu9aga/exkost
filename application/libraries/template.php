@@ -44,7 +44,7 @@ class template {
       $data['js'] = $this->_ci->load->view('template/js', $data, TRUE);
       $this->_ci->load->view('checkout', $data);
   }
-  function pembayaran($template = NULL, $data = NULL) {
+  function pembayarann($template = NULL, $data = NULL) {
       $data['head'] = $this->_ci->load->view('template/head', $data, TRUE);
       $data['header'] = $this->_ci->load->view('template/header', $data, TRUE);
       $data['navigation'] = $this->_ci->load->view('template/navigation', $data, TRUE);
@@ -115,6 +115,14 @@ class template {
       $data['footer'] = $this->_ci->load->view('template/footer', $data, TRUE);
       $data['js'] = $this->_ci->load->view('template/js', $data, TRUE);
       $this->_ci->load->view('lelang_dikirim', $data);
+  }
+  function rtopup($template = NULL, $data = NULL) {
+      $data['head'] = $this->_ci->load->view('template/head', $data, TRUE);
+      $data['header'] = $this->_ci->load->view('template/header', $data, TRUE);
+      $data['navigation'] = $this->_ci->load->view('template/navigation', $data, TRUE);
+      $data['footer'] = $this->_ci->load->view('template/footer', $data, TRUE);
+      $data['js'] = $this->_ci->load->view('template/js', $data, TRUE);
+      $this->_ci->load->view('riwayat_topup', $data);
   }
 }
 ?>

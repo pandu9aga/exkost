@@ -29,5 +29,10 @@ class Akun_model extends CI_Model {
     $this->db->where($where);
     $this->db->update('akun',$data);
   }
+  function topupSaldo($data){
+    $this->db->set('saldo_akun',$data['nominal']);
+    $this->db->where('id_akun',$data['id_akun']);
+    $this->db->update('akun');
+  }
 }
 ?>

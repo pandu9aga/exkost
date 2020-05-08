@@ -12,6 +12,7 @@ class Profil extends CI_Controller {
     $this->load->model('Akun_model');
     $this->load->model('Jenis_model');
     $this->load->model('Topup_model');
+    $this->load->model('Notif_model');
     $this->load->library('upload');
 	}
   function index(){
@@ -21,6 +22,7 @@ class Profil extends CI_Controller {
     $data['akun'] = $this->Akun_model->dataAkun($id_akun)->result();
     $data['jenis'] = $this->Jenis_model->jenisBarang()->result();
     $data['jenlimbar'] = $this->Jenis_model->jenisLimit($limbar)->result();
+    $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 		$this->template->profil('profil',$data);
 	}

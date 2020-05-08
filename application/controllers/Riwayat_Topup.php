@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Pembayaran extends CI_Controller {
+class Riwayat_Topup extends CI_Controller {
   function __construct(){
 		parent::__construct();
 
@@ -12,9 +12,7 @@ class Pembayaran extends CI_Controller {
     $this->load->model('Akun_model');
     $this->load->model('Jenis_model');
     $this->load->model('Topup_model');
-    $this->load->model('Bankadmin_model');
     $this->load->model('Notif_model');
-    $this->load->library('upload');
 	}
   function index(){
     $this->Now->updateNow();
@@ -26,9 +24,12 @@ class Pembayaran extends CI_Controller {
     $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 
-    $jumlah_data = $this->Topup_model->jmlMybayar($id_akun);
+    $this->Notif_model->changeNotif($id_akun);
+    $data['riwayatnot'] = $this->Notif_model->getNotiftop($id_akun)->result();
+
+    $jumlah_data = $this->Topup_model->jmlMyriwayat($id_akun);
     $this->load->library('pagination');
-    $config['base_url'] = base_url().'index.php/Pembayaran/index/';
+    $config['base_url'] = base_url().'index.php/Riwayat_Topup/index/';
     $config['total_rows'] = $jumlah_data;
     $config['per_page'] = 5;
     $config['uri_segment'] = 3;
@@ -65,12 +66,12 @@ class Pembayaran extends CI_Controller {
     $data['limit'] = $config['per_page'];
     $data['total_rows'] = $config['total_rows'];
     $data['pagination'] = $this->pagination->create_links();
-    $data['topup'] = $this->Topup_model->getPgbayar($config['per_page'],$page,$id_akun)->result();
+    $data['topup'] = $this->Topup_model->getPgriwayat($config['per_page'],$page,$id_akun)->result();
 
     //$data['topup'] = $this->Topup_model->getMytopup($id_akun)->result();
-    $this->template->lpembayaran('list_pembayaran',$data);
+    $this->template->rtopup('riwayat_topup',$data);
   }
-  function detail_pembayaran($idtopup){
+  function pembayaran($idtopup){
     $this->Now->updateNow();
     $id_akun = $this->session->userdata('id_akun');
     $limbar = 6;
@@ -85,7 +86,7 @@ class Pembayaran extends CI_Controller {
       $id_bank = $topup->id_bank_admin;
     }
     $data['bankadmin'] = $this->Bankadmin_model->selectBank($id_bank)->result();
-    $this->template->pembayarann('pembayaran',$data);
+    $this->template->pembayaran('pembayaran',$data);
   }
   function prosesPembayaran(){
     $this->Now->updateNow();

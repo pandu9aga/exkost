@@ -17,10 +17,14 @@
               <a class="lidrop-a" href="<?php echo base_url('Topup'); ?>">Topup</a>
               <a class="lidrop-a" href="<?php echo base_url('Pembayaran'); ?>">Pembayaran <?php if ($qtytopup>0) {
               ?>
-              <div class="qty"><?php echo $qtytopup; ?></div></a>
+              <div class="qty"><?php echo $qtytopup; ?></div>
               <?php
-              } ?>
-              <a class="lidrop-a" href="#">Riwayat Topup</a>
+              } ?></a>
+              <a class="lidrop-a" href="<?php echo base_url('Riwayat_Topup'); ?>">Riwayat Topup <?php if ($qtyritop>0) {
+              ?>
+              <div class="qty1"><?php echo $qtyritop ?></div>
+              <?php
+              } ?></a>
             </div>
           </li>
           <li class="lidrop">

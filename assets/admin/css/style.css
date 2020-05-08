@@ -1062,6 +1062,12 @@ File: scss
       font-weight: 500;
       color: #ffffff;
       padding: 0 10px; }
+      .topbar .top-navbar .navbar-nav > .nav-item > p {
+        line-height: 65px;
+        font-size: 20px;
+        font-weight: 500;
+        color: #333333;
+        padding: 0 10px; }
     .topbar .top-navbar .navbar-nav > .nav-item.show {
       background: rgba(0, 0, 0, 0.05); }
   .topbar .profile-pic {
@@ -5885,7 +5891,7 @@ File: scss
 	margin: 0;
 	padding: 0;
 	font-family: 'Arial', sans-serif;
-	background: linear-gradient(to right, orange, #ec38bc, #7303c0, cyan);
+	background: linear-gradient(to right, #999966, #ebebe0, #ffffff);
 }
 
 
@@ -5915,7 +5921,7 @@ File: scss
 .login-box h2 {
 	margin: 0 0 30px;
 	padding: 0;
-	color: #F1EEE6;
+	color: #fbb2b2;
 	text-align: center;
 }
 
@@ -5947,10 +5953,11 @@ File: scss
 }
 
 .login-box .user-box input:focus ~ label, .login-box .user-box input:valid ~ label {
-	top: -20px; 
-	left: 0px; 
-	color: #EE2737;
-	font-size: 12px;
+	top: -20px;
+	left: 0px;
+	color: #ffc6ca;
+	font-size: 14px;
+  font-weight: bold;
 }
 
 
@@ -5958,7 +5965,7 @@ File: scss
 	position: relative;
 	display: inline-block;
 	padding: 10px 20px;
-	color: #EE2737;
+	color: #f9acb2;
 	font-size: 16px;
 	text-decoration: none;
 	text-transform: uppercase;
@@ -6057,4 +6064,3 @@ File: scss
     bottom: 100%;
   }
 }
-

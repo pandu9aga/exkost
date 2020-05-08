@@ -5,21 +5,88 @@ class Admin extends CI_Controller {
   function __construct(){
 		parent::__construct();
 
-		//if($this->session->userdata('status') != "login"){
-		//	redirect(base_url('Main/login'));
-		//}
-
+    $this->load->model('Admin_model');
     $this->load->model('Akun_model');
-    $this->load->model('Jenis_model');
     $this->load->model('Topup_model');
+    $this->load->model('Notif_model');
     $this->load->model('Bankadmin_model');
 	}
-  function index(){
+  public function login()
+	{
+		$this->Now->updateNow();
+		$this->load->view('admin/login');
+	}
+	public function prosesLogin(){
+		$this->Now->updateNow();
+		$nama = $this->input->post('nama');
+    $password = $this->input->post('password');
+
+		$data = array(
+      'nama_admin' => $nama,
+			'pass_admin' => $password
+    );
+
+		$cek = $this->Admin_model->loginAdmin($data)->num_rows();
+		if($cek > 0){
+			$dataadmin = $this->Admin_model->loginAdmin($data)->result();
+			foreach ($dataadmin as $admin) {
+				$id_admin = $admin->id_admin;
+			}
+			$data_session = array(
+				'id_admin' => $id_admin,
+				'status' => "login"
+			);
+			$this->session->set_userdata($data_session);
+			redirect(base_url('Admin/topup_user'));
+		}
+		else{
+			$data['login'] = "salah";
+			$this->load->view('admin/login',$data);
+		}
+	}
+	function logout(){
+		$this->Now->updateNow();
+		$this->session->sess_destroy();
+		redirect(base_url('Admin/login'));
+	}
+	public function register()
+	{
+		$this->Now->updateNow();
+		$this->load->view('Admin/register');
+	}
+	public function prosesRegister(){
+		$this->Now->updateNow();
+    $nama = $this->input->post('nama');
+    $password = $this->input->post('password');
+
+    $data = array(
+      'nama_admin' => $nama,
+			'pass_admin' => $password
+    );
+
+		$cekNama = $this->Admin_model->cekNama($data)->num_rows();
+		if ($cekNama == 0) {
+			$data['regisSukses'] = "ya";
+		  $this->Admin_model->registerAdmin($data,'admin');
+		  $this->load->view('admin/login',$data);
+		}
+		else {
+			$data['cekNama'] = "ada";
+			$this->load->view('admin/register',$data);
+		}
+  }
+  function topup_user(){
     $this->Now->updateNow();
+
+    if($this->session->userdata('status') != "login"){
+		redirect(base_url('Admin/login'));
+		}
+
+    $id_admin = $this->session->userdata('id_admin');
 
     $jumlah_data = $this->Topup_model->getAll()->num_rows();
     $this->load->library('pagination');
-    $config['base_url'] = base_url().'index.php/Admin/index/';
+    $config['base_url'] = base_url().'index.php/Admin/topup_user/';
     $config['total_rows'] = $jumlah_data;
     $config['per_page'] = 5;
     $config['uri_segment'] = 3;
@@ -58,6 +125,52 @@ class Admin extends CI_Controller {
     $data['pagination'] = $this->pagination->create_links();
     $data['topup'] = $this->Topup_model->getPgall($config['per_page'],$page)->result();
 
+    $data['admin'] = $this->Admin_model->dataAdmin($id_admin)->result();
+
     $this->load->view('admin/topup_user',$data);
+  }
+  function proses_topup($idtopup){
+    $this->Now->updateNow();
+
+    $get = $this->Topup_model->getTopup($idtopup)->result();
+    foreach ($get as $topup) {
+      $id_akun = $topup->id_akun;
+      $saldo = $topup->saldo_akun;
+      $nominal = $topup->nominal;
+    }
+    $topup = $saldo+$nominal;
+    $data = array(
+      'id_akun' => $id_akun,
+      'nominal' => $topup,
+      'status_topup' => 'sukses'
+    );
+    $data['id_topup'] = $idtopup;
+    $this->Akun_model->topupSaldo($data);
+    $this->Topup_model->changeTopup($data);
+    $this->Notif_model->topupNotif($data);
+
+    redirect(base_url('Admin/topup_user'));
+  }
+  function batal_topup($idtopup){
+    $this->Now->updateNow();
+
+    $get = $this->Topup_model->getTopup($idtopup)->result();
+    foreach ($get as $topup) {
+      $id_akun = $topup->id_akun;
+      $saldo = $topup->saldo_akun;
+      $nominal = $topup->nominal;
+    }
+    $topup = $saldo+$nominal;
+    $data = array(
+      'id_akun' => $id_akun,
+      'nominal' => $topup,
+      'status_topup' => 'gagal'
+    );
+    $data['id_topup'] = $idtopup;
+    $this->Akun_model->topupSaldo($data);
+    $this->Topup_model->changeTopup($data);
+    $this->Notif_model->topupNotif($data);
+
+    redirect(base_url('Admin/topup_user'));
   }
 }

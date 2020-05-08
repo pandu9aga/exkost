@@ -9,8 +9,8 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <!-- Favicon icon -->
-  <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url('assets/admin/assets/images/favicon.png'); ?>">
-  <title>Top-Up Penawar</title>
+  <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url('assets/admin/assets/images/logo_min.png'); ?>">
+  <title>ExKost Admin</title>
   <!-- Bootstrap Core CSS -->
   <link href="<?php echo base_url('assets/admin/assets/plugins/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet">
   <!-- This page CSS -->
@@ -34,6 +34,11 @@
 </head>
 
 <body class="fix-header card-no-border fix-sidebar">
+
+  <?php foreach ($admin as $dataadmin)
+  {
+  ?>
+
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -94,11 +99,15 @@
                         <!-- Profile -->
                         <!-- ============================================================== -->
                         <li class="nav-item">
+                          <p><?php echo $dataadmin->nama_admin; ?></p>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link waves-effect waves-dark" href="#"><img src="<?php echo base_url('assets/admin/assets/images/iconprofile.png'); ?>" alt="user" class="profile-pic" /></a>
                         </li>
                     </ul>
                 </div>
             </nav>
+
         </header>
         <!-- ============================================================== -->
         <!-- End Topbar header -->
@@ -116,6 +125,9 @@
                       <li> <a class="waves-effect waves-dark" href="table-basic.html" aria-expanded="false"><i class="mdi mdi-account-check"></i><span class="hide-menu">Transfer Pelelang</span></a></li>
                       <li> <a class="waves-effect waves-dark" href="icon-material.html" aria-expanded="false"><i class="mdi mdi-table"></i><span class="hide-menu">Tambah Jenis Barang</span></a></li>
                   </ul>
+                  <div class="text-center m-t-30">
+                      <a href="<?php echo base_url('Admin/logout'); ?>" class="btn waves-effect waves-light btn-info hidden-md-down"> Logout</a>
+                  </div>
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>
@@ -179,6 +191,7 @@
                     </div>
                   </div>
                   <div class="col-md-7">
+                    <?php echo $data->id_topup; ?>
                     <p>Waktu top-up : <?php echo $data->waktu_topup; ?></p>
                     <p>Nama akun : <?php echo $data->nama_akun; ?></p>
                     <p>Nama rekening : <?php echo $data->nama_rekening; ?></p>
@@ -194,7 +207,12 @@
                     <?php
                     } elseif ($data->status_topup=='menunggu') {
                     ?>
-                    <button class="btn btn-primary" type="button" name="sub_topup">Konfirmasi</button>
+                    <a href="<?php echo base_url('Admin/proses_topup/'.$data->id_topup); ?>">
+                      <button class="btn btn-primary" type="button" name="sub_topup">Konfirmasi</button>
+                    </a>
+                    <a href="<?php echo base_url('Admin/batal_topup/'.$data->id_topup); ?>">
+                      <button class="btn btn-secondary" type="button" name="sub_topup">Batalkan</button>
+                    </a>
                     <?php
                     }
                     ?>
@@ -229,6 +247,10 @@
         <!-- End Page wrapper  -->
         <!-- ============================================================== -->
     </div>
+
+    <?php
+    }
+    ?>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->

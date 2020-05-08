@@ -13,6 +13,7 @@ class Cari extends CI_Controller {
     $this->load->model('Jenis_model');
     $this->load->model('Barang_model');
     $this->load->model('Topup_model');
+    $this->load->model('Notif_model');
     $this->load->helper(array('url'));
 	}
 	function index(){
@@ -28,6 +29,7 @@ class Cari extends CI_Controller {
     $data['jenlimcol'] = $this->Jenis_model->jenisLimit($limcol)->result();
     $data['jenlimnew'] = $this->Jenis_model->jenisLimit($limnew)->result();
     $data['jenlimtop'] = $this->Jenis_model->jenisLimit($limtop)->result();
+    $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 
     $this->load->database();
@@ -86,6 +88,7 @@ class Cari extends CI_Controller {
     $data['jenlimcol'] = $this->Jenis_model->jenisLimit($limcol)->result();
     $data['jenlimnew'] = $this->Jenis_model->jenisLimit($limnew)->result();
     $data['jenlimtop'] = $this->Jenis_model->jenisLimit($limtop)->result();
+    $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 
     if ($this->input->post('checkall')) {
