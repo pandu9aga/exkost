@@ -124,6 +124,10 @@ class Pembayaran extends CI_Controller {
           $this->Topup_model->updateTopup($data,$where);
       }
     }
-    redirect(base_url('Pembayaran/index/'.$id));
+    redirect(base_url('Pembayaran/detail_pembayaran/'.$id));
+  }
+  function hapus($idtopup){
+    $this->Topup_model->deleteTopup($idtopup);
+    redirect(base_url('Pembayaran/index/'));
   }
 }

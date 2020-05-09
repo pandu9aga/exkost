@@ -82,13 +82,13 @@
             <?php
             if ($list->status_topup=="sukses") {
             ?>
-            <a href="<?php echo base_url('Riwayat_Topup/detail/'.$list->id_topup); ?>">
+            <a href="<?php echo base_url('Riwayat_Topup/detail_riwayat/'.$list->id_topup); ?>">
               <button class="primaryab-btn">Lihat</button>
             </a>
             <?php
             } elseif ($list->status_topup=="gagal") {
             ?>
-            <a href="<?php echo base_url('Riwayat_Topup/detail/'.$list->id_topup); ?>">
+            <a href="<?php echo base_url('Riwayat_Topup/detail_riwayat/'.$list->id_topup); ?>">
               <button class="primaryab-btn">Lihat</button>
             </a>
             <?php
@@ -96,15 +96,15 @@
           </div>
           <div class="col-md-2">
             <?php
-            if ($list->status_topup=="sukses") {
+            //if ($list->status_topup=="sukses") {
             ?>
-            <button class="primarys-btn">Hapus</button>
+            <!--<button class="primarys-btn">Hapus</button>
             <?php
-            } elseif ($list->status_topup=="gagal") {
+            //} elseif ($list->status_topup=="gagal") {
             ?>
-            <button class="primarys-btn">Hapus</button>
+            <button class="primarys-btn">Hapus</button>-->
             <?php
-            }?>
+            //}?>
           </div>
           <!-- /Review Form -->
         </div>

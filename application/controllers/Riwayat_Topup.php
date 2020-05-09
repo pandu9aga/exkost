@@ -12,6 +12,7 @@ class Riwayat_Topup extends CI_Controller {
     $this->load->model('Akun_model');
     $this->load->model('Jenis_model');
     $this->load->model('Topup_model');
+    $this->load->model('Bankadmin_model');
     $this->load->model('Notif_model');
 	}
   function index(){
@@ -71,7 +72,7 @@ class Riwayat_Topup extends CI_Controller {
     //$data['topup'] = $this->Topup_model->getMytopup($id_akun)->result();
     $this->template->rtopup('riwayat_topup',$data);
   }
-  function pembayaran($idtopup){
+  function detail_riwayat($idtopup){
     $this->Now->updateNow();
     $id_akun = $this->session->userdata('id_akun');
     $limbar = 6;
@@ -86,45 +87,6 @@ class Riwayat_Topup extends CI_Controller {
       $id_bank = $topup->id_bank_admin;
     }
     $data['bankadmin'] = $this->Bankadmin_model->selectBank($id_bank)->result();
-    $this->template->pembayaran('pembayaran',$data);
-  }
-  function prosesPembayaran(){
-    $this->Now->updateNow();
-    $id = $this->input->post('id');
-    $stat = $this->input->post('status');
-
-    $config['upload_path'] = './assets/topup/'; //path folder
-    $config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; //type yang dapat diakses bisa anda sesuaikan
-    $config['encrypt_name'] = TRUE; //Enkripsi nama yang terupload
-
-    $this->upload->initialize($config);
-    if(!empty($_FILES['gambar']['name'])){
-
-      if ($this->upload->do_upload('gambar')){
-          $gbr = $this->upload->data();
-          //Compress Image
-          $config['image_library']='gd2';
-          $config['source_image']='./assets/topup/'.$gbr['file_name'];
-          $config['create_thumb']= FALSE;
-          $config['maintain_ratio']= FALSE;
-          $config['quality']= '50%';
-          $config['width']= 900;
-          $config['height']= 600;
-          $config['new_image']= './assets/topup/'.$gbr['file_name'];
-          $this->load->library('image_lib', $config);
-          $this->image_lib->resize();
-
-          $gambar=$gbr['file_name'];
-
-          $data = array(
-            'bukti_transfer' => $gambar,
-            'status_topup' => $stat
-          );
-          $where = array( 'id_topup' => $id );
-
-          $this->Topup_model->updateTopup($data,$where);
-      }
-    }
-    redirect(base_url('Pembayaran/index/'.$id));
+    $this->template->driwayat('detail_riwayat',$data);
   }
 }

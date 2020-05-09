@@ -191,7 +191,7 @@
                     </div>
                   </div>
                   <div class="col-md-7">
-                    <?php echo $data->id_topup; ?>
+
                     <p>Waktu top-up : <?php echo $data->waktu_topup; ?></p>
                     <p>Nama akun : <?php echo $data->nama_akun; ?></p>
                     <p>Nama rekening : <?php echo $data->nama_rekening; ?></p>
@@ -213,6 +213,14 @@
                     <a href="<?php echo base_url('Admin/batal_topup/'.$data->id_topup); ?>">
                       <button class="btn btn-secondary" type="button" name="sub_topup">Batalkan</button>
                     </a>
+                    <?php
+                    } elseif ($data->status_topup=='sukses') {
+                    ?>
+                    <p>Top-Up Sukses</p>
+                    <?php
+                    } elseif ($data->status_topup=='gagal') {
+                    ?>
+                    <p>Top-Up Gagal</p>
                     <?php
                     }
                     ?>

@@ -82,7 +82,7 @@
             <?php
             if ($list->status_topup=="belum") {
             ?>
-            <a href="<?php echo base_url('Pembayaran/pembayaran/'.$list->id_topup); ?>">
+            <a href="<?php echo base_url('Pembayaran/detail_pembayaran/'.$list->id_topup); ?>">
               <button class="primaryab-btn">Transfer</button>
             </a>
             <?php
@@ -98,7 +98,7 @@
             <?php
             if ($list->status_topup=="belum") {
             ?>
-            <button class="primarys-btn">Hapus</button>
+            <button class="modal-button" href="#myModal<?php echo $list->id_topup; ?>">Hapus</button>
             <?php
             } elseif ($list->status_topup=="menunggu") {
             ?>
@@ -110,6 +110,24 @@
         </div>
         <div class="col-md-12">
           <br><br>
+        </div>
+        <!-- Modal content -->
+        <div id="myModal<?php echo $list->id_topup;  ?>" class="modal">
+          <div class="modal-content">
+           <div class="modal-header">
+             <span class="close">&times;</span>
+             <h2>Hapus Top-Up</h2>
+           </div>
+           <div class="modal-body">
+             <p>Anda yakin akan menghapus dan membatalkan proses Top-Up</p>
+             <p>Sebesar Rp. <?php echo $list->nominal; ?> ini?</p>
+           </div>
+           <div class="modal-footer">
+             <a href="<?php echo base_url('Pembayaran/hapus/'.$list->id_topup); ?>">
+               <button type="button" class="primarys-btn" name="button">Hapus</button>
+             </a>
+           </div>
+          </div>
         </div>
 
         <?php

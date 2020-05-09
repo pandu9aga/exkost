@@ -8,7 +8,7 @@
 
 		<link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url('assets/admin/assets/images/logo_min.png'); ?>">
 
-		<title>Electro - HTML Ecommerce Template</title>
+		<title>ExKost</title>
 
  		<!-- Google font -->
  		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -106,7 +106,7 @@
                 <input class="input" type="number" placeholder="Masukkan Nomor Telepon" name="notelepon" required>
 								<input class="input" type="email" placeholder="Masukkan Email" name="email" required>
                 <input class="input" type="password" placeholder="Masukkan Password" name="password" required>
-								<button class="newsletter-btn">Daftar</button>
+								<button class="primary-btn">Daftar</button>
 							</form>
               <a href="login">Sudah punya akun?</a>
 						</div>

@@ -7,6 +7,10 @@ class Topup_model extends CI_Model {
     $this->db->where($where);
     $this->db->update('topup',$data);
   }
+  function deleteTopup($data){
+    $this->db->where('id_topup',$data);
+    $this->db->delete('topup');
+  }
   function getTopup($data){
     $this->db->select('*');
     $this->db->from('topup');

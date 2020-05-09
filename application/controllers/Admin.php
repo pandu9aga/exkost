@@ -160,14 +160,12 @@ class Admin extends CI_Controller {
       $saldo = $topup->saldo_akun;
       $nominal = $topup->nominal;
     }
-    $topup = $saldo+$nominal;
     $data = array(
       'id_akun' => $id_akun,
-      'nominal' => $topup,
+      'nominal' => $saldo,
       'status_topup' => 'gagal'
     );
     $data['id_topup'] = $idtopup;
-    $this->Akun_model->topupSaldo($data);
     $this->Topup_model->changeTopup($data);
     $this->Notif_model->topupNotif($data);
 
