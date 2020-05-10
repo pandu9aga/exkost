@@ -4,6 +4,13 @@
 
 		<!-- BREADCRUMB -->
 		<div id="breadcrumb" class="section">
+
+			<?php
+			foreach ($akun as $key) {
+				$id_akun = $key->id_akun;
+			}
+			?>
+			
 			<!-- container -->
 			<div class="container">
 				<!-- row -->
@@ -203,7 +210,11 @@
                   </div>
                   <div class="add-to-cart">
                     <a href="<?php echo base_url('Barang/index/'.$b->id_barang); ?>">
-											<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> ikuti lelang</button>
+											<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <?php if ($b->id_akun!=$id_akun) {
+				                echo "ikuti lelang";
+				              }else {
+				                echo "lihat";
+				              } ?></button>
 										</a>
                   </div>
 								</div>

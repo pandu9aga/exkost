@@ -14,6 +14,7 @@ class Barang extends CI_Controller {
     $this->load->model('Barang_model');
     $this->load->model('Topup_model');
     $this->load->model('Notif_model');
+    $this->load->model('Tawaran_model');
 	}
   function index($id){
     $this->Now->updateNow();
@@ -31,6 +32,17 @@ class Barang extends CI_Controller {
     $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
     $data['id_barang'] = $id;
+
+    $cektawaran = $this->Tawaran_model->getHighest($id)->result();
+    if ($cektawaran!=NULL) {
+      $data['tawaran'] = $cektawaran;
+    }
+
+    $cekmybid = $this->Tawaran_model->getMybid($id,$id_akun)->num_rows();
+    if ($cekmybid!=0) {
+      $data['mybid'] = $this->Tawaran_model->getMybid($id,$id_akun)->result();
+    }
+
     $data['barang'] = $this->Barang_model->getAll()->result();
 		$this->template->barang('barang',$data);
 	}

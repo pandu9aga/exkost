@@ -89,6 +89,7 @@ class Tambah_Barang extends CI_Controller {
           );
 
           $this->Barang_model->uploadGambar($gbr);
+          redirect(base_url('Lelang/barang/'.$idbarang));
       }
 
     }else{
