@@ -75,8 +75,8 @@ class Main extends CI_Controller {
 			'pass_akun' => $password
     );
 
-		$cekEmail = $this->Akun_model->cekEmail($data)->result();
-		if ($cekEmail == "") {
+		$cekEmail = $this->Akun_model->cekEmail($data)->num_rows();
+		if ($cekEmail == 0) {
 			$data['regisSukses'] = "ya";
 		  $this->Akun_model->registerAkun($data,'akun');
 		  $this->load->view('login',$data);

@@ -16,7 +16,12 @@ class Akun_model extends CI_Model {
     return $query;
   }
   function registerAkun($data,$table){
-    $this->db->insert($table,$data);
+    $this->db->set('nama_akun',$data['nama_akun']);
+    $this->db->set('alamat_akun',$data['alamat_akun']);
+    $this->db->set('no_telp_akun',$data['no_telp_akun']);
+    $this->db->set('email_akun',$data['email_akun']);
+    $this->db->set('pass_akun',$data['pass_akun']);
+    $this->db->insert($table);
   }
   function dataAkun($id_akun){
     $this->db->select('*');
@@ -32,6 +37,16 @@ class Akun_model extends CI_Model {
   function topupSaldo($data){
     $this->db->set('saldo_akun',$data['nominal']);
     $this->db->where('id_akun',$data['id_akun']);
+    $this->db->update('akun');
+  }
+  function bid($data){
+    $this->db->set('saldo_akun',$data['change']);
+    $this->db->where('id_akun',$data['id_akun']);
+    $this->db->update('akun');
+  }
+  function losBid($id,$saldo){
+    $this->db->set('saldo_akun',$saldo);
+    $this->db->where('id_akun',$id);
     $this->db->update('akun');
   }
 }

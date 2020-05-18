@@ -114,7 +114,7 @@ foreach ($barang as $tbarang) {
                 }else {
                   echo 0;
                 }
-                ?>" required>
+                ?>" min="<?php echo $value->jumlah_tawaran+1; ?>" required oninvalid="this.setCustomValidity('tawaran harus lebih tinggi dari <?php echo $value->jumlah_tawaran; ?>')">
                 <span class="qty-up">+</span>
                 <span class="qty-down">-</span>
               </div>
@@ -122,8 +122,20 @@ foreach ($barang as $tbarang) {
                 echo $a->id_akun;
               } ?>">
               <input type="hidden" name="id_barang" value="<?php echo $tbarang->id_barang; ?>">
+              <?php
+              if ($this->uri->segment('4')!=NULL) {
+                echo "Saldo tidak cukup";
+              } ?>
             </div>
-            <span class="product-available">tertinggi</span>
+            <?php
+            if (isset($mybid)) {
+              if ($mb->jumlah_tawaran==$value->jumlah_tawaran) {
+              ?>
+              <span class="product-available">tertinggi</span>
+              <?php
+              }
+            }
+            ?>
             <br>
             <button class="add-to-cart-btn"><i class="fa fa-plus"></i> Tawar</button>
             </form>
@@ -162,7 +174,7 @@ foreach ($barang as $tbarang) {
           <ul class="tab-nav">
             <li class="active"><a data-toggle="tab" href="#tab1">Deskripsi</a></li>
             <li><a data-toggle="tab" href="#tab2">Tawaran</a></li>
-            <li><a data-toggle="tab" href="#tab3">Komentar (3)</a></li>
+            <!--<li><a data-toggle="tab" href="#tab3">Komentar (3)</a></li>-->
           </ul>
           <!-- /product tab nav -->
 
@@ -189,7 +201,7 @@ foreach ($barang as $tbarang) {
                     </div>
                     <div class="review-heading">
                       <h5 class="name">Jumlah Tawaran:</h5>
-                      <p class="date">(30)</p>
+                      <p class="date">(<?php echo $totbid; ?>)</p>
                     </div>
                   </div>
                 </div>
@@ -199,31 +211,23 @@ foreach ($barang as $tbarang) {
                 <div class="col-md-6">
                   <div id="reviews">
                     <ul class="reviews">
+                      <?php
+                      if (isset($bid)) {
+                        foreach ($bid as $all) {
+                      ?>
                       <li>
                         <div class="review-heading">
-                          <h4 class="name">John</h4>
-                          <p class="date"><i class="fa fa-hourglass"></i> 27 DEC 2018, 8:0 PM</p>
+                          <h4 class="name"><?php echo $all->nama_akun; ?></h4>
+                          <!--<p class="date"><i class="fa fa-hourglass"></i> 27 DEC 2018, 8:0 PM</p>-->
                         </div>
                         <div class="review-body">
-                          <p><h5>Jumlah Tawaran :</h5> Rp. 000</p>
+                          <p><h5>Jumlah Tawaran :</h5> Rp. <?php echo $all->jumlah_tawaran; ?></p>
                         </div>
                       </li>
-                      <li>
-                        <div class="review-heading">
-                          <h4 class="name">John</h4>
-                          <p class="date"><i class="fa fa-hourglass"></i> 27 DEC 2018, 8:0 PM</p>
-                        </div>
-                        <div class="review-body">
-                          <p><h5>Jumlah Tawaran :</h5> Rp. 000</p>
-                        </div>
-                      </li>
-                    </ul>
-                    <ul class="reviews-pagination">
-                      <li class="active">1</li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">4</a></li>
-                      <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                      <?php
+                        }
+                      }
+                      ?>
                     </ul>
                   </div>
                 </div>
@@ -237,10 +241,10 @@ foreach ($barang as $tbarang) {
             </div>
             <!-- /tab2  -->
 
-            <!-- tab3  -->
+            <!-- tab3
             <div id="tab3" class="tab-pane fade in">
               <div class="row">
-                <!-- Rating -->
+                Rating
                 <div class="col-md-3">
                   <div id="rating">
                     <div class="rating-avg">
@@ -322,9 +326,9 @@ foreach ($barang as $tbarang) {
                     </ul>
                   </div>
                 </div>
-                <!-- /Rating -->
+                /Rating
 
-                <!-- Reviews -->
+                 Reviews
                 <div class="col-md-6">
                   <div id="reviews">
                     <ul class="reviews">
@@ -386,9 +390,9 @@ foreach ($barang as $tbarang) {
                     </ul>
                   </div>
                 </div>
-                <!-- /Reviews -->
+                 /Reviews
 
-                <!-- Review Form -->
+                 Review Form
                 <div class="col-md-3">
                   <div id="review-form">
                     <form class="review-form">
@@ -409,10 +413,10 @@ foreach ($barang as $tbarang) {
                     </form>
                   </div>
                 </div>
-                <!-- /Review Form -->
+                 /Review Form
               </div>
             </div>
-            <!-- /tab3  -->
+             /tab3  -->
           </div>
           <!-- /product tab content  -->
         </div>

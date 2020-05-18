@@ -43,7 +43,14 @@ class Barang extends CI_Controller {
       $data['mybid'] = $this->Tawaran_model->getMybid($id,$id_akun)->result();
     }
 
+    $cekalltawaran = $this->Tawaran_model->getBid($id)->result();
+    if ($cekalltawaran!=NULL) {
+      $data['bid'] = $cekalltawaran;
+    }
+    $data['totbid'] = $this->Tawaran_model->getBid($id)->num_rows();
+
     $data['barang'] = $this->Barang_model->getAll()->result();
+
 		$this->template->barang('barang',$data);
 	}
 }

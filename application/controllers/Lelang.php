@@ -14,6 +14,7 @@ class Lelang extends CI_Controller {
     $this->load->model('Barang_model');
     $this->load->model('Topup_model');
     $this->load->model('Notif_model');
+    $this->load->model('Tawaran_model');
 	}
 	function index(){
     $this->Now->updateNow();
@@ -198,6 +199,11 @@ class Lelang extends CI_Controller {
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
     $data['id_barang'] = $id;
     $data['barang'] = $this->Barang_model->getAll()->result();
+    $cekalltawaran = $this->Tawaran_model->getBid($id)->result();
+    if ($cekalltawaran!=NULL) {
+      $data['bid'] = $cekalltawaran;
+    }
+    $data['totbid'] = $this->Tawaran_model->getBid($id)->num_rows();
 		$this->template->lelangku('lelangku',$data);
 	}
   function selesai(){
