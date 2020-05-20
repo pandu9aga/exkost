@@ -2283,6 +2283,14 @@ textarea.input {
   min-height: 70px;
 }
 
+.reviews .review-body .product-pricer{
+  color: #D10024;
+}
+
+.reviews .review-body .product-price{
+  color: #1e1f29;
+}
+
 .reviews .review-heading .name {
   margin-bottom: 5px;
   margin-top: 0px;

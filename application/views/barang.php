@@ -133,6 +133,10 @@ foreach ($barang as $tbarang) {
               ?>
               <span class="product-available">tertinggi</span>
               <?php
+              }else {
+              ?>
+              Saldo kembali Rp. <?php echo $mb->jumlah_tawaran; ?>
+              <?php
               }
             }
             ?>
