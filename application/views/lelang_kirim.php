@@ -12,7 +12,7 @@
 						<ul class="breadcrumb-tree">
 							<li><a href="<?php echo base_url('Home'); ?>">Home</a></li>
               <li>Lelang</li>
-							<li class="active">Lelang Kirim (227,490 Results)</li>
+							<li class="active">Lelang Kirim </li>
 						</ul>
 					</div>
 				</div>
@@ -46,7 +46,7 @@
 									<label for="category-0">
 										<span></span>
 										Semua
-										<small>(120)</small>
+										<small></small>
 									</label>
 								</div>
 
@@ -68,7 +68,7 @@
 									<label for="category-<?php echo $k; ?>">
 										<span></span>
 										<?php echo $kategori->nama_jenis_barang; ?>
-										<small>(120)</small>
+										<small></small>
 									</label>
 								</div>
                 <?php
@@ -188,7 +188,7 @@
                   </div>
                   <div class="add-to-cart">
                     <a href="<?php echo base_url('Lelang/barang/'.$b->id_barang); ?>">
-											<button class="add-to-cart-btn"><i class="fa fa-search"></i> kirim barang</button>
+											<button class="add-to-cart-btn"><i class="fa fa-truck"></i> kirim barang</button>
 										</a>
                   </div>
 								</div>

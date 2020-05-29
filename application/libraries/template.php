@@ -116,6 +116,14 @@ class template {
       $data['js'] = $this->_ci->load->view('template/js', $data, TRUE);
       $this->_ci->load->view('lelang_dikirim', $data);
   }
+  function lelangkt($template = NULL, $data = NULL) {
+      $data['head'] = $this->_ci->load->view('template/head', $data, TRUE);
+      $data['header'] = $this->_ci->load->view('template/header', $data, TRUE);
+      $data['navigation'] = $this->_ci->load->view('template/navigation', $data, TRUE);
+      $data['footer'] = $this->_ci->load->view('template/footer', $data, TRUE);
+      $data['js'] = $this->_ci->load->view('template/js', $data, TRUE);
+      $this->_ci->load->view('lelang_konfirmtrans', $data);
+  }
   function rtopup($template = NULL, $data = NULL) {
       $data['head'] = $this->_ci->load->view('template/head', $data, TRUE);
       $data['header'] = $this->_ci->load->view('template/header', $data, TRUE);
@@ -139,6 +147,38 @@ class template {
       $data['footer'] = $this->_ci->load->view('template/footer', $data, TRUE);
       $data['js'] = $this->_ci->load->view('template/js', $data, TRUE);
       $this->_ci->load->view('cart_berlangsung', $data);
+  }
+  function menangws($template = NULL, $data = NULL) {
+      $data['head'] = $this->_ci->load->view('template/head', $data, TRUE);
+      $data['header'] = $this->_ci->load->view('template/header', $data, TRUE);
+      $data['navigation'] = $this->_ci->load->view('template/navigation', $data, TRUE);
+      $data['footer'] = $this->_ci->load->view('template/footer', $data, TRUE);
+      $data['js'] = $this->_ci->load->view('template/js', $data, TRUE);
+      $this->_ci->load->view('m_waitsend', $data);
+  }
+  function menangis($template = NULL, $data = NULL) {
+      $data['head'] = $this->_ci->load->view('template/head', $data, TRUE);
+      $data['header'] = $this->_ci->load->view('template/header', $data, TRUE);
+      $data['navigation'] = $this->_ci->load->view('template/navigation', $data, TRUE);
+      $data['footer'] = $this->_ci->load->view('template/footer', $data, TRUE);
+      $data['js'] = $this->_ci->load->view('template/js', $data, TRUE);
+      $this->_ci->load->view('m_insend', $data);
+  }
+  function menangse($template = NULL, $data = NULL) {
+      $data['head'] = $this->_ci->load->view('template/head', $data, TRUE);
+      $data['header'] = $this->_ci->load->view('template/header', $data, TRUE);
+      $data['navigation'] = $this->_ci->load->view('template/navigation', $data, TRUE);
+      $data['footer'] = $this->_ci->load->view('template/footer', $data, TRUE);
+      $data['js'] = $this->_ci->load->view('template/js', $data, TRUE);
+      $this->_ci->load->view('m_selesai', $data);
+  }
+  function gagal($template = NULL, $data = NULL) {
+      $data['head'] = $this->_ci->load->view('template/head', $data, TRUE);
+      $data['header'] = $this->_ci->load->view('template/header', $data, TRUE);
+      $data['navigation'] = $this->_ci->load->view('template/navigation', $data, TRUE);
+      $data['footer'] = $this->_ci->load->view('template/footer', $data, TRUE);
+      $data['js'] = $this->_ci->load->view('template/js', $data, TRUE);
+      $this->_ci->load->view('gagal', $data);
   }
 }
 ?>

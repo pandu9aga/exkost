@@ -149,95 +149,148 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">Top-up User</h3>
+                        <h3 class="text-themecolor">Transfer</h3>
                     </div>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
-                <!-- Sales overview chart -->
+                <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <?php
-                foreach ($topup as $data) {
-                ?>
-
-                <!-- kotak -->
-                <div class="row border-top border-left border-right border-bottom pt-2">
-                  <div class="col-md-3">
-                    <!-- Button trigger modal -->
-                    <a  data-toggle="modal" data-target="#buktitransfer<?php echo $data->id_topup; ?>">
-                      <img src="<?php echo base_url('assets/topup/'.$data->bukti_transfer); ?>" alt="bukti transfer" width="225" height="155">
-                    </a>
-                    <!-- Modal -->
-                    <div class="modal fade" id="buktitransfer<?php echo $data->id_topup; ?>" tabindex="-1" role="dialog" aria-labelledby="buktiTransferLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="buktiTransferLabel">Bukti Top Up</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <img src="<?php echo base_url('assets/topup/'.$data->bukti_transfer); ?>" width="450" height="310">
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-                          </div>
+                <!-- Row -->
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-lg-6 col-xlg-3 col-md-5">
+                        <div class="card">
+                            <div class="card-body">
+                              <?php
+                              if (isset($trans)) {
+                                foreach ($trans as $t) {
+                              ?>
+                                <center class="m-t-30"> <img src="<?php echo base_url('assets/transfer/'.$t->bukti_transfer); ?>" class="img" width="450" height="310" />
+                                    <h4 class="card-title m-t-10">Bukti Transfer</h4>
+                                    <?php
+                                    if ($t->status_transfer=='') {
+                                    ?>
+                                    <h6 class="card-subtitle">Belum Upload Bukti <i class="mdi mdi-upload"></i></h6>
+                                    <?php
+                                    }elseif ($t->status_transfer=='kirim') {
+                                    ?>
+                                    <h6 class="card-subtitle">Belum Terkonfirmasi <i class="mdi mdi-clock"></i></h6>
+                                    <?php
+                                    }elseif ($t->status_transfer=='terima') {
+                                    ?>
+                                    <h6 class="card-subtitle">Terkonfirmasi <i class="mdi mdi-checkbox-marked-circle-outline"></i></h6>
+                                    <?php
+                                    }
+                                     ?>
+                                </center>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-7">
+                    <!-- Column -->
+                    <!-- Column -->
+                    <div class="col-lg-6 col-xlg-9 col-md-7">
+                        <div class="card">
+                            <div class="card-body">
 
-                    <p>Waktu top-up : <?php echo $data->waktu_topup; ?></p>
-                    <p>Nama akun : <?php echo $data->nama_akun; ?></p>
-                    <p>Nama rekening : <?php echo $data->nama_rekening; ?></p>
-                    <p>Nominal : Rp. <?php echo $data->nominal; ?></p>
-                    <p>Bank <?php echo $data->nama_bank_admin; ?> (<?php echo $data->no_rek_admin; ?>)</p>
-                  </div>
-                  <div class="col-md-2 pl-5">
-                    <br> <br> <br>
-                    <?php
-                    if ($data->status_topup=='belum') {
-                    ?>
-                    <p>Belum Upload Bukti</p>
-                    <?php
-                    } elseif ($data->status_topup=='menunggu') {
-                    ?>
-                    <a href="<?php echo base_url('Admin/proses_topup/'.$data->id_topup); ?>">
-                      <button class="btn btn-primary" type="button" name="sub_topup">Konfirmasi</button>
-                    </a>
-                    <a href="<?php echo base_url('Admin/batal_topup/'.$data->id_topup); ?>">
-                      <button class="btn btn-secondary" type="button" name="sub_topup">Batalkan</button>
-                    </a>
-                    <?php
-                    } elseif ($data->status_topup=='sukses') {
-                    ?>
-                    <p>Top-Up Sukses</p>
-                    <?php
-                    } elseif ($data->status_topup=='gagal') {
-                    ?>
-                    <p>Top-Up Gagal</p>
-                    <?php
-                    }
-                    ?>
-                  </div>
-                </div> <br>
-                <!-- akhir kotak -->
-                <?php
-                } ?>
+                                <form class="form-horizontal form-material" name="form_trans" action="<?php echo base_url('Admin/proses_transfer'); ?>" method="post" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label class="col-md-12">Nama Pelelang</label>
+                                        <div class="col-md-12">
+                                            <input type="text" placeholder="<?php echo $t->nama_akun; ?>" class="form-control form-control-line" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-email" class="col-md-12">Nomor Rekening</label>
+                                        <div class="col-md-12">
+                                            <input type="text" placeholder="<?php echo $t->rekening_akun; ?>" class="form-control form-control-line" name="example-email" id="example-email" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">Alamat</label>
+                                        <div class="col-md-12">
+                                            <input type="text" value="<?php echo $t->alamat_akun; ?>" class="form-control form-control-line" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">No Telpon</label>
+                                        <div class="col-md-12">
+                                            <input type="text" placeholder="<?php echo $t->no_telp_akun; ?>" class="form-control form-control-line" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">Barang Yang Dilelang</label>
+                                        <div class="col-md-12">
+                                            <input type="text" placeholder="<?php echo $t->nama_barang; ?>" class="form-control form-control-line" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">Nominal Transfer</label>
+                                        <div class="col-md-12">
+                                          <?php
+                                          $CI =& get_instance();
+                                          $CI->load->model('Transfer_model');
+                                          $high = $CI->Transfer_model->getHighfortrans($t->id_barang)->result();
+                                          foreach ($high as $val) {
+                                          ?>
+                                            <input type="text" placeholder="Rp. <?php echo $val->jumlah_tawaran; ?>" class="form-control form-control-line" disabled>
+                                          <?php
+                                          } ?>
+                                        </div>
+                                    </div>
+                                    <?php
+                                    if ($t->status_transfer=='') {
+                                    ?>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <input type="hidden" name="idtrans" value="<?php echo $t->id_transfer; ?>">
+                                            <input type="hidden" name="idbar" value="<?php echo $t->id_barang; ?>">
+                                            <input type="file" name="bukti" placeholder="Bukti" class="form-control form-control-line" required>
+                                            <button class="btn btn-success">Upload Bukti</button>
+                                        </div>
+                                    </div>
+                                    <?php
+                                    }elseif ($t->status_transfer=='kirim') {
+                                    ?>
+                                    <div class="form-group">
+                                        <label class="col-md-12">Status Transfer</label>
+                                        <div class="col-md-12">
+                                            <input type="text" value="Menunggu Konfirmasi" class="form-control form-control-line" disabled>
+                                            <i class="mdi mdi-clock"></i>
+                                        </div>
+                                    </div>
+                                    <?php
+                                    }elseif ($t->status_transfer=='terima') {
+                                    ?>
+                                    <div class="form-group">
+                                        <label class="col-md-12">Status Transfer</label>
+                                        <div class="col-md-12">
+                                            <input type="text" value="Telah Terkonfirmasi" class="form-control form-control-line" disabled>
+                                            <input type="text" value="Proses Transfer Selesai" class="form-control form-control-line" disabled>
+                                            <i class="mdi mdi-checkbox-marked-circle-outline"></i>
+                                        </div>
+                                    </div>
+                                    <?php
+                                    }
+                                     ?>
+                                </form>
 
-          <!-- akhir kotak -->
-          <div>
-            <?php
-              echo $pagination;
-            ?>
-          </div>
-          <br>
-          </div>
+                                <?php
+                                  }
+                                }
+                                 ?>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                </div>
+                <!-- Row -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+            </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
             <!-- ============================================================== -->

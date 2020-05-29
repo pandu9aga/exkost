@@ -106,6 +106,9 @@ foreach ($barang as $tbarang) {
               Tawaran Anda
               <br>
               <form action="<?php echo base_url('Tawaran/tawar'); ?>" method="post">
+              <?php
+              if ($tbarang->status_lelang=="berlangsung") {
+              ?>
               <div class="input-number">
                 <input name="jumlah" type="number" value="<?php if (isset($mybid)) {
                   foreach ($mybid as $mb) {
@@ -118,6 +121,22 @@ foreach ($barang as $tbarang) {
                 <span class="qty-up">+</span>
                 <span class="qty-down">-</span>
               </div>
+              <?php
+              }else {
+              ?>
+              <div class="input-number">
+                <input name="jumlah" type="number" disabled value="<?php if (isset($mybid)) {
+                  foreach ($mybid as $mb) {
+                    echo $mb->jumlah_tawaran;
+                  }
+                }else {
+                  echo 0;
+                }
+                ?>" min="<?php echo $value->jumlah_tawaran+1; ?>" required oninvalid="this.setCustomValidity('tawaran harus lebih tinggi dari <?php echo $value->jumlah_tawaran; ?>')">
+              </div>
+              <?php
+              }
+              ?>
               <input type="hidden" name="id_akun" value="<?php foreach ($akun as $a) {
                 echo $a->id_akun;
               } ?>">
@@ -128,11 +147,13 @@ foreach ($barang as $tbarang) {
               } ?>
             </div>
             <?php
+            $menang = false;
             if (isset($mybid)) {
               if ($mb->jumlah_tawaran==$value->jumlah_tawaran) {
               ?>
               <span class="product-available">tertinggi</span>
               <?php
+                $menang = true;
               }else {
               ?>
               Saldo kembali Rp. <?php echo $mb->jumlah_tawaran; ?>
@@ -140,8 +161,69 @@ foreach ($barang as $tbarang) {
               }
             }
             ?>
+
+            <?php
+            if ($tbarang->status_lelang=="berlangsung") {
+            ?>
             <br>
             <button class="add-to-cart-btn"><i class="fa fa-plus"></i> Tawar</button>
+            <?php
+            }elseif ($tbarang->status_lelang=="selesai") {
+              if ($menang==true) {
+              ?>
+              <br><br><br>Anda Menang!!<br><br>
+              <button class="add-to-cart-btn" disabled><i class="fa fa-cube"></i> Tunggu Dikirim</button>
+              <?php
+              }else {
+                ?>
+                <br><br><br>Anda Kalah
+                <?php
+              }
+            }elseif ($tbarang->status_lelang=="kirim") {
+              if ($menang==true) {
+              ?>
+              <br><br><br>Anda Menang!!<br><br>
+              <button class="add-to-cart-btn" disabled><i class="fa fa-truck"></i> Sedang Dikirim</button>
+              <button class="modal-button" href="#myModal<?php echo $tbarang->id_barang; ?>">Diterima</button>
+              <!-- Modal content -->
+              <div id="myModal<?php echo $tbarang->id_barang;  ?>" class="modal">
+                <div class="modal-content">
+                 <div class="modal-header">
+                   <span class="close">&times;</span>
+                   <h2>Konfirmasi Diterima</h2>
+                 </div>
+                 <div class="modal-body">
+                   <p>Anda yakin barang ini telah diterima?</p>
+                   <p>Barang : <?php echo $tbarang->nama_barang; ?></p>
+                   <img alt="" height="135px" width="200px" src="<?php echo base_url('assets/barang/'.$tbarang->nama_gambar_barang); ?>">
+                 </div>
+                 <div class="modal-footer">
+                   <a href="<?php echo base_url('Menang/terima_konfirm/'.$tbarang->id_barang); ?>">
+                     <button type="button" class="primarys-btn" name="button">Diterima</button>
+                   </a>
+                 </div>
+                </div>
+              </div>
+              <?php
+              }else {
+                ?>
+                <br><br><br>Anda Kalah
+                <?php
+              }
+            }elseif ($tbarang->status_lelang=="terima") {
+              if ($menang==true) {
+              ?>
+              <br><br><br>Anda Menang!!<br><br>
+              <button class="add-to-cart-btn" disabled><i class="fa fa-check"></i> Selesai</button>
+              <?php
+              }else {
+                ?>
+                <br><br><br>Anda Kalah
+                <?php
+              }
+            }
+            ?>
+
             </form>
           </div>
 
@@ -452,42 +534,45 @@ foreach ($barang as $tbarang) {
       $lim = 4;
       $i = 1;
       foreach ($barang as $related) {
-        if ($related->id_jenis_barang==$thisjenis) {
-          if ($related->id_barang!=$id_barang) {
-            if ($i<=$lim) {
-      ?>
+        if ($related->status_lelang=='berlangsung') {
+          if ($related->id_jenis_barang==$thisjenis) {
+            if ($related->id_barang!=$id_barang) {
+              if ($i<=$lim) {
+              ?>
 
-      <!-- product -->
-      <div class="col-md-3 col-xs-6">
-        <div class="product">
-          <div class="product-img">
-            <img src="<?php echo base_url('assets/barang/'.$related->nama_gambar_barang); ?>" alt="">
-          </div>
-          <div class="product-body">
-            <p class="product-category"><?php echo $related->nama_jenis_barang; ?></p>
-            <h3 class="product-name"><a href="<?php echo base_url('Barang/index/'.$related->id_barang); ?>"><?php echo $related->nama_barang; ?></a></h3>
-            <h4 class="product-price">Rp. <?php echo $related->harga_barang; ?></h4>
-            <h4 class="product-category"><i class="fa fa-hourglass-half"></i> <?php echo $related->waktu_lelang; ?></h4>
-          </div>
-          <div class="add-to-cart">
-            <a href="<?php echo base_url('Barang/index/'.$related->id_barang); ?>">
-              <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <?php if ($related->id_akun!=$id_akun) {
-                echo "ikuti lelang";
-              }else {
-                echo "lihat";
-              } ?></button>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- /product -->
+              <!-- product -->
+              <div class="col-md-3 col-xs-6">
+                <div class="product">
+                  <div class="product-img">
+                    <img src="<?php echo base_url('assets/barang/'.$related->nama_gambar_barang); ?>" alt="">
+                  </div>
+                  <div class="product-body">
+                    <p class="product-category"><?php echo $related->nama_jenis_barang; ?></p>
+                    <h3 class="product-name"><a href="<?php echo base_url('Barang/index/'.$related->id_barang); ?>"><?php echo $related->nama_barang; ?></a></h3>
+                    <h4 class="product-price">Rp. <?php echo $related->harga_barang; ?></h4>
+                    <h4 class="product-category"><i class="fa fa-hourglass-half"></i> <?php echo $related->waktu_lelang; ?></h4>
+                  </div>
+                  <div class="add-to-cart">
+                    <a href="<?php echo base_url('Barang/index/'.$related->id_barang); ?>">
+                      <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <?php if ($related->id_akun!=$id_akun) {
+                        echo "ikuti lelang";
+                      }else {
+                        echo "lihat";
+                      } ?></button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <!-- /product -->
 
-      <?php
+              <?php
               $i++;
+              }
             }
           }
         }
-      } ?>
+      }
+      ?>
     </div>
     <!-- /row -->
   </div>

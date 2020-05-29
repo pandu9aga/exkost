@@ -89,7 +89,7 @@
                     <ul class="navbar-nav my-lg-0">
                         <!-- ============================================================== -->
                         <!-- Search -->
-                        <!-- ==============================================================
+                        <!-- ============================================================== 
                         <li class="nav-item hidden-xs-down search-box"> <a class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
                             <form class="app-search">
                                 <input type="text" class="form-control" placeholder="Search & enter"> <a class="srh-btn"><i class="ti-close"></i></a>
@@ -149,95 +149,197 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">Top-up User</h3>
+                        <h3 class="text-themecolor">Jenis Barang</h3>
                     </div>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
-                <!-- Sales overview chart -->
+                <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <?php
-                foreach ($topup as $data) {
-                ?>
-
-                <!-- kotak -->
-                <div class="row border-top border-left border-right border-bottom pt-2">
-                  <div class="col-md-3">
-                    <!-- Button trigger modal -->
-                    <a  data-toggle="modal" data-target="#buktitransfer<?php echo $data->id_topup; ?>">
-                      <img src="<?php echo base_url('assets/topup/'.$data->bukti_transfer); ?>" alt="bukti transfer" width="225" height="155">
-                    </a>
-                    <!-- Modal -->
-                    <div class="modal fade" id="buktitransfer<?php echo $data->id_topup; ?>" tabindex="-1" role="dialog" aria-labelledby="buktiTransferLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="buktiTransferLabel">Bukti Top Up</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <img src="<?php echo base_url('assets/topup/'.$data->bukti_transfer); ?>" width="450" height="310">
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                <!-- Row -->
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-lg-4 col-xlg-3 col-md-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <!--center class="m-t-30"-->
+                                  <form class="form-horizontal form-material" name="form_plus" method="post" action="<?php echo base_url('Admin/proses_cjenis'); ?>">
+                                      <div class="form-group">
+                                          <label class="col-md-12">Tambah Jenis Barang</label>
+                                          <div class="col-md-12">
+                                              <input type="text" name="nama_jenis" placeholder="Nama Jenis" class="form-control form-control-line">
+                                          </div>
+                                      </div>
+                                      <div class="form-group">
+                                          <div class="col-sm-12">
+                                              <button class="btn btn-success"><i class="mdi mdi-plus-box"></i> Tambah</button>
+                                          </div>
+                                      </div>
+                                  </form>
+                                <!--/center-->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <?php
+                    if (isset($msg)) {
+                      if ($msg=='sukses') {
+                      ?>
+                      <!-- Modal -->
+                      <div class="modal fade" id="isuccess" tabindex="-1" role="dialog" aria-labelledby="isuccessLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="isuccessLabel">Tambah Jenis Barang</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Sukses menambahkan jenis barang : </p>
+                              <h4><?php echo $nj; ?></h4>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                              <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="col-md-7">
-
-                    <p>Waktu top-up : <?php echo $data->waktu_topup; ?></p>
-                    <p>Nama akun : <?php echo $data->nama_akun; ?></p>
-                    <p>Nama rekening : <?php echo $data->nama_rekening; ?></p>
-                    <p>Nominal : Rp. <?php echo $data->nominal; ?></p>
-                    <p>Bank <?php echo $data->nama_bank_admin; ?> (<?php echo $data->no_rek_admin; ?>)</p>
-                  </div>
-                  <div class="col-md-2 pl-5">
-                    <br> <br> <br>
-                    <?php
-                    if ($data->status_topup=='belum') {
-                    ?>
-                    <p>Belum Upload Bukti</p>
-                    <?php
-                    } elseif ($data->status_topup=='menunggu') {
-                    ?>
-                    <a href="<?php echo base_url('Admin/proses_topup/'.$data->id_topup); ?>">
-                      <button class="btn btn-primary" type="button" name="sub_topup">Konfirmasi</button>
-                    </a>
-                    <a href="<?php echo base_url('Admin/batal_topup/'.$data->id_topup); ?>">
-                      <button class="btn btn-secondary" type="button" name="sub_topup">Batalkan</button>
-                    </a>
-                    <?php
-                    } elseif ($data->status_topup=='sukses') {
-                    ?>
-                    <p>Top-Up Sukses</p>
-                    <?php
-                    } elseif ($data->status_topup=='gagal') {
-                    ?>
-                    <p>Top-Up Gagal</p>
-                    <?php
+                      <?php
+                      }elseif ($msg=='ada') {
+                      ?>
+                      <!-- Modal -->
+                      <div class="modal fade" id="isuccess" tabindex="-1" role="dialog" aria-labelledby="isuccessLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="isuccessLabel">Tambah Jenis Barang</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Jenis barang : </p>
+                              <h4><?php echo $nj; ?></h4>
+                              <p>Sudah ada</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                              <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <?php
+                      }elseif ($msg=='suksesu') {
+                      ?>
+                      <!-- Modal -->
+                      <div class="modal fade" id="isuccess" tabindex="-1" role="dialog" aria-labelledby="isuccessLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="isuccessLabel">Edit Jenis Barang</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Sukses mengedit jenis barang : </p>
+                              <h4><?php echo $nj; ?></h4>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                              <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <?php
+                      }elseif ($msg=='suksesd') {
+                      ?>
+                      <!-- Modal -->
+                      <div class="modal fade" id="isuccess" tabindex="-1" role="dialog" aria-labelledby="isuccessLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="isuccessLabel">Hapus Jenis Barang</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Sukses menghapus jenis barang : </p>
+                              <h4><?php echo $nj; ?></h4>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                              <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <?php
+                      }
                     }
                     ?>
-                  </div>
-                </div> <br>
-                <!-- akhir kotak -->
-                <?php
-                } ?>
-
-          <!-- akhir kotak -->
-          <div>
-            <?php
-              echo $pagination;
-            ?>
-          </div>
-          <br>
-          </div>
+                    <!-- Column -->
+                    <div class="col-lg-8 col-xlg-9 col-md-7">
+                      <?php foreach ($jenis as $j): ?>
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form-horizontal form-material" name="form_edit<?php echo $j->id_jenis_barang; ?>" method="post" action="<?php echo base_url('Admin/proses_ujenis'); ?>">
+                                    <div class="form-group">
+                                        <label class="col-md-12">ID Jenis : <?php echo $j->id_jenis_barang; ?></label>
+                                        <div class="col-md-12">
+                                            <input type="text" name="nama_jenis" placeholder="Nama Jenis Barang" class="form-control form-control-line" value="<?php echo $j->nama_jenis_barang; ?>" required>
+                                            <input type="hidden" name="id_jenis" value="<?php echo $j->id_jenis_barang; ?>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <button class="btn btn-success"><i class="mdi mdi-plus-box"></i> Update</button>
+                                            <a href="#" data-toggle="modal" data-target="#del<?php echo $j->id_jenis_barang; ?>"><i class="mdi mdi-delete"></i> Hapus</a>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!-- Modal -->
+                                <div class="modal fade" id="del<?php echo $j->id_jenis_barang; ?>" tabindex="-1" role="dialog" aria-labelledby="delLabel" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="delLabel">Hapus Jenis Barang</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <p>Anda yakin akan menghapus jenis barang : </p>
+                                        <p><?php echo $j->nama_jenis_barang; ?></p>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <a href="<?php echo base_url('Admin/proses_djenis/'.$j->id_jenis_barang); ?>">
+                                          <button type="button" class="btn btn-danger">Hapus</button>
+                                        </a>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                      <?php endforeach; ?>
+                    </div>
+                    <!-- Column -->
+                </div>
+                <!-- Row -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+            </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
             <!-- ============================================================== -->
@@ -253,6 +355,10 @@
         </div>
         <!-- ============================================================== -->
         <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
         <!-- ============================================================== -->
     </div>
 
@@ -287,6 +393,14 @@
     <script src="<?php echo base_url('assets/admin/assets/plugins/c3-master/c3.min.js'); ?>"></script>
     <!-- Chart JS -->
     <script src="<?php echo base_url('assets/admin/js/dashboard.js'); ?>"></script>
+
+    <script>
+    $(document).ready(function(){
+      $("#isuccess").ready(function(){
+        $("#isuccess").modal("toggle");
+      });
+    });
+    </script>
 </body>
 
 </html>

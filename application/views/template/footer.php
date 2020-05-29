@@ -8,25 +8,54 @@
       <div class="row">
         <div class="col-md-3 col-xs-6">
           <div class="footer">
-            <h3 class="footer-title">About Us</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
+            <h3 class="footer-title">Tentang Kami</h3>
+            <p>Penyedia layanan platform pelelangan barang kost.</p>
             <ul class="footer-links">
-              <li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
-              <li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
-              <li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
+              <li><a href="#"><i class="fa fa-map-marker"></i>MIF-JTI, POLIJE</a></li>
+              <li><a href="#"><i class="fa fa-phone"></i>+6282234885169</a></li>
+              <li><a href="#"><i class="fa fa-envelope-o"></i>exkost@gmail.com</a></li>
             </ul>
           </div>
         </div>
 
         <div class="col-md-3 col-xs-6">
           <div class="footer">
-            <h3 class="footer-title">Categories</h3>
+            <h3 class="footer-title">Kategori</h3>
+            <form method="post" name="fnew" action="<?php echo base_url('Cari/hasil'); ?>">
+              <input type="hidden" name="min" value="0">
+              <input type="hidden" name="max" value="5000000">
+              <input type="hidden" name="sort" value="0">
+              <input type="hidden" name="checkall" value="checkall">
+            </form>
+            <?php
+            $j=0;
+            foreach ($jenlimbar as $formlimbarf) {
+              if ($j<4) {
+                ?>
+                <form method="post" name="f<?php echo $formlimbarf->nama_jenis_barang; ?>" action="<?php echo base_url('Cari/hasil'); ?>">
+                  <input type="hidden" name="min" value="0">
+                  <input type="hidden" name="max" value="5000000">
+                  <input type="hidden" name="sort" value="0">
+                  <input type="hidden" name="kategori[]" value="<?php echo $formlimbarf->id_jenis_barang; ?>">
+                </form>
+                <?php
+              }
+              $j++;
+            }
+             ?>
             <ul class="footer-links">
-              <li><a href="#">Hot deals</a></li>
-              <li><a href="#">Laptops</a></li>
-              <li><a href="#">Smartphones</a></li>
-              <li><a href="#">Cameras</a></li>
-              <li><a href="#">Accessories</a></li>
+              <li><a href="#" onclick="document.forms['fnew'].submit(); return false;">New</a></li>
+              <?php
+              $jj=0;
+              foreach ($jenlimbar as $kategolimbarf) {
+                if ($jj<4) {
+                  ?>
+                  <li><a href="#" onclick="document.forms['f<?php echo $kategolimbarf->nama_jenis_barang; ?>'].submit(); return false;"><?php echo $kategolimbarf->nama_jenis_barang; ?></a></li>
+                  <?php
+                }
+                $jj++;
+              }
+              ?>
             </ul>
           </div>
         </div>
@@ -35,12 +64,11 @@
 
         <div class="col-md-3 col-xs-6">
           <div class="footer">
-            <h3 class="footer-title">Information</h3>
+            <h3 class="footer-title">Informasi</h3>
             <ul class="footer-links">
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Tentang Kami</a></li>
+              <li><a href="#">Kontak Kami</a></li>
               <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Orders and Returns</a></li>
               <li><a href="#">Terms & Conditions</a></li>
             </ul>
           </div>
@@ -48,13 +76,11 @@
 
         <div class="col-md-3 col-xs-6">
           <div class="footer">
-            <h3 class="footer-title">Service</h3>
+            <h3 class="footer-title">Servis</h3>
             <ul class="footer-links">
-              <li><a href="#">My Account</a></li>
-              <li><a href="#">View Cart</a></li>
-              <li><a href="#">Wishlist</a></li>
-              <li><a href="#">Track My Order</a></li>
-              <li><a href="#">Help</a></li>
+              <li><a href="<?php echo base_url('Profil'); ?>">Profil</a></li>
+              <li><a href="<?php echo base_url('Cart/berlangsung'); ?>">Cart</a></li>
+              <li><a href="#">Bantuan</a></li>
             </ul>
           </div>
         </div>
@@ -81,7 +107,7 @@
           </ul>
           <span class="copyright">
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made by <a href="#" target="_blank">Decode</a>
           <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
           </span>
         </div>

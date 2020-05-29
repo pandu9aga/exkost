@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Cart extends CI_Controller {
+class Gagal extends CI_Controller {
   function __construct(){
 		parent::__construct();
 
@@ -14,9 +14,11 @@ class Cart extends CI_Controller {
     $this->load->model('Topup_model');
     $this->load->model('Notif_model');
     $this->load->model('Tawaran_model');
-    $this->load->model('Cart_model');
+    $this->load->model('Transfer_model');
+    $this->load->model('Menang_model');
+    $this->load->model('Barang_model');
 	}
-  function berlangsung(){
+  function index(){
     $this->Now->updateNow();
     $done['now'] = $this->Now->getNow()->result();
     $done['all'] = $this->Done_model->allLelang()->result();
@@ -50,9 +52,25 @@ class Cart extends CI_Controller {
     $data['qtyritop'] = $this->Notif_model->getNotiftop($id_akun)->num_rows();
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
 
-    $jumlah_data = $this->Cart_model->getCartb($id_akun);
+    $jumlah_data = 0;
+    $idgagal[] = 0;
+    $getgagal = $this->Menang_model->getGagal($id_akun)->num_rows();
+    if ($getgagal!=0) {
+      $dgagal = $this->Menang_model->getGagal($id_akun)->result();
+      foreach ($dgagal as $g) {
+        $qtinggi = $this->Menang_model->getHighws($g->id_barang)->result();
+        foreach ($qtinggi as $tinggi) {
+          $ttinggi = $tinggi->jumlah_tawaran;
+        }
+        if ($g->jumlah_tawaran==$ttinggi) {
+          $idgagal[] = $g->id_tawaran;
+          $jumlah_data++;
+        }
+      }
+    }
+
     $this->load->library('pagination');
-    $config['base_url'] = base_url().'index.php/Cart/berlangsung/';
+    $config['base_url'] = base_url().'index.php/Gagal/index/';
     $config['total_rows'] = $jumlah_data;
     $config['per_page'] = 5;
     $config['uri_segment'] = 3;
@@ -89,48 +107,8 @@ class Cart extends CI_Controller {
     $data['limit'] = $config['per_page'];
     $data['total_rows'] = $config['total_rows'];
     $data['pagination'] = $this->pagination->create_links();
-    $data['cart'] = $this->Cart_model->getPgcartb($config['per_page'],$page,$id_akun)->result();
+    $data['cart'] = $this->Menang_model->getPgwin($config['per_page'],$page,$idgagal)->result();
 
-    $this->template->cberlangsung('cart_berlangsung',$data);
-  }
-  function sudah(){
-    $this->Now->updateNow();
-    $done['now'] = $this->Now->getNow()->result();
-    $done['all'] = $this->Done_model->allLelang()->result();
-    $selesai = $this->done->selesai($done);
-    if ($selesai!=NULL) {
-      foreach ($selesai as $value) {
-        $ids[] = $value;
-      }
-      $this->Done_model->changeStat($ids);
-      //$i=0;
-      foreach ($ids as $thisid) {
-        //echo $ids[$i];
-        //$thisid=$ids[$i];
-        //echo $thisid;
-        $win = $this->Done_model->listTawaran($thisid)->num_rows();
-        if ($win!=0) {
-          //echo "ada data";
-          $wins = $this->Done_model->winnerBid($thisid)->result();
-          foreach ($wins as $datawin) {
-            $jumbid = $datawin->jumlah_tawaran;
-          }
-          //echo $jumbid;
-          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
-          foreach ($winner as $w) {
-            $this->Done_model->insertWinner($w->id_tawaran);
-            //echo $w->id_tawaran;
-            //echo "ada pemenang";
-          }
-        }else {
-          $this->Done_model->changeStatl($thisid);
-          //echo "gagal";
-        }
-        //$i++;
-      }
-      //echo "keluar loop";
-    }
-    //else{echo "data null luar";}
+    $this->template->gagal('gagal',$data);
   }
 }
-?>

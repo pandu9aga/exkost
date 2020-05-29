@@ -10,14 +10,14 @@
 				$id_akun = $key->id_akun;
 			}
 			?>
-			
+
 			<!-- container -->
 			<div class="container">
 				<!-- row -->
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb-tree">
-							<li><a href="#">Home</a></li>
+							<li><a href="<?php echo base_url('Home'); ?>">Home</a></li>
 							<li class="active"><?php
 							if (isset($paskategori)) {
 								if ($paskategori!='checkall') {
@@ -34,7 +34,7 @@
 									echo "Semua Kategori";
 								}
 							}
-							?> (227,490 Results)</li>
+							?></li>
 						</ul>
 					</div>
 				</div>
@@ -55,8 +55,19 @@
 						<!-- aside Widget -->
 						<div class="aside">
 							<h3 class="aside-title">Kategori</h3>
-              <form method="post" name="form_fs" action="<?php echo base_url('Cari/hasil'); ?>">
+              <form method="post" name="form_fs" action="<?php if (isset($keyword)) {
+              	echo base_url('Cari/keyword');
+              }else {
+              	echo base_url('Cari/hasil');
+              } ?>">
 							<div class="checkbox-filter">
+
+								<?php
+								if (isset($keyword)) {
+								?>
+								<input type="hidden" name="key" value="<?php echo $keyword; ?>">
+								<?php
+								} ?>
 
                 <div class="input-checkbox">
 									<input type="checkbox" name="checkall" id="category-0" value="all" onClick="check_uncheck_checkbox(this.checked);" <?php
@@ -68,7 +79,7 @@
 									<label for="category-0">
 										<span></span>
 										Semua
-										<small>(120)</small>
+										<small></small>
 									</label>
 								</div>
 
@@ -90,7 +101,7 @@
 									<label for="category-<?php echo $k; ?>">
 										<span></span>
 										<?php echo $kategori->nama_jenis_barang; ?>
-										<small>(120)</small>
+										<small></small>
 									</label>
 								</div>
                 <?php
@@ -186,6 +197,12 @@
 							</div>
 						</div>
 						<!-- /store top filter -->
+
+						<?php if (isset($keyword)): ?>
+							<div class="">
+								Menampilkan Hasil "<h5 class="cari" style="display:inline;"><?php echo $keyword; ?></h5>"
+							</div>
+						<?php endif; ?>
 
 						<!-- store products -->
 						<div class="row">

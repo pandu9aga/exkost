@@ -22,7 +22,7 @@ $("#datetime").datetimepicker({
                 var password = $("#txtPassword").val();
                 var confirmPassword = $("#txtConfirmPassword").val();
                 if (password != confirmPassword) {
-                    alert("Password tidak sama, ulangi..");
+                    alert("Password tidak sama, ulangi..!!");
                     return false;
                 }
                 return true;

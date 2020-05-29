@@ -9,10 +9,10 @@
     <!-- row -->
     <div class="row">
       <div class="col-md-12">
-        <h3 class="breadcrumb-header">Cart</h3>
+        <h3 class="breadcrumb-header">Menang</h3>
         <ul class="breadcrumb-tree">
           <li><a href="<?php echo base_url('Home'); ?>">Home</a></li>
-          <li class="active">Berlangsung</li>
+          <li class="active">Dikirim</li>
         </ul>
       </div>
     </div>
@@ -33,7 +33,7 @@
         <!-- Billing Details -->
         <div class="billing-details">
           <div class="section-title">
-            <h3 class="title">Cart Berlangsung</h3>
+            <h3 class="title">Dikirim</h3>
           </div>
         </div>
         <!-- /Billing Details -->
@@ -61,26 +61,9 @@
                     <h5 class="date">Tawaran Anda</h5>
                     <p class="date">Rp. <?php echo $list->jumlah_tawaran; ?></p>
                   </div>
-                  <?php
-                  $CI =& get_instance();
-                  $CI->load->model('Cart_model');
-                  $high = $CI->Cart_model->getHighb($list->id_barang)->result();
-                  foreach ($high as $key) {
-                    if ($key->jumlah_tawaran==$list->jumlah_tawaran) {
-                    ?>
-                    <div class="review-body">
-                      <h5 class="product-pricer">Tertinggi</h5>
-                    </div>
-                    <?php
-                    }else {
-                    ?>
-                    <div class="review-body">
-                      <h5 class="product-price">Saldo kembali Rp. <?php echo $list->jumlah_tawaran; ?></h5>
-                    </div>
-                    <?php
-                    }
-                  }
-                   ?>
+                  <div class="review-body">
+                    <h5 class="product-pricer"><i class="fa fa-truck"></i>Sedang Dikirim</h5>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -93,7 +76,9 @@
             </a>
           </div>
           <div class="col-md-2">
-            <button class="modal-button" href="#myModal<?php echo $list->id_barang; ?>">Hapus</button>
+            <a href="<?php echo base_url('Barang/index/'.$list->id_barang); ?>">
+              <button class="modal-button" href="#myModal<?php echo $list->id_barang; ?>">Diterima</button>
+            </a>
           </div>
           <!-- /Review Form -->
         </div>
@@ -105,21 +90,20 @@
           <div class="modal-content">
            <div class="modal-header">
              <span class="close">&times;</span>
-             <h2>Hapus Cart</h2>
+             <h2>Konfirmasi Diterima</h2>
            </div>
            <div class="modal-body">
-             <p>Anda yakin akan menghapus Cart dan membatalkan proses Tawaran?</p>
+             <p>Anda yakin barang ini telah diterima?</p>
              <p>Barang : <?php echo $list->nama_barang; ?></p>
              <img alt="" height="135px" width="200px" src="<?php echo base_url('assets/barang/'.$list->nama_gambar_barang); ?>">
            </div>
            <div class="modal-footer">
-             <a href="<?php echo base_url('Cart/hapus/'.$list->id_barang); ?>">
-               <button type="button" class="primarys-btn" name="button">Hapus</button>
+             <a href="<?php echo base_url('Menang/terima_konfirm/'.$list->id_barang); ?>">
+               <button type="button" class="primarys-btn" name="button">Diterima</button>
              </a>
            </div>
           </div>
         </div>
-
         <?php
         }
         ?>

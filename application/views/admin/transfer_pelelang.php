@@ -149,7 +149,7 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">Top-up User</h3>
+                        <h3 class="text-themecolor">Transfer Pelelang</h3>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -159,28 +159,28 @@
                 <!-- Sales overview chart -->
                 <!-- ============================================================== -->
                 <?php
-                foreach ($topup as $data) {
+                foreach ($transfer as $data) {
                 ?>
 
                 <!-- kotak -->
                 <div class="row border-top border-left border-right border-bottom pt-2">
                   <div class="col-md-3">
                     <!-- Button trigger modal -->
-                    <a  data-toggle="modal" data-target="#buktitransfer<?php echo $data->id_topup; ?>">
-                      <img src="<?php echo base_url('assets/topup/'.$data->bukti_transfer); ?>" alt="bukti transfer" width="225" height="155">
+                    <a  data-toggle="modal" data-target="#buktitransfer<?php echo $data->id_barang; ?>">
+                      <img src="<?php echo base_url('assets/transfer/'.$data->bukti_transfer); ?>" alt="bukti transfer" width="225" height="155">
                     </a>
                     <!-- Modal -->
-                    <div class="modal fade" id="buktitransfer<?php echo $data->id_topup; ?>" tabindex="-1" role="dialog" aria-labelledby="buktiTransferLabel" aria-hidden="true">
+                    <div class="modal fade" id="buktitransfer<?php echo $data->id_barang; ?>" tabindex="-1" role="dialog" aria-labelledby="buktiTransferLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="buktiTransferLabel">Bukti Top Up</h5>
+                            <h5 class="modal-title" id="buktiTransferLabel">Bukti Transfer</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
                           <div class="modal-body">
-                            <img src="<?php echo base_url('assets/topup/'.$data->bukti_transfer); ?>" width="450" height="310">
+                            <img src="<?php echo base_url('assets/transfer/'.$data->bukti_transfer); ?>" width="450" height="310">
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -191,41 +191,55 @@
                     </div>
                   </div>
                   <div class="col-md-7">
-
-                    <p>Waktu top-up : <?php echo $data->waktu_topup; ?></p>
+                    <?php
+                    $CI =& get_instance();
+                    $CI->load->model('Transfer_model');
+                    $high = $CI->Transfer_model->getHighfortrans($data->id_barang)->result();
+                    foreach ($high as $val) {
+                    ?>
                     <p>Nama akun : <?php echo $data->nama_akun; ?></p>
-                    <p>Nama rekening : <?php echo $data->nama_rekening; ?></p>
-                    <p>Nominal : Rp. <?php echo $data->nominal; ?></p>
-                    <p>Bank <?php echo $data->nama_bank_admin; ?> (<?php echo $data->no_rek_admin; ?>)</p>
+                    <p>Nomor rekening : <?php echo $data->rekening_akun; ?></p>
+                    <p>Nominal : Rp. <?php echo $val->jumlah_tawaran; ?></p>
+                    <p>Nama Barang : <?php echo $data->nama_barang; ?></p>
                   </div>
                   <div class="col-md-2 pl-5">
-                    <br> <br> <br>
+                    <br> <br>
                     <?php
-                    if ($data->status_topup=='belum') {
+                    if ($data->status_transfer=='') {
                     ?>
-                    <p>Belum Upload Bukti</p>
-                    <?php
-                    } elseif ($data->status_topup=='menunggu') {
-                    ?>
-                    <a href="<?php echo base_url('Admin/proses_topup/'.$data->id_topup); ?>">
-                      <button class="btn btn-primary" type="button" name="sub_topup">Konfirmasi</button>
-                    </a>
-                    <a href="<?php echo base_url('Admin/batal_topup/'.$data->id_topup); ?>">
-                      <button class="btn btn-secondary" type="button" name="sub_topup">Batalkan</button>
+                    <p>Upload Bukti</p>
+                    <a href="<?php echo base_url('Admin/detail_transfer/'.$data->id_transfer); ?>">
+                      <button class="btn btn-primary" type="button" name="sub_topup">Upload</button>
                     </a>
                     <?php
-                    } elseif ($data->status_topup=='sukses') {
+                    } elseif ($data->status_transfer=='kirim') {
                     ?>
-                    <p>Top-Up Sukses</p>
+                    <p>Tunggu Konfirmasi</p>
+                    <a href="<?php echo base_url('Admin/detail_transfer/'.$data->id_transfer); ?>">
+                      <button class="btn btn-primary" type="button" name="sub_topup">Detail</button>
+                    </a>
                     <?php
-                    } elseif ($data->status_topup=='gagal') {
+                    } elseif ($data->status_transfer=='terima') {
                     ?>
-                    <p>Top-Up Gagal</p>
+                    <p>Transfer Sukses</p>
+                    <a href="<?php echo base_url('Admin/detail_transfer/'.$data->id_transfer); ?>">
+                      <button class="btn btn-primary" type="button" name="sub_topup">Detail</button>
+                    </a>
+                    <?php
+                    } elseif ($data->status_transfer=='gagal') {
+                    ?>
+                    <p>Transfer Gagal</p>
+                    <a href="<?php echo base_url('Admin/detail_transfer/'.$data->id_transfer); ?>">
+                      <button class="btn btn-primary" type="button" name="sub_topup">Detail</button>
+                    </a>
                     <?php
                     }
                     ?>
                   </div>
                 </div> <br>
+                <?php
+                }
+                 ?>
                 <!-- akhir kotak -->
                 <?php
                 } ?>

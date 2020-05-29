@@ -18,6 +18,30 @@ class Pembayaran extends CI_Controller {
 	}
   function index(){
     $this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
     $id_akun = $this->session->userdata('id_akun');
     $limbar = 6;
     $data['akun'] = $this->Akun_model->dataAkun($id_akun)->result();
@@ -72,6 +96,30 @@ class Pembayaran extends CI_Controller {
   }
   function detail_pembayaran($idtopup){
     $this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
     $id_akun = $this->session->userdata('id_akun');
     $limbar = 6;
     $data['akun'] = $this->Akun_model->dataAkun($id_akun)->result();
@@ -89,6 +137,30 @@ class Pembayaran extends CI_Controller {
   }
   function prosesPembayaran(){
     $this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
     $id = $this->input->post('id');
     $stat = $this->input->post('status');
 
@@ -127,6 +199,31 @@ class Pembayaran extends CI_Controller {
     redirect(base_url('Pembayaran/detail_pembayaran/'.$id));
   }
   function hapus($idtopup){
+    $this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
     $this->Topup_model->deleteTopup($idtopup);
     redirect(base_url('Pembayaran/index/'));
   }

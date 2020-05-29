@@ -12,7 +12,7 @@
 						<ul class="breadcrumb-tree">
 							<li><a href="<?php echo base_url('Home'); ?>">Home</a></li>
               <li>Lelang</li>
-							<li class="active">Barang Lelang</li>
+							<li class="active">Lelang Kirim </li>
 						</ul>
 					</div>
 				</div>
@@ -33,7 +33,7 @@
 						<!-- aside Widget -->
 						<div class="aside">
 							<h3 class="aside-title">Kategori</h3>
-              <form method="post" name="form_fs" action="<?php echo base_url('Lelang/hasil'); ?>">
+              <form method="post" name="form_fs" action="<?php echo base_url('Lelang/konfirm_transfer_hasil'); ?>">
 							<div class="checkbox-filter">
 
                 <div class="input-checkbox">
@@ -170,7 +170,7 @@
               <?php
 		            //$no = $this->uri->segment('3') + 1;
 		            foreach($barang as $b){
-                  if ($b->status_lelang=='berlangsung') {
+                  if ($b->status_lelang=='terima') {
 		          ?>
 							<!-- product -->
 							<div class="col-md-4 col-xs-6">
@@ -188,14 +188,14 @@
                   </div>
                   <div class="add-to-cart">
                     <a href="<?php echo base_url('Lelang/barang/'.$b->id_barang); ?>">
-											<button class="add-to-cart-btn"><i class="fa fa-search"></i> lihat lelang</button>
+											<button class="add-to-cart-btn"><i class="fa fa-pencil"></i> konfirmasi</button>
 										</a>
                   </div>
 								</div>
 							</div>
 							<!-- /product -->
             <?php
-              }
+						}
             }
             ?>
 						</div>

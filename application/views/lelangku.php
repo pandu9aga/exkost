@@ -68,7 +68,31 @@ foreach ($barang as $tbarang) {
           <p><a href="#" onclick="document.forms['form_b'].submit(); return false;"><?php echo $tbarang->nama_jenis_barang; ?></a></p>
           <div>
             <h3 class="product-price">Rp. <?php echo $tbarang->harga_barang; ?></del></h3>
-            <span class="product-available"><?php echo $tbarang->status_lelang; ?></span>
+            <?php
+            if ($tbarang->status_lelang=="berlangsung") {
+            ?>
+            <span class="product-available">Berlangsung</span>
+            <?php
+            }elseif ($tbarang->status_lelang=="selesai") {
+              if ($tbarang->status_gagal=="gagal") {
+              ?>
+              <span class="product-available">Gagal</span>
+              <?php
+              }else {
+              ?>
+              <span class="product-available">Kirim</span>
+              <?php
+              }
+            }elseif ($tbarang->status_lelang=="kirim") {
+            ?>
+            <span class="product-available">Dikirim</span>
+            <?php
+            }elseif ($tbarang->status_lelang=="terima") {
+            ?>
+            <span class="product-available">Selesai</span>
+            <?php
+            }
+            ?>
           </div>
           <div class="review-heading">
             <h5 class="name">Waktu Habis</h5>
@@ -80,7 +104,19 @@ foreach ($barang as $tbarang) {
           <div class="product-options">
             <label>
               Tawaran Tertinggi
-              <input class="input" type="text" name="high_bid" placeholder="Tawaran Tertinggi" disabled>
+              <?php
+              if (isset($hbid)) {
+                foreach ($hbid as $hb) {
+                  $hbtawaran = $hb->jumlah_tawaran;
+                  $hbakun = $hb->nama_akun;
+                  $hbnotelp = $hb->no_telp_akun;
+                  $hbalamat = $hb->alamat_akun;
+                }
+              }
+              ?>
+              <input class="input" type="text" name="high_bid" placeholder="Tawaran Tertinggi" value="<?php if (isset($hbid)) {
+                echo $hbtawaran;
+              } ?>" disabled>
             </label>
           </div>
 
@@ -94,26 +130,153 @@ foreach ($barang as $tbarang) {
           </div>
           <?php
           } elseif ($tbarang->status_lelang=="selesai") {
-          ?>
-          <div class="add-to-cart">
-            <br>
-            <button class="add-to-cart-btn"><i class="fa fa-truck"></i> Kirim</button>
-          </div>
-          <?php
+            if ($tbarang->status_gagal=="gagal") {
+            ?>
+            <div class="add-to-cart">
+              <br>
+              <button class="add-to-cart-btn"><i class="fa fa-cross"></i>Gagal</button>
+            </div>
+            <?php
+            }else {
+            ?>
+            <div class="add-to-cart">
+              <br>
+              <button class="modal-button" href="#myModal<?php echo $tbarang->id_barang; ?>"><i class="fa fa-truck"></i> Kirim</button>
+            </div>
+            <!-- Modal content -->
+            <div id="myModal<?php echo $tbarang->id_barang;  ?>" class="modal">
+              <div class="modal-content">
+               <div class="modal-header">
+                 <span class="close">&times;</span>
+                 <h2>Kirimkan Barang</h2>
+               </div>
+               <div class="modal-body">
+                 <p>Kirim Barang Ini Ke :</p>
+                 <p>Nama : <?php echo $hbakun; ?></p>
+                 <p>No Telp : <?php echo $hbnotelp; ?></p>
+                 <p>Alamat : <?php echo $hbalamat; ?></p>
+               </div>
+               <div class="modal-footer">
+                 <a href="<?php echo base_url('Lelang/proses_kirim/'.$tbarang->id_barang); ?>">
+                   <button type="button" class="primarys-btn" name="button"><i class="fa fa-truck"></i> Kirim</button>
+                 </a>
+               </div>
+              </div>
+            </div>
+            <?php
+            }
           } elseif ($tbarang->status_lelang=="kirim") {
           ?>
           <div class="add-to-cart">
             <br>
-            <button class="add-to-cart-btn"><i class="fa fa-truck"></i> Sedang Kirim</button>
+            <button class="modal-button" href="#myModal<?php echo $tbarang->id_barang; ?>"><i class="fa fa-truck"></i> Sedang Dikirim</button>
+          </div>
+          <!-- Modal content -->
+          <div id="myModal<?php echo $tbarang->id_barang;  ?>" class="modal">
+            <div class="modal-content">
+             <div class="modal-header">
+               <span class="close">&times;</span>
+               <h2>Barang Dikirim</h2>
+             </div>
+             <div class="modal-body">
+               <p>Barang Ini Sedang Dikirim Ke :</p>
+               <p>Nama : <?php echo $hbakun; ?></p>
+               <p>No Telp : <?php echo $hbnotelp; ?></p>
+               <p>Alamat : <?php echo $hbalamat; ?></p>
+             </div>
+            </div>
           </div>
           <?php
           } elseif ($tbarang->status_lelang=="terima") {
-          ?>
-          <div class="add-to-cart">
-            <br>
-            <button class="add-to-cart-btn"><i class="fa fa-check"></i> Selesai</button>
-          </div>
-          <?php
+            if ($tbarang->status_transfer=="terima") {
+            ?>
+            <div class="add-to-cart">
+              <br>
+              <button class="modal-button" href="#myModal<?php echo $tbarang->id_barang; ?>"><i class="fa fa-check"></i> Selesai</button>
+            </div>
+            <!-- Modal content -->
+            <div id="myModal<?php echo $tbarang->id_barang;  ?>" class="modal">
+              <div class="modal-content">
+               <div class="modal-header">
+                 <span class="close">&times;</span>
+                 <h2>Konfirmasi Transfer</h2>
+               </div>
+               <div class="modal-body">
+                 <p>Admin Telah Mengupload Bukti Transfer</p>
+                 <?php
+                 $CI =& get_instance();
+                 $CI->load->model('Barang_model');
+                 $trans = $CI->Barang_model->getThistrans($tbarang->id_barang)->result();
+                 foreach ($trans as $t) {
+                   $bukti = $t->bukti_transfer;
+                 }
+                 ?>
+                 <img src="<?php echo base_url('assets/transfer/'.$bukti); ?>" alt="" height="310" width="450">
+               </div>
+               <div class="modal-footer">
+                 <button type="button" class="primarys-btn" name="button"><i class="fa fa-check"></i> Selamat..!!</button>
+               </div>
+              </div>
+            </div>
+            <?php
+            }elseif ($tbarang->status_transfer=="kirim") {
+            ?>
+            <div class="add-to-cart">
+              <br>
+              <button class="modal-button" href="#myModal<?php echo $tbarang->id_barang; ?>"><i class="fa fa-pencil"></i> Konfirmasi</button>
+            </div>
+            <!-- Modal content -->
+            <div id="myModal<?php echo $tbarang->id_barang;  ?>" class="modal">
+              <div class="modal-content">
+               <div class="modal-header">
+                 <span class="close">&times;</span>
+                 <h2>Konfirmasi Transfer</h2>
+               </div>
+               <div class="modal-body">
+                 <p>Admin Telah Mengupload Bukti Transfer</p>
+                 <?php
+                 $CI =& get_instance();
+                 $CI->load->model('Barang_model');
+                 $trans = $CI->Barang_model->getThistrans($tbarang->id_barang)->result();
+                 foreach ($trans as $t) {
+                   $bukti = $t->bukti_transfer;
+                 }
+                 ?>
+                 <img src="<?php echo base_url('assets/transfer/'.$bukti); ?>" alt="" height="310" width="450">
+               </div>
+               <div class="modal-footer">
+                 <a href="<?php echo base_url('Lelang/proses_konfirmtrans/'.$tbarang->id_barang); ?>">
+                   <button type="button" class="primarys-btn" name="button"><i class="fa fa-truck"></i> Konfirmasi</button>
+                 </a>
+               </div>
+              </div>
+            </div>
+            <?php
+            }else {
+            ?>
+            <div class="add-to-cart">
+              <br>
+              <button class="modal-button" href="#myModal<?php echo $tbarang->id_barang; ?>"><i class="fa fa-pencil"></i> Konfirmasi</button>
+            </div>
+            <!-- Modal content -->
+            <div id="myModal<?php echo $tbarang->id_barang;  ?>" class="modal">
+              <div class="modal-content">
+               <div class="modal-header">
+                 <span class="close">&times;</span>
+                 <h2>Konfirmasi Transfer</h2>
+               </div>
+               <div class="modal-body">
+                 <p>Admin Belum Mengupload Bukti Transfer</p>
+                 <p>.</p>
+                 <p>.</p>
+                 <p>Harap Tunggu</p>
+               </div>
+               <div class="modal-footer">
+               </div>
+              </div>
+            </div>
+            <?php
+            }
           }
           ?>
 
@@ -160,7 +323,7 @@ foreach ($barang as $tbarang) {
                     </div>
                     <div class="review-heading">
                       <h5 class="name">Jumlah Tawaran:</h5>
-                      <p class="date">(30)</p>
+                      <p class="date">(<?php echo $totbid; ?>)</p>
                     </div>
                   </div>
                 </div>

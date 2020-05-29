@@ -21,6 +21,7 @@ class Akun_model extends CI_Model {
     $this->db->set('no_telp_akun',$data['no_telp_akun']);
     $this->db->set('email_akun',$data['email_akun']);
     $this->db->set('pass_akun',$data['pass_akun']);
+    $this->db->set('rekening_akun',$data['rekening_akun']);
     $this->db->insert($table);
   }
   function dataAkun($id_akun){
@@ -48,6 +49,12 @@ class Akun_model extends CI_Model {
     $this->db->set('saldo_akun',$saldo);
     $this->db->where('id_akun',$id);
     $this->db->update('akun');
+  }
+  function allAccount(){
+    $this->db->select('*');
+    $this->db->from('akun');
+    $query = $this->db->get();
+    return $query;
   }
 }
 ?>

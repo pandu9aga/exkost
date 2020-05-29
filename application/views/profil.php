@@ -64,7 +64,7 @@
             <input class="input" type="text" name="alamat" placeholder="Alamat" value="<?php echo $profil->alamat_akun; ?>" required oninvalid="this.setCustomValidity('alamat tidak boleh kosong')" oninput="setCustomValidity('')">
           </div>
           <div class="form-group">
-            <input class="input" type="text" name="rekening" placeholder="Rekening (Jika ingin melelang barang, maka rekening harus diisi)" value="<?php if($profil->rekening_akun==0){ echo ""; }else{ echo $profil->rekening_akun; }; ?>">
+            <input class="input" type="text" name="rekening" placeholder="Rekening (Jika ingin melelang barang, maka rekening harus diisi)" value="<?php if($profil->rekening_akun==0){ echo ""; }else{ echo $profil->rekening_akun; }; ?>" required oninvalid="this.setCustomValidity('Rekening tidak boleh kosong')" oninput="setCustomValidity('')">
           </div>
           <div class="form-group">
             <input class="input" type="number" name="telepon" placeholder="Telepon" value="<?php echo $profil->no_telp_akun; ?>" required oninvalid="this.setCustomValidity('telepon tidak boleh kosong')" oninput="setCustomValidity('')">

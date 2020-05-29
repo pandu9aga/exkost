@@ -90,6 +90,7 @@
 									<div class="products-slick" data-nav="#slick-nav-1">
 										<?php
 										foreach ($barang as $barnew) {
+											if ($barnew->status_lelang=='berlangsung') {
 										?>
 										<!-- product -->
 										<div class="product">
@@ -117,6 +118,7 @@
 										</div>
 										<!-- /product -->
 										<?php
+											}
 										}
 										?>
 									</div>
@@ -131,6 +133,7 @@
 										<?php
 										foreach ($barang as $barnew) {
 											if ($barnew->nama_jenis_barang==$tabnew->nama_jenis_barang) {
+												if ($barnew->status_lelang=='berlangsung') {
 											?>
 											<!-- product -->
 											<div class="product">
@@ -148,12 +151,17 @@
 												</div>
 												<div class="add-to-cart">
 													<a href="<?php echo base_url('Barang/index/'.$barnew->id_barang); ?>">
-														<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> ikuti lelang</button>
+														<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <?php if ($barnew->id_akun!=$id_akun) {
+							                echo "ikuti lelang";
+							              }else {
+							                echo "lihat";
+							              } ?></button>
 													</a>
 												</div>
 											</div>
 											<!-- /product -->
 											<?php
+												}
 											}
 										}
 										?>
@@ -187,11 +195,11 @@
 		<br><br>
 		<!-- /SECTION -->
 
-		<!-- HOT DEAL SECTION -->
+		<!-- HOT DEAL SECTION
 		<div id="hot-deal" class="section">
-			<!-- container -->
+
 			<div class="container">
-				<!-- row -->
+
 				<div class="row">
 					<div class="col-md-12">
 						<div class="hot-deal">
@@ -227,11 +235,11 @@
 						</div>
 					</div>
 				</div>
-				<!-- /row -->
+
 			</div>
-			<!-- /container -->
+
 		</div>
-		<!-- /HOT DEAL SECTION -->
+		 /HOT DEAL SECTION -->
 
 		<!-- SECTION -->
 		<div class="section">
@@ -245,13 +253,21 @@
 						<div class="section-title">
 							<h3 class="title">Pelelangan Paling Top</h3>
 							<div class="section-nav">
+								<form id="form_tn" method="post" name="form_tn" action="<?php echo base_url('Cari/hasil'); ?>">
+									<input id="tnmin" type="hidden" name="min" value="0">
+									<input id="tnmax" type="hidden" name="max" value="5000000">
+									<input id="tnsort" type="hidden" name="sort" value="4">
+									<input id="tncheck" type="hidden" name="checkall" value="checkall">
+								</form>
 								<ul class="section-tab-nav tab-nav">
-									<li class="active"><a data-toggle="tab" href="#tab1">Semua</a></li>
+									<li id="tabnavtop" class="active"><a data-toggle="tab" href="#tab11">Semua</a></li>
 									<?php
+									$ktop=12;
 									foreach ($jenlimtop as $kategolimtop) {
 									?>
-									<li><a data-toggle="tab" href="#tab1"><?php echo $kategolimtop->nama_jenis_barang; ?></a></li>
+									<li><a data-toggle="tab" href="#tab<?php echo $ktop; ?>"><?php echo $kategolimtop->nama_jenis_barang; ?></a></li>
 									<?php
+									$ktop++;
 									}
 									?>
 								</ul>
@@ -265,165 +281,113 @@
 						<div class="row">
 							<div class="products-tabs">
 								<!-- tab -->
-								<div id="tab2" class="tab-pane fade in active">
-									<div class="products-slick" data-nav="#slick-nav-2">
+								<div id="tab11" class="tab-pane active">
+									<div class="products-slick" data-nav="#slick-nav-11">
+										<?php
+										foreach ($barang as $bartop) {
+											if ($bartop->status_lelang=='berlangsung') {
+										?>
 										<!-- product -->
 										<div class="product">
 											<div class="product-img">
-												<img src="<?php echo base_url('assets/img/product06.png'); ?>" alt="">
+												<img src="<?php echo base_url('assets/barang/'.$bartop->nama_gambar_barang); ?>" alt="">
 												<div class="product-label">
-													<span class="sale">-30%</span>
-													<span class="new">NEW</span>
+													<span class="sale">TOP</span>
 												</div>
 											</div>
 											<div class="product-body">
-												<p class="product-category">Category</p>
-												<h3 class="product-name"><a href="#">product name goes here</a></h3>
-												<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-												<div class="product-rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>
-												<div class="product-btns">
-													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-												</div>
+												<p class="product-category"><?php echo $bartop->nama_jenis_barang; ?></p>
+												<h3 class="product-name"><a href="<?php echo base_url('Barang/index/'.$bartop->id_barang); ?>"><?php echo $bartop->nama_barang; ?></a></h3>
+												<h4 class="product-price">Rp. <?php echo $bartop->harga_barang; ?></h4>
+												<h4 class="product-category"><i class="fa fa-hourglass-half"></i> <?php echo $bartop->waktu_lelang; ?></h4>
 											</div>
 											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+												<a href="<?php echo base_url('Barang/index/'.$bartop->id_barang); ?>">
+													<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <?php if ($bartop->id_akun!=$id_akun) {
+						                echo "ikuti lelang";
+						              }else {
+						                echo "lihat";
+						              } ?></button>
+												</a>
 											</div>
 										</div>
 										<!-- /product -->
-
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="<?php echo base_url('assets/img/product07.png'); ?>" alt="">
-												<div class="product-label">
-													<span class="new">NEW</span>
-												</div>
-											</div>
-											<div class="product-body">
-												<p class="product-category">Category</p>
-												<h3 class="product-name"><a href="#">product name goes here</a></h3>
-												<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-												<div class="product-rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star-o"></i>
-												</div>
-												<div class="product-btns">
-													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-												</div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-											</div>
-										</div>
-										<!-- /product -->
-
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="<?php echo base_url('assets/img/product08.png'); ?>" alt="">
-												<div class="product-label">
-													<span class="sale">-30%</span>
-												</div>
-											</div>
-											<div class="product-body">
-												<p class="product-category">Category</p>
-												<h3 class="product-name"><a href="#">product name goes here</a></h3>
-												<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-												<div class="product-rating">
-												</div>
-												<div class="product-btns">
-													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-												</div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-											</div>
-										</div>
-										<!-- /product -->
-
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="<?php echo base_url('assets/img/product09.png'); ?>" alt="">
-											</div>
-											<div class="product-body">
-												<p class="product-category">Category</p>
-												<h3 class="product-name"><a href="#">product name goes here</a></h3>
-												<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-												<div class="product-rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>
-												<div class="product-btns">
-													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-												</div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-											</div>
-										</div>
-										<!-- /product -->
-
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="<?php echo base_url('assets/img/product01.png'); ?>" alt="">
-											</div>
-											<div class="product-body">
-												<p class="product-category">Category</p>
-												<h3 class="product-name"><a href="#">product name goes here</a></h3>
-												<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-												<div class="product-rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>
-												<div class="product-btns">
-													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-												</div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-											</div>
-										</div>
-										<!-- /product -->
+										<?php
+											}
+										}
+										?>
 									</div>
-									<div id="slick-nav-2" class="products-slick-nav"></div>
+									<div id="slick-nav-11" class="products-slick-nav"></div>
 								</div>
+								<?php
+								$top=12;
+								foreach ($jenlimtop as $tabtop) {
+								?>
+								<div id="tab<?php echo $top; ?>" class="tab-pane">
+									<div class="products-slick" data-nav="#slick-nav-<?php echo $top; ?>">
+										<?php
+										foreach ($barang as $bartop) {
+											if ($bartop->nama_jenis_barang==$tabtop->nama_jenis_barang) {
+												if ($bartop->status_lelang=='berlangsung') {
+											?>
+											<!-- product -->
+											<div class="product">
+												<div class="product-img">
+													<img src="<?php echo base_url('assets/barang/'.$bartop->nama_gambar_barang); ?>" alt="">
+													<div class="product-label">
+														<span class="sale">TOP</span>
+													</div>
+												</div>
+												<div class="product-body">
+													<p class="product-category"><?php echo $bartop->nama_jenis_barang; ?></p>
+													<h3 class="product-name"><a href="<?php echo base_url('Barang/index/'.$bartop->id_barang); ?>"><?php echo $bartop->nama_barang; ?></a></h3>
+													<h4 class="product-price">Rp. <?php echo $bartop->harga_barang; ?></h4>
+													<h4 class="product-category"><i class="fa fa-hourglass-half"></i> <?php echo $bartop->waktu_lelang; ?></h4>
+												</div>
+												<div class="add-to-cart">
+													<a href="<?php echo base_url('Barang/index/'.$bartop->id_barang); ?>">
+														<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <?php if ($bartop->id_akun!=$id_akun) {
+							                echo "ikuti lelang";
+							              }else {
+							                echo "lihat";
+							              } ?></button>
+													</a>
+												</div>
+											</div>
+											<!-- /product -->
+											<?php
+												}
+											}
+										}
+										?>
+									</div>
+									<div id="slick-nav-<?php echo $top; ?>" class="products-slick-nav"></div>
+								</div>
+								<?php
+								$top++;
+								}
+								?>
 								<!-- /tab -->
 							</div>
 						</div>
 					</div>
-					<!-- /Products tab & slick -->
+					<!-- Products tab & slick -->
 				</div>
 				<!-- /row -->
 			</div>
 			<!-- /container -->
 		</div>
+		<div class="col-md-12">
+			<div class="section-title">
+				<div class="section-nav">
+					<ul class="section-tab-nav tab-nav">
+						<li class="active"><a href="#" onclick="document.forms['form_tn'].submit(); return false;">Selengkapnya</a></li>
+						<li></li><li></li><li></li><li></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<br><br>
 		<!-- /SECTION -->
 
 		<!-- SECTION -->
@@ -432,286 +396,54 @@
 			<div class="container">
 				<!-- row -->
 				<div class="row">
+
+					<?php
+					$valjl = 33;
+					foreach ($jenlimcol as $jen) {
+					?>
+
 					<div class="col-md-4 col-xs-6">
 						<div class="section-title">
-							<h4 class="title">Top Lemari</h4>
+							<h4 class="title">Top <?php echo $jen->nama_jenis_barang; ?></h4>
 							<div class="section-nav">
-								<div id="slick-nav-3" class="products-slick-nav"></div>
+								<div id="slick-nav-<?php echo $valjl; ?>" class="products-slick-nav"></div>
 							</div>
 						</div>
 
-						<div class="products-widget-slick" data-nav="#slick-nav-3">
+						<div class="products-widget-slick" data-nav="#slick-nav-<?php echo $valjl; ?>">
 							<div>
+								<?php
+								foreach ($barang as $jl) {
+									if ($jl->nama_jenis_barang==$jen->nama_jenis_barang) {
+										if ($jl->status_lelang=='berlangsung') {
+								?>
 								<!-- product widget -->
 								<div class="product-widget">
 									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product07.png'); ?>" alt="">
+										<img src="<?php echo base_url('assets/barang/'.$jl->nama_gambar_barang); ?>" alt="">
 									</div>
 									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+										<p class="product-category"><?php echo $jl->nama_jenis_barang; ?></p>
+										<h3 class="product-name"><a href="<?php echo base_url('Barang/index/'.$jl->id_barang); ?>"><?php echo $jl->nama_barang; ?></a></h3>
+										<h4 class="product-price">Rp. <?php echo $jl->harga_barang; ?></h4>
 									</div>
 								</div>
 								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product08.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product09.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- product widget -->
-							</div>
-
-							<div>
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product01.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product02.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product03.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- product widget -->
+								<?php
+										}
+									}
+								}
+								 ?>
 							</div>
 						</div>
 					</div>
 
-					<div class="col-md-4 col-xs-6">
-						<div class="section-title">
-							<h4 class="title">Top Meja</h4>
-							<div class="section-nav">
-								<div id="slick-nav-4" class="products-slick-nav"></div>
-							</div>
-						</div>
-
-						<div class="products-widget-slick" data-nav="#slick-nav-4">
-							<div>
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product04.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product05.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product06.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- product widget -->
-							</div>
-
-							<div>
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product07.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product08.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product09.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- product widget -->
-							</div>
-						</div>
-					</div>
+					<?php
+					$valjl++;
+					}
+					?>
 
 					<div class="clearfix visible-sm visible-xs"></div>
-
-					<div class="col-md-4 col-xs-6">
-						<div class="section-title">
-							<h4 class="title">Top Elektronik</h4>
-							<div class="section-nav">
-								<div id="slick-nav-5" class="products-slick-nav"></div>
-							</div>
-						</div>
-
-						<div class="products-widget-slick" data-nav="#slick-nav-5">
-							<div>
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product01.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product02.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product03.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- product widget -->
-							</div>
-
-							<div>
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product04.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product05.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/img/product06.png'); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-									</div>
-								</div>
-								<!-- product widget -->
-							</div>
-						</div>
-					</div>
 
 				</div>
 				<!-- /row -->
@@ -719,42 +451,6 @@
 			<!-- /container -->
 		</div>
 		<!-- /SECTION -->
-
-		<!-- NEWSLETTER -->
-		<div id="newsletter" class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="newsletter">
-							<p>Sign Up for the <strong>NEWSLETTER</strong></p>
-							<form>
-								<input class="input" type="email" placeholder="Enter Your Email">
-								<button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
-							</form>
-							<ul class="newsletter-follow">
-								<li>
-									<a href="#"><i class="fa fa-facebook"></i></a>
-								</li>
-								<li>
-									<a href="#"><i class="fa fa-twitter"></i></a>
-								</li>
-								<li>
-									<a href="#"><i class="fa fa-instagram"></i></a>
-								</li>
-								<li>
-									<a href="#"><i class="fa fa-pinterest"></i></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /NEWSLETTER -->
 
 		<?php $this->load->view("template/footer.php") ?>
 		<?php $this->load->view("template/js.php") ?>

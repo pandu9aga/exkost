@@ -12,7 +12,7 @@
 						<ul class="breadcrumb-tree">
 							<li><a href="<?php echo base_url('Home'); ?>">Home</a></li>
               <li>Lelang</li>
-							<li class="active">Lelang Sedang Dikirim (227,490 Results)</li>
+							<li class="active">Lelang Sedang Dikirim </li>
 						</ul>
 					</div>
 				</div>
@@ -33,7 +33,7 @@
 						<!-- aside Widget -->
 						<div class="aside">
 							<h3 class="aside-title">Kategori</h3>
-              <form method="post" name="form_fs" action="<?php echo base_url('Lelang/kirim_hasil'); ?>">
+              <form method="post" name="form_fs" action="<?php echo base_url('Lelang/dikirim_hasil'); ?>">
 							<div class="checkbox-filter">
 
                 <div class="input-checkbox">
@@ -46,7 +46,7 @@
 									<label for="category-0">
 										<span></span>
 										Semua
-										<small>(120)</small>
+										<small></small>
 									</label>
 								</div>
 
@@ -68,7 +68,7 @@
 									<label for="category-<?php echo $k; ?>">
 										<span></span>
 										<?php echo $kategori->nama_jenis_barang; ?>
-										<small>(120)</small>
+										<small></small>
 									</label>
 								</div>
                 <?php

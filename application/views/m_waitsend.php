@@ -9,10 +9,10 @@
     <!-- row -->
     <div class="row">
       <div class="col-md-12">
-        <h3 class="breadcrumb-header">Cart</h3>
+        <h3 class="breadcrumb-header">Menang</h3>
         <ul class="breadcrumb-tree">
           <li><a href="<?php echo base_url('Home'); ?>">Home</a></li>
-          <li class="active">Berlangsung</li>
+          <li class="active">Tunggu Dikirim</li>
         </ul>
       </div>
     </div>
@@ -33,7 +33,7 @@
         <!-- Billing Details -->
         <div class="billing-details">
           <div class="section-title">
-            <h3 class="title">Cart Berlangsung</h3>
+            <h3 class="title">Tunggu Dikirim</h3>
           </div>
         </div>
         <!-- /Billing Details -->
@@ -69,7 +69,7 @@
                     if ($key->jumlah_tawaran==$list->jumlah_tawaran) {
                     ?>
                     <div class="review-body">
-                      <h5 class="product-pricer">Tertinggi</h5>
+                      <h5 class="product-pricer">Anda Menang</h5>
                     </div>
                     <?php
                     }else {
@@ -88,38 +88,18 @@
           <!-- /Reviews -->
           <!-- Review Form -->
           <div class="col-md-2">
+            <h5 class="product-pricer"><i class="fa fa-truck"></i>Tunggu Dikirim</h5>
+          </div>
+          <div class="col-md-2">
             <a href="<?php echo base_url('Barang/index/'.$list->id_barang); ?>">
               <button class="primaryab-btn">Lihat</button>
             </a>
-          </div>
-          <div class="col-md-2">
-            <button class="modal-button" href="#myModal<?php echo $list->id_barang; ?>">Hapus</button>
           </div>
           <!-- /Review Form -->
         </div>
         <div class="col-md-12">
           <br><br>
         </div>
-        <!-- Modal content -->
-        <div id="myModal<?php echo $list->id_barang;  ?>" class="modal">
-          <div class="modal-content">
-           <div class="modal-header">
-             <span class="close">&times;</span>
-             <h2>Hapus Cart</h2>
-           </div>
-           <div class="modal-body">
-             <p>Anda yakin akan menghapus Cart dan membatalkan proses Tawaran?</p>
-             <p>Barang : <?php echo $list->nama_barang; ?></p>
-             <img alt="" height="135px" width="200px" src="<?php echo base_url('assets/barang/'.$list->nama_gambar_barang); ?>">
-           </div>
-           <div class="modal-footer">
-             <a href="<?php echo base_url('Cart/hapus/'.$list->id_barang); ?>">
-               <button type="button" class="primarys-btn" name="button">Hapus</button>
-             </a>
-           </div>
-          </div>
-        </div>
-
         <?php
         }
         ?>
