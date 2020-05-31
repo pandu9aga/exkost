@@ -86,7 +86,7 @@
 							<div class="header-ctn">
 								<!-- Wishlist -->
 								<div>
-									<a href="Main/login">
+									<a href="<?php echo base_url('Main/login'); ?>">
 										<i class="fa fa-sign-in"></i>
 										<span>Login</span>
 									</a>
