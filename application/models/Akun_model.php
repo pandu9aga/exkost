@@ -24,6 +24,16 @@ class Akun_model extends CI_Model {
     $this->db->set('rekening_akun',$data['rekening_akun']);
     $this->db->insert($table);
   }
+  function registerAkun1($data,$table){
+    $this->db->set('nama_akun',$data['nama_akun']);
+    $this->db->set('alamat_akun',$data['alamat_akun']);
+    $this->db->set('no_telp_akun',$data['no_telp_akun']);
+    $this->db->set('email_akun',$data['email_akun']);
+    $this->db->set('pass_akun',$data['pass_akun']);
+    $this->db->set('rekening_akun',$data['rekening_akun']);
+    $this->db->insert($table);
+    return $this->db->affected_rows();
+  }
   function dataAkun($id_akun){
     $this->db->select('*');
     $this->db->from('akun');

@@ -37,7 +37,7 @@ class Api_login extends CI_Controller {
 			);
 			echo json_encode($response);
 		}else {
-			$akun = array(
+			$response = array(
 				'status' => "false",
 				'message' => "Akun tidak ditemukan"
 			);
@@ -51,6 +51,38 @@ class Api_login extends CI_Controller {
 			'data' => $akun
 		);
 		echo json_encode($response);
+	}
+	function register(){
+		$data['nama_akun'] = $this->input->post('nama');
+    $data['alamat_akun'] = $this->input->post('alamat');
+		$data['no_telp_akun'] = $this->input->post('notelp');
+    $data['rekening_akun'] = $this->input->post('norek');
+		$data['email_akun'] = $this->input->post('email');
+    $data['pass_akun'] = $this->input->post('password');
+
+		$cekemail = $this->Akun_model->cekEmail($data)->num_rows();
+		if ($cekemail==0) {
+			$regis = $this->Akun_model->registerAkun1($data,'akun');
+			if ($regis!=0) {
+				$response = array(
+					'status' => "success",
+					'message' => "Registrasi berhasil"
+				);
+				echo json_encode($response);
+			}else {
+				$response = array(
+					'status' => "fail",
+					'message' => "Registrasi gagal"
+				);
+				echo json_encode($response);
+			}
+		}else {
+			$response = array(
+				'status' => "fail",
+				'message' => "Email telah terdaftar"
+			);
+			echo json_encode($response);
+		}
 	}
 	public function Api(){
     $data = $this->Mahasiswa_model->getAll();

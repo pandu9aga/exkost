@@ -13,10 +13,31 @@ class Barang_model extends CI_Model {
     $query = $this->db->get();
     return $query;
   }
+  function getAllberlangsung(){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by('barang.id_barang','DESC');
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->join('akun','akun.id_akun = barang.id_akun');
+    $this->db->where('status_lelang','berlangsung');
+    $query = $this->db->get();
+    return $query;
+  }
   function getBarang($data){
     $this->db->select('*');
     $this->db->from('barang');
     $this->db->where($data);
+    $query = $this->db->get();
+    return $query;
+  }
+  function getBarang1($data){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->where($data);
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->join('akun','akun.id_akun = barang.id_akun');
     $query = $this->db->get();
     return $query;
   }
@@ -361,6 +382,16 @@ class Barang_model extends CI_Model {
     $this->db->select('*');
     $this->db->from('transfer');
     $this->db->where('id_barang',$id);
+    $query = $this->db->get();
+    return $query;
+  }
+  function getNotmy($id){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->where('barang.id_akun != '.$id);
+    $this->db->where('barang.status_lelang',"berlangsung");
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
     $query = $this->db->get();
     return $query;
   }
