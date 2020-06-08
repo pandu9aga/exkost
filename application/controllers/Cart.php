@@ -132,5 +132,10 @@ class Cart extends CI_Controller {
     }
     //else{echo "data null luar";}
   }
+  function hapus($id){
+    $akun = $this->session->userdata('id_akun');
+		$this->Tawaran_model->delBid($akun,$id);
+    redirect(base_url('Cart/berlangsung'));
+  }
 }
 ?>

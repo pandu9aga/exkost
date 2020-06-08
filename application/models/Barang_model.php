@@ -392,6 +392,126 @@ class Barang_model extends CI_Model {
     $this->db->where('barang.status_lelang',"berlangsung");
     $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
     $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->order_by('barang.id_barang','DESC');
+    $query = $this->db->get();
+    return $query;
+  }
+  function getlelBerlangsung($id,$keyword){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by('barang.id_barang','DESC');
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.id_akun = ',$id);
+    $this->db->where('barang.status_lelang','berlangsung');
+    $this->db->like('nama_jenis_barang',$keyword);
+    $query = $this->db->get();
+    return $query;
+  }
+  function getlelKirim($id){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by('barang.id_barang','DESC');
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.id_akun = ',$id);
+    $this->db->where('barang.status_lelang in ("selesai","kirim")');
+    $this->db->where('barang.status_gagal','');
+    $query = $this->db->get();
+    return $query;
+  }
+  function getlelKirim2($id,$keyword){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by('barang.id_barang','DESC');
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.id_akun = ',$id);
+    $this->db->where('barang.status_lelang',$keyword);
+    $this->db->where('barang.status_gagal','');
+    $query = $this->db->get();
+    return $query;
+  }
+  function getlelSelesai($id){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by('barang.id_barang','DESC');
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.id_akun',$id);
+    $this->db->where('barang.status_lelang="terima" or barang.status_gagal="gagal"');
+    $this->db->where('barang.id_akun',$id);
+    $query = $this->db->get();
+    return $query;
+  }
+  function getlelSelesai1($id){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by('barang.id_barang','DESC');
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.id_akun = ',$id);
+    $this->db->where('barang.status_lelang','terima');
+    $this->db->where('barang.status_gagal != "gagal"');
+    $this->db->where('barang.status_transfer != "kirim"');
+    $this->db->where('barang.status_transfer != "terima"');
+    $query = $this->db->get();
+    return $query;
+  }
+  function getlelSelesai2($id){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by('barang.id_barang','DESC');
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.id_akun = ',$id);
+    $this->db->where('barang.status_gagal != "gagal"');
+    $this->db->where('barang.status_lelang','terima');
+    $this->db->where('barang.status_transfer','kirim');
+    $query = $this->db->get();
+    return $query;
+  }
+  function getlelSelesai3($id){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by('barang.id_barang','DESC');
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.id_akun = ',$id);
+    $this->db->where('barang.status_gagal != "gagal"');
+    $this->db->where('barang.status_lelang','terima');
+    $this->db->where('barang.status_transfer','terima');
+    $query = $this->db->get();
+    return $query;
+  }
+  function getlelSelesai4($id){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by('barang.id_barang','DESC');
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('barang.id_akun = ',$id);
+    $this->db->where('barang.status_gagal','gagal');
+    $query = $this->db->get();
+    return $query;
+  }
+  function getBarangTrans($id){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->join('transfer','barang.id_barang = transfer.id_barang');
+    $this->db->where('barang.id_barang = ',$id);
+    $query = $this->db->get();
+    return $query;
+  }
+  function getCari($id,$keyword){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->order_by('barang.id_barang','DESC');
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('id_akun != '.$id);
+    $this->db->where('status_lelang','berlangsung');
+    $this->db->like('nama_barang',$keyword);
     $query = $this->db->get();
     return $query;
   }

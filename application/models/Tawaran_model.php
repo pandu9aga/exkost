@@ -50,4 +50,9 @@ class Tawaran_model extends CI_Model {
     $query = $this->db->get();
     return $query;
   }
+  function delBid($akun,$id){
+    $this->db->where('tawaran.id_akun',$akun);
+    $this->db->where('tawaran.id_barang',$id);
+    $this->db->delete('tawaran');
+  }
 }

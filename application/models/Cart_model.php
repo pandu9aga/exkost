@@ -30,4 +30,14 @@ class Cart_model extends CI_Model {
     $query = $this->db->get();
     return $query;
   }
+  function getMyCart($akun){
+    $this->db->select('*');
+    $this->db->from('barang');
+    $this->db->join('tawaran','tawaran.id_barang = barang.id_barang');
+    $this->db->join('gambar_barang','gambar_barang.id_barang = barang.id_barang');
+    $this->db->join('jenis_barang','jenis_barang.id_jenis_barang = barang.id_jenis_barang');
+    $this->db->where('tawaran.id_akun',$akun);
+    $query = $this->db->get();
+    return $query;
+  }
 }

@@ -92,14 +92,22 @@
               <button class="primaryab-btn">Lihat</button>
             </a>
           </div>
+          <?php
+          if ($key->jumlah_tawaran!=$list->jumlah_tawaran) {
+          ?>
           <div class="col-md-2">
             <button class="modal-button" href="#myModal<?php echo $list->id_barang; ?>">Hapus</button>
           </div>
+          <?php
+          } ?>
           <!-- /Review Form -->
         </div>
         <div class="col-md-12">
           <br><br>
         </div>
+        <?php
+        if ($key->jumlah_tawaran!=$list->jumlah_tawaran) {
+        ?>
         <!-- Modal content -->
         <div id="myModal<?php echo $list->id_barang;  ?>" class="modal">
           <div class="modal-content">
@@ -119,8 +127,8 @@
            </div>
           </div>
         </div>
-
         <?php
+        }
         }
         ?>
 

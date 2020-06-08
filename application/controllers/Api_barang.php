@@ -7,6 +7,8 @@ class Api_barang extends CI_Controller {
     $this->load->model('Barang_model');
 		$this->load->model('Akun_model');
     $this->load->model('Tawaran_model');
+		$this->load->model('Transfer_model');
+		$this->load->model('Jenis_model');
   }
 	function barang(){
     $id = $this->input->post('id');
@@ -20,7 +22,14 @@ class Api_barang extends CI_Controller {
     if ($bid==null) {
       $bid = array('jumlah_tawaran' => '0');
     }
-    $high = $this->Tawaran_model->getHighest($id)->row();
+    $high = $this->Tawaran_model->getHighest($id)->result();
+		foreach ($high as $key) {
+			if ($key->jumlah_tawaran!=null) {
+				$high = $this->Tawaran_model->getHighest($id)->row();
+			}else {
+				$high = array('jumlah_tawaran' => '0');
+			}
+		}
 
     $response = array(
 			'data' => $barang,
@@ -28,6 +37,14 @@ class Api_barang extends CI_Controller {
       'high' => $high
 		);
     echo json_encode($response);
+  }
+	function terima(){
+		$id = $this->input->post('id_barang');
+    $change = array('status_lelang' => 'terima' );
+    $this->Barang_model->chStat($id,$change);
+    $this->Transfer_model->insTrans($id);
+		$response = array('pesan' => 'selesai');
+		echo json_encode($response);
   }
   function tawaran(){
     $jumlah = $this->input->post('jumlah');
@@ -67,7 +84,8 @@ class Api_barang extends CI_Controller {
           $this->Tawaran_model->updateMybid($data);
           //echo "pernah nawar dan tertinggi";
           //echo $akunhigh." ".$saldo." ".$bidhigh;
-          redirect(base_url('Barang/index/'.$id_barang)); //done
+					$response = array('pesan' => 'sukses');
+					echo json_encode($response); //done
         }else { //jika tidak tertinggi
           if ($bidmax!=NULL) {
             $getakun = $this->Akun_model->dataAkun($akunhigh)->result(); //ambil data saldo penawar tertinggi
@@ -82,7 +100,8 @@ class Api_barang extends CI_Controller {
           $this->Tawaran_model->updateMybid($data);
           //echo "pernah nawar ga tertinggi";
           //echo $akunhigh." ".$saldo." ".$bidhigh;
-          redirect(base_url('Barang/index/'.$id_barang)); //done
+					$response = array('pesan' => 'sukses');
+					echo json_encode($response); //done
         }
       }else { //jika belum pernah nawar
         $cekbid = $this->Tawaran_model->getBid($id_barang)->num_rows();
@@ -97,13 +116,15 @@ class Api_barang extends CI_Controller {
           $this->Akun_model->bid($data);
           $this->Tawaran_model->insertMybid($data);
           //echo "belum pernah nawar tapi ada tawaran yg lain";
-          redirect(base_url('Barang/index/'.$id_barang)); //done
+					$response = array('pesan' => 'sukses');
+					echo json_encode($response); //done
         }else { //jika tidak ada tawaran
           $data['change'] = $saldo-$jumlah; //kurangi saldo user
           $this->Akun_model->bid($data);
           $this->Tawaran_model->insertMybid($data);
           //echo "belum pernah nawar ga ada tawaran lain";
-          redirect(base_url('Barang/index/'.$id_barang)); //done
+					$response = array('pesan' => 'sukses');
+					echo json_encode($response); //done
         }
       }
     }else { //jika saldo lebih kecil
@@ -115,19 +136,28 @@ class Api_barang extends CI_Controller {
             $this->Akun_model->bid($data);
             $this->Tawaran_model->updateMybid($data);
             //echo "saldo cukup untuk selisih";
-            redirect(base_url('Barang/index/'.$id_barang)); //done
+						$response = array('pesan' => 'sukses');
+            echo json_encode($response); //done
           }else { //saldo gak cukup
-            $pesan = 'kurang';
-            redirect(base_url('Barang/index/'.$id_barang.'/'.$pesan)); //done
+            $response = array('pesan' => 'kurang');
+            echo json_encode($response); //done
           }
         }else { //bukan yang tertinggi
-          $pesan = 'kurang';
-          redirect(base_url('Barang/index/'.$id_barang.'/'.$pesan)); //done
+					$response = array('pesan' => 'kurang');
+					echo json_encode($response); //done
         }
       }else {
-        $pesan = 'kurang';
-        redirect(base_url('Barang/index/'.$id_barang.'/'.$pesan)); //done
+				$response = array('pesan' => 'kurang');
+				echo json_encode($response); //done
       }
     }
   }
+	function jenis(){
+		$jenis = $this->Jenis_model->jenisBarang()->result_array();
+		//$response = array('data' => $jenis);
+		echo json_encode($jenis);
+	}
+	function tambahbarang(){
+		
+	}
 }

@@ -69,4 +69,19 @@ class Menang_model extends CI_Model {
     $query = $this->db->get();//->num_rows();
     return $query;
   }
+  function dataWinner($id){
+    $this->db->select('*');
+    $this->db->from('pemenang');
+    $this->db->join('tawaran','tawaran.id_tawaran = pemenang.id_tawaran');
+    $this->db->where('tawaran.id_barang',$id);
+    $query = $this->db->get();
+    return $query;
+  }
+  function thewinner($id){
+    $this->db->select('*');
+    $this->db->from('akun');
+    $this->db->where('id_akun',$id);
+    $query = $this->db->get();
+    return $query;
+  }
 }

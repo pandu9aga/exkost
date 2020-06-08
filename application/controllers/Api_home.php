@@ -8,9 +8,11 @@ class Api_home extends CI_Controller {
 		$this->load->model('Akun_model');
   }
 	function home(){
-    //$id = $this->input->post('id');
-    //$barang = $this->Barang_model->getNotmy($id)->result();
-		$barang = $this->Barang_model->getAllberlangsung()->result_array();
-    echo json_encode($barang);
+    $id = $this->input->post('id');
+    if ($id!=null) {
+			$barang = $this->Barang_model->getNotmy($id)->result_array();
+			//$barang = $this->Barang_model->getAllberlangsung()->result_array();
+	    echo json_encode($barang);
+    }
   }
 }
