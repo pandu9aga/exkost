@@ -158,6 +158,74 @@ class Api_barang extends CI_Controller {
 		echo json_encode($jenis);
 	}
 	function tambahbarang(){
-		
+		$jenis = $this->input->post('jenis_barang');
+    $nama = $this->input->post('nama_barang');
+    $harga = $this->input->post('harga_barang');
+    $tanggal = $this->input->post('tanggal_lelang');
+		$jam = $this->input->post('jam_lelang');
+    $catatan = $this->input->post('catatan');
+    $idpl = $this->input->post('id_pelelang');
+    $status = $this->input->post('status');
+    //$gambar = $this->input->post('gambar');
+
+		$waktu = $tanggal." ".$jam;
+
+    $where = array( 'nama_jenis_barang' => $jenis );
+    $cekidjenis = $this->Jenis_model->idJenis($where)->result();
+    foreach ($cekidjenis as $cekjenis) {
+      $idjenis = $cekjenis->id_jenis_barang;
+    }
+
+    $data = array(
+      'id_jenis_barang' => $idjenis,
+      'nama_barang' => $nama,
+      'harga_barang' => $harga,
+      'waktu_lelang' => $waktu,
+			'info_barang' => $catatan,
+      'id_akun' => $idpl,
+      'status_lelang' => $status
+    );
+
+    $this->Barang_model->uploadBarang($data,'barang');
+    $getbarang = $this->Barang_model->getBarang($data)->result();
+    foreach ($getbarang as $cekbarang) {
+      $idbarang = $cekbarang->id_barang;
+    }
+
+    $config['upload_path'] = './assets/barang/'; //path folder
+    $config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; //type yang dapat diakses bisa anda sesuaikan
+    $config['encrypt_name'] = TRUE; //Enkripsi nama yang terupload
+
+		$foto = $this->input->post('foto');
+		// convert the image data from base64
+    $imgData = base64_decode($foto);
+    // set the image paths
+    $path = './assets/barang/';
+    $file = uniqid().'.png';
+    $file_path = $path.$file;
+
+		file_put_contents($file_path, $imgData);
+
+		$gbr = array(
+			'id_barang' => $idbarang,
+			'nama_gambar_barang' => $file
+		);
+		$this->Barang_model->uploadGambar($gbr);
+
+		$config['source_image'] = './assets/barang/'.$file;
+		$config['create_thumb']= FALSE;
+		$config['maintain_ratio']= FALSE;
+		$config['quality']= '50%';
+		$config['width']= 600;
+		$config['height']= 400;
+		$config['new_image'] = './assets/barang/'.$file;
+		$this->load->library('image_lib', $config);
+		$this->image_lib->resize();
+
+		$response = array(
+			'stat' => 'true',
+			'id_barang' => $idbarang
+    );
+    echo json_encode($response);
 	}
 }
