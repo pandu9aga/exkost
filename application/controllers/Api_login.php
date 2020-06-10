@@ -8,9 +8,59 @@ class Api_login extends CI_Controller {
 		$this->load->model('Akun_model');
   }
 	function index(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
     $this->load->view('viewvue.php');
   }
   function data_api(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
     $query = $this->Vue_model->allAccount()->result();
     //echo json_encode($query);
 		//$cek = $this->Akun_model->loginAkun($data)->num_rows();
@@ -25,6 +75,31 @@ class Api_login extends CI_Controller {
 		}
   }
 	function login(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
 		$data['email_akun'] = $this->input->post('email');
     $data['pass_akun'] = $this->input->post('password');
 		$cek = $this->Akun_model->loginAkun($data)->num_rows();
@@ -45,6 +120,31 @@ class Api_login extends CI_Controller {
 		}
 	}
 	function akun(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
 		$data = $this->input->post('id');
 		$akun = $this->Akun_model->dataAkun($data)->row();
 		$response = array(
@@ -53,6 +153,31 @@ class Api_login extends CI_Controller {
 		echo json_encode($response);
 	}
 	function register(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
 		$data['nama_akun'] = $this->input->post('nama');
     $data['alamat_akun'] = $this->input->post('alamat');
 		$data['no_telp_akun'] = $this->input->post('notelp');
@@ -84,62 +209,4 @@ class Api_login extends CI_Controller {
 			echo json_encode($response);
 		}
 	}
-	public function Api(){
-    $data = $this->Mahasiswa_model->getAll();
-    echo json_encode($data->result_array());
-  }
-  public function ApiInsert(){
-    $username = $this->input->post('username');
-    $password = $this->input->post('password');
-    $nama = $this->input->post('nama');
-    $grup = $this->input->post('grup');
-
-    $data = array(
-      'username' => $username,
-      'password' => $password,
-      'nama' => $nama,
-      'grup' => $grup
-    );
-    $this->Mahasiswa_model->input_data($data,'tm_user');
-    echo json_encode($array);
-  }
-  public function ApiDelete(){
-    if ($this->input->post('username')) {
-      $where = array('username' => $this->input->post('username'));
-      if ($this->Mahasiswa_model->hapus_data($where,'tm_user')) {
-        $array = array('success' => true);
-      } else {
-        $array = array('error' => true);
-      }
-      echo json_encode($array);
-    }
-  }
-  public function ApiUpdate(){
-    if ($this->input->post('username')) {
-      $where = array('username' => $this->input->post('username'));
-      $username = $this->input->post('username');
-      $password = $this->input->post('password');
-      $nama = $this->input->post('nama');
-      $grup = $this->input->post('grup');
-      if ($grup=="admin") {
-        $idgrup = "1";
-      }elseif ($grup=="user") {
-        $idgrup = "2";
-      }else {
-        $array = array('error' => true);
-      }
-      $data = array(
-        'username' => $username,
-        'password' => $password,
-        'nama' => $nama,
-        'grup' => $idgrup
-      );
-      if ($this->Mahasiswa_model->update_data($where,$data,'tm_user')) {
-        $array = array('success' => true);
-      } else {
-        $array = array('error' => true);
-      }
-      echo json_encode($array);
-    }
-  }
 }

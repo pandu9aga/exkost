@@ -13,5 +13,12 @@ class Bankadmin_model extends CI_Model {
     $query = $this->db->get();
     return $query;
   }
+  function nameBank($rek){
+    $this->db->select('*');
+    $this->db->from('bank_admin');
+    $this->db->where('nama_bank_admin',$rek);
+    $query = $this->db->get();
+    return $query;
+  }
 }
 ?>

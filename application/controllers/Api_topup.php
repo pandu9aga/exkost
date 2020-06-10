@@ -1,15 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Api_lelang extends CI_Controller {
+class Api_topup extends CI_Controller {
 	function __construct(){
     parent::__construct();
-    $this->load->model('Barang_model');
 		$this->load->model('Akun_model');
-    $this->load->model('Tawaran_model');
-		$this->load->model('Menang_model');
+		$this->load->model('Transfer_model');
+    $this->load->model('Bankadmin_model');
+    $this->load->Model('Topup_model');
   }
-	function berlangsung(){
+	function bank_admin(){
 		$this->Now->updateNow();
     $done['now'] = $this->Now->getNow()->result();
     $done['all'] = $this->Done_model->allLelang()->result();
@@ -35,15 +35,10 @@ class Api_lelang extends CI_Controller {
         }
       }
     }
-    $id = $this->input->post('id');
-		$keyword = $this->input->post('keyword');
-		if ($keyword=='semua') {
-			$keyword = '';
-		}
-    $lelang = $this->Barang_model->getlelBerlangsung($id,$keyword)->result_array();
-    echo json_encode($lelang);
+    $bank = $this->Bankadmin_model->bankAdmin()->result_array();
+		echo json_encode($bank);
   }
-  function kirim(){
+  function get_idbank(){
 		$this->Now->updateNow();
     $done['now'] = $this->Now->getNow()->result();
     $done['all'] = $this->Done_model->allLelang()->result();
@@ -69,16 +64,13 @@ class Api_lelang extends CI_Controller {
         }
       }
     }
-    $id = $this->input->post('id');
-		$keyword = $this->input->post('keyword');
-		if ($keyword=='semua') {
-			$lelang = $this->Barang_model->getlelKirim($id)->result_array();
-		}else {
-			$lelang = $this->Barang_model->getlelKirim2($id,$keyword)->result_array();
-		}
-    echo json_encode($lelang);
+    $bank = $this->input->post('bank');
+    $exbank = explode(' ',$bank);
+    $thebank = $exbank[0];
+    $array = array('bank' => $thebank);
+    echo json_encode($array);
   }
-  function selesai(){
+  function checkout(){
 		$this->Now->updateNow();
     $done['now'] = $this->Now->getNow()->result();
     $done['all'] = $this->Done_model->allLelang()->result();
@@ -104,70 +96,44 @@ class Api_lelang extends CI_Controller {
         }
       }
     }
+    $nama = $this->input->post('nama_pembayar');
+    $bank = $this->input->post('rek_admin');
+    $nominal = $this->input->post('nominal');
     $id = $this->input->post('id');
-		$keyword = $this->input->post('keyword');
-		if ($keyword=='semua') {
-			$lelang = $this->Barang_model->getlelSelesai($id)->result_array();
-		}else if($keyword=='tunggu'){
-			$lelang = $this->Barang_model->getlelSelesai1($id)->result_array();
-		}else if($keyword=='konfirm'){
-			$lelang = $this->Barang_model->getlelSelesai2($id)->result_array();
-		}else if($keyword=='selesai'){
-			$lelang = $this->Barang_model->getlelSelesai3($id)->result_array();
-		}else if($keyword=='gagal'){
-			$lelang = $this->Barang_model->getlelSelesai4($id)->result_array();
-		}
+    $exbank = explode(' ',$bank);
+    $rekening = $exbank[0];
 
-    echo json_encode($lelang);
-  }
-  function barang(){
-		$this->Now->updateNow();
-    $done['now'] = $this->Now->getNow()->result();
-    $done['all'] = $this->Done_model->allLelang()->result();
-    $selesai = $this->done->selesai($done);
-    if ($selesai!=NULL) {
-      foreach ($selesai as $value) {
-        $ids[] = $value;
-      }
-      $this->Done_model->changeStat($ids);
-      foreach ($ids as $thisid) {
-        $win = $this->Done_model->listTawaran($thisid)->num_rows();
-        if ($win!=0) {
-          $wins = $this->Done_model->winnerBid($thisid)->result();
-          foreach ($wins as $datawin) {
-            $jumbid = $datawin->jumlah_tawaran;
-          }
-          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
-          foreach ($winner as $w) {
-            $this->Done_model->insertWinner($w->id_tawaran);
-          }
-        }else {
-          $this->Done_model->changeStatl($thisid);
-        }
-      }
+    $getnow = $this->Now->getNow()->result();
+    foreach ($getnow as $dn) {
+      $now = $dn->now;
     }
-    $id = $this->input->post('id');
+
+    $getbank =$this->Bankadmin_model->nameBank($rekening)->result();
+    foreach ($getbank as $value) {
+      $idbank = $value->id_bank_admin;
+    }
 
     $data = array(
-      'barang.id_barang' => $id
+      'nama_rekening' => $nama,
+      'id_bank_admin' => $idbank,
+      'nominal' => $nominal,
+      'id_akun' => $id,
+      'waktu_topup' => $now
     );
-		$barang = $this->Barang_model->getBarang1($data)->row();
-    $high = $this->Tawaran_model->getHighest($id)->result();
-		foreach ($high as $key) {
-			if ($key->jumlah_tawaran!=null) {
-				$high = $this->Tawaran_model->getHighest($id)->row();
-			}else {
-				$high = array('jumlah_tawaran' => '0');
-			}
-		}
+
+    $this->Topup_model->tambahTopup($data,'topup');
+    $gettopup = $this->Topup_model->getidTopup($data)->result();
+    foreach ($gettopup as $cektopup) {
+      $idtopup = $cektopup->id_topup;
+    }
 
     $response = array(
-			'data' => $barang,
-      'high' => $high
+			'stat' => 'sukses',
+			'id' => $idtopup
 		);
     echo json_encode($response);
   }
-	function view_send(){
+	function detailTopup(){
 		$this->Now->updateNow();
     $done['now'] = $this->Now->getNow()->result();
     $done['all'] = $this->Done_model->allLelang()->result();
@@ -194,122 +160,143 @@ class Api_lelang extends CI_Controller {
       }
     }
 		$id = $this->input->post('id');
-		$data = array(
-      'barang.id_barang' => $id
-    );
-		$barang = $this->Barang_model->getBarang1($data)->row();
-		$bid = $this->Menang_model->dataWinner($id)->row();
-		$menang = $this->Menang_model->dataWinner($id)->result();
-		foreach ($menang as $key) {
-			$akun = $key->id_akun;
+		$data = $this->Topup_model->getTopup($id)->row();
+		$response = array('data' => $data );
+		echo json_encode($response);
+	}
+	function hapus_topup(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
+		$id = $this->input->post('id');
+		$this->Topup_model->deleteTopup($id);
+		$response = array('stat' => 'sukses' );
+		echo json_encode($response);
+	}
+	function allmyTopup(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
+		$id = $this->input->post('id');
+		$keyword = $this->input->post('keyword');
+		if ($keyword=='semua') {
+			$topup = $this->Topup_model->getMytopup($id)->result_array();
+			echo json_encode($topup);
+		}else {
+			$topup = $this->Topup_model->getMytopuplim($id,$keyword)->result_array();
+			echo json_encode($topup);
 		}
-    $winner = $this->Menang_model->thewinner($akun)->row();
-		$response = array(
-			'data' => $barang,
-			'bid' => $bid,
-      'winner' => $winner
+
+	}
+	function uploadBukti(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
+		$id = $this->input->post('id');
+    $stat = $this->input->post('status');
+
+		$config['upload_path'] = './assets/barang/'; //path folder
+    $config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; //type yang dapat diakses bisa anda sesuaikan
+    $config['encrypt_name'] = TRUE; //Enkripsi nama yang terupload
+
+		$foto = $this->input->post('foto');
+		// convert the image data from base64
+    $imgData = base64_decode($foto);
+    // set the image paths
+    $path = './assets/topup/';
+    $file = uniqid().'.png';
+    $file_path = $path.$file;
+
+		file_put_contents($file_path, $imgData);
+
+		$data = array(
+			'bukti_transfer' => $file,
+			'status_topup' => $stat
 		);
-    echo json_encode($response);
-	}
-	function to_send(){
-		$this->Now->updateNow();
-    $done['now'] = $this->Now->getNow()->result();
-    $done['all'] = $this->Done_model->allLelang()->result();
-    $selesai = $this->done->selesai($done);
-    if ($selesai!=NULL) {
-      foreach ($selesai as $value) {
-        $ids[] = $value;
-      }
-      $this->Done_model->changeStat($ids);
-      foreach ($ids as $thisid) {
-        $win = $this->Done_model->listTawaran($thisid)->num_rows();
-        if ($win!=0) {
-          $wins = $this->Done_model->winnerBid($thisid)->result();
-          foreach ($wins as $datawin) {
-            $jumbid = $datawin->jumlah_tawaran;
-          }
-          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
-          foreach ($winner as $w) {
-            $this->Done_model->insertWinner($w->id_tawaran);
-          }
-        }else {
-          $this->Done_model->changeStatl($thisid);
-        }
-      }
-    }
-		$id = $this->input->post('id');
-		$change = array('status_lelang' => 'kirim' );
-    $this->Barang_model->chStat($id,$change);
-		$thisId = array('id_barang' => $id);
-		$response = array('data' => $thisId);
-    echo json_encode($response);
-	}
-	function view_trans(){
-		$this->Now->updateNow();
-    $done['now'] = $this->Now->getNow()->result();
-    $done['all'] = $this->Done_model->allLelang()->result();
-    $selesai = $this->done->selesai($done);
-    if ($selesai!=NULL) {
-      foreach ($selesai as $value) {
-        $ids[] = $value;
-      }
-      $this->Done_model->changeStat($ids);
-      foreach ($ids as $thisid) {
-        $win = $this->Done_model->listTawaran($thisid)->num_rows();
-        if ($win!=0) {
-          $wins = $this->Done_model->winnerBid($thisid)->result();
-          foreach ($wins as $datawin) {
-            $jumbid = $datawin->jumlah_tawaran;
-          }
-          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
-          foreach ($winner as $w) {
-            $this->Done_model->insertWinner($w->id_tawaran);
-          }
-        }else {
-          $this->Done_model->changeStatl($thisid);
-        }
-      }
-    }
-		$id = $this->input->post('id');
-		$barang = $this->Barang_model->getBarangTrans($id)->row();
-		$bid = $this->Menang_model->dataWinner($id)->row();
+		$where = array( 'id_topup' => $id );
+
+		$this->Topup_model->updateTopup($data,$where);
+
+		$config['source_image'] = './assets/topup/'.$file;
+		$config['create_thumb']= FALSE;
+		$config['maintain_ratio']= FALSE;
+		$config['quality']= '50%';
+		$config['width']= 900;
+		$config['height']= 600;
+		$config['new_image'] = './assets/topup/'.$file;
+		$this->load->library('image_lib', $config);
+		$this->image_lib->resize();
+
 		$response = array(
-			'data' => $barang,
-			'bid' => $bid
+			'stat' => 'sukses',
+			'id' => $id
 		);
-    echo json_encode($response);
-	}
-	function proses_konfirm(){
-		$this->Now->updateNow();
-    $done['now'] = $this->Now->getNow()->result();
-    $done['all'] = $this->Done_model->allLelang()->result();
-    $selesai = $this->done->selesai($done);
-    if ($selesai!=NULL) {
-      foreach ($selesai as $value) {
-        $ids[] = $value;
-      }
-      $this->Done_model->changeStat($ids);
-      foreach ($ids as $thisid) {
-        $win = $this->Done_model->listTawaran($thisid)->num_rows();
-        if ($win!=0) {
-          $wins = $this->Done_model->winnerBid($thisid)->result();
-          foreach ($wins as $datawin) {
-            $jumbid = $datawin->jumlah_tawaran;
-          }
-          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
-          foreach ($winner as $w) {
-            $this->Done_model->insertWinner($w->id_tawaran);
-          }
-        }else {
-          $this->Done_model->changeStatl($thisid);
-        }
-      }
-    }
-		$id = $this->input->post('id');
-		$change = array('status_transfer' => 'terima' );
-    $this->Barang_model->chStat($id,$change);
-		$thisId = array('id_barang' => $id);
-		$response = array('data' => $thisId);
-    echo json_encode($response);
+		echo json_encode($response);
 	}
 }
