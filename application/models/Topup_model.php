@@ -84,6 +84,14 @@ class Topup_model extends CI_Model {
     $query = $this->db->get();
     return $query;
   }
+  function getAlltopuplim($where){
+    $this->db->select('*');
+    $this->db->from('topup');
+    $this->db->where('status_topup',$where);
+    $this->db->join('bank_admin','topup.id_bank_admin = bank_admin.id_bank_admin');
+    $query = $this->db->get();
+    return $query;
+  }
   function getPgall($number,$offset){
     $this->db->select('*');
     $this->db->from('topup');

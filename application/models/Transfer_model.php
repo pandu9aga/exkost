@@ -49,4 +49,29 @@ class Transfer_model extends CI_Model {
     $this->db->where('id_barang',$id);
     $this->db->update('barang');
   }
+  function getAlltranslim($lim){
+    $this->db->select('*');
+    $this->db->from('pemenang');
+    $this->db->join('tawaran','tawaran.id_tawaran = pemenang.id_tawaran');
+    $this->db->join('barang','barang.id_barang = tawaran.id_barang');
+    $this->db->join('akun','akun.id_akun = barang.id_akun');
+    $this->db->join('transfer','barang.id_barang = transfer.id_barang');
+    //$this->db->join('akun','akun.id_akun = barang.id_akun');
+    //$this->db->where('barang.status_transfer in ("","kirim")');
+    $this->db->where('barang.status_lelang','terima');
+    $this->db->where('barang.status_transfer',$lim);
+    return $this->db->get();
+  }
+  function getAlltranslimId($id){
+    $this->db->select('*');
+    $this->db->from('pemenang');
+    $this->db->join('tawaran','tawaran.id_tawaran = pemenang.id_tawaran');
+    $this->db->join('barang','barang.id_barang = tawaran.id_barang');
+    $this->db->join('akun','akun.id_akun = barang.id_akun');
+    $this->db->join('transfer','barang.id_barang = transfer.id_barang');
+    //$this->db->join('akun','akun.id_akun = barang.id_akun');
+    //$this->db->where('barang.status_transfer in ("","kirim")');
+    $this->db->where('pemenang.id_pemenang',$id);
+    return $this->db->get();
+  }
 }

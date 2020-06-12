@@ -6,6 +6,10 @@ class Api_admin extends CI_Controller {
     parent::__construct();
     $this->load->model('Admin_model');
 		$this->load->model('Akun_model');
+		$this->load->model('Jenis_model');
+		$this->load->model('Topup_model');
+		$this->load->model('Notif_model');
+		$this->load->model('Transfer_model');
   }
 	function login(){
 		$this->Now->updateNow();
@@ -111,23 +115,30 @@ class Api_admin extends CI_Controller {
         }
       }
     }
-		$data['nama_admin'] = $this->input->post('nama');
-    $data['pass_admin'] = $this->input->post('password');
+		$nama = $this->input->post('nama');
+    $password = $this->input->post('password');
 
-    $regis = $this->Admin_model->registerAdmin($data,'admin');
-    if ($regis!=0) {
-      $response = array(
+    $data = array(
+      'nama_admin' => $nama,
+			'pass_admin' => $password
+    );
+
+		$cekNama = $this->Admin_model->cekNama($data)->num_rows();
+		if ($cekNama == 0) {
+			$this->Admin_model->registerAdmin($data,'admin');
+			$response = array(
         'status' => "success",
         'message' => "Registrasi berhasil"
       );
       echo json_encode($response);
-    }else {
-      $response = array(
+		}
+		else {
+			$response = array(
         'status' => "fail",
-        'message' => "Registrasi gagal"
+        'message' => "Admin sudah ada"
       );
       echo json_encode($response);
-    }
+		}
 	}
   function update_profil(){
     $nama = $this->input->post('nama');
@@ -139,7 +150,7 @@ class Api_admin extends CI_Controller {
       'pass_admin' => $password
     );
     $where = array( 'id_admin' => $id );
-    $this->Akun_model->updateProfil($data,$where);
+    $this->Admin_model->updateProfil($data,$where);
 
 		$idakun = array('id_admin' => $id);
 		$response = array(
@@ -148,4 +159,161 @@ class Api_admin extends CI_Controller {
     );
     echo json_encode($response);
   }
+	function data_jenis(){
+    $data = $this->Jenis_model->jenisBarang()->result();
+		echo json_encode($data);
+  }
+	function get_jenis(){
+		$id = $this->input->post('id_jenis');
+		$data = $this->Jenis_model->getjenis($id)->row();
+		echo json_encode($data);
+	}
+  function proses_cjenis(){
+    $nama = $this->input->post('nama_jenis');
+
+    $cek = $this->Jenis_model->idJenis2($nama)->num_rows();
+    if ($cek==0) {
+      $insertdata = array('nama_jenis_barang' => $nama );
+      $this->Jenis_model->tambahJenis($insertdata);
+
+			$id = $this->Jenis_model->idJenis2($nama)->row();
+
+			$response = array(
+				'pesan' => 'success',
+				'data' => $id
+	    );
+	    echo json_encode($response);
+    }
+    else {
+			$response = array(
+				'pesan' => 'fail'
+	    );
+	    echo json_encode($response);
+    }
+  }
+  function proses_ujenis(){
+    $nama = $this->input->post('nama_jenis');
+    $id = $this->input->post('id_jenis');
+
+    $cek = $this->Jenis_model->getjenis($id)->num_rows();
+    if ($cek!=0) {
+      $updatedata = array('nama_jenis_barang' => $nama );
+      $this->Jenis_model->editJenis($updatedata,$id);
+
+			$response = array(
+				'pesan' => 'true'
+	    );
+	    echo json_encode($response);
+    }
+  }
+  function proses_djenis(){
+		$id = $this->input->post('id_jenis');
+    $cek = $this->Jenis_model->getjenis($id)->result();
+    foreach ($cek as $key) {
+      $nama = $key->nama_jenis_barang;
+    }
+    $this->Jenis_model->hapusJenis($id);
+		$response = array(
+			'pesan' => 'true'
+		);
+		echo json_encode($response);
+  }
+	function allTopup(){
+		$keyword = $this->input->post('keyword');
+		if ($keyword=='semua') {
+			$topup = $this->Topup_model->getAll()->result_array();
+			echo json_encode($topup);
+		}else {
+			$topup = $this->Topup_model->getAlltopuplim($keyword)->result_array();
+			echo json_encode($topup);
+		}
+	}
+	function changestatTop(){
+		$idtopup = $this->input->post('id');
+		$stat = $this->input->post('status');
+		if ($stat=='sukses') {
+			$get = $this->Topup_model->getTopup($idtopup)->result();
+	    foreach ($get as $topup) {
+	      $id_akun = $topup->id_akun;
+	      $saldo = $topup->saldo_akun;
+	      $nominal = $topup->nominal;
+	    }
+	    $topup = $saldo+$nominal;
+	    $data = array(
+	      'id_akun' => $id_akun,
+	      'nominal' => $topup,
+	      'status_topup' => 'sukses'
+	    );
+	    $data['id_topup'] = $idtopup;
+	    $this->Akun_model->topupSaldo($data);
+	    $this->Topup_model->changeTopup($data);
+	    $this->Notif_model->topupNotif($data);
+		}else {
+			$get = $this->Topup_model->getTopup($idtopup)->result();
+	    foreach ($get as $topup) {
+	      $id_akun = $topup->id_akun;
+	      $saldo = $topup->saldo_akun;
+	      $nominal = $topup->nominal;
+	    }
+	    $data = array(
+	      'id_akun' => $id_akun,
+	      'nominal' => $saldo,
+	      'status_topup' => 'gagal'
+	    );
+	    $data['id_topup'] = $idtopup;
+	    $this->Topup_model->changeTopup($data);
+	    $this->Notif_model->topupNotif($data);
+		}
+		$response = array(
+			'stat' => 'sukses',
+			'id' => $idtopup
+		);
+		echo json_encode($response);
+	}
+	function getTransLim(){
+		$key = $this->input->post('key');
+		$data = $this->Transfer_model->getAlltranslim($key)->result_array();
+		echo json_encode($data);
+	}
+	function getTransLimId(){
+		$id = $this->input->post('id');
+		$data = $this->Transfer_model->getAlltranslimId($id)->row();
+		$response = array('data' => $data );
+		echo json_encode($response);
+	}
+	function upBuktiTrans(){
+		$id = $this->input->post('idtrans');
+    $ib = $this->input->post('idbar');
+
+		if ($this->input->post('foto')!=null) {
+			$foto = $this->input->post('foto');
+			// convert the image data from base64
+			$imgData = base64_decode($foto);
+			// set the image paths
+			$path = './assets/transfer/';
+			$file = uniqid().'.png';
+			$file_path = $path.$file;
+
+			file_put_contents($file_path, $imgData);
+
+			$data = array( 'bukti_transfer' => $file );
+			$where = array( 'id_transfer' => $id );
+
+			$this->Transfer_model->uploadTrans($data,$where);
+			$this->Transfer_model->chBarang($ib);
+			$config['source_image'] = './assets/transfer/'.$file;
+			$config['create_thumb']= FALSE;
+			$config['maintain_ratio']= FALSE;
+			$config['quality']= '50%';
+			$config['width']= 900;
+			$config['height']= 600;
+			$config['new_image'] = './assets/transfer/'.$file;
+			$this->load->library('image_lib', $config);
+			$this->image_lib->resize();
+		}
+		$response = array(
+      'msg' => 'sukses'
+    );
+    echo json_encode($response);
+	}
 }
