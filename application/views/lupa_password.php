@@ -79,7 +79,7 @@
 				<!-- row -->
 				<div class="row">
 					<div class="col-md-12">
-						<h3 class="breadcrumb-header">Login</h3>
+						<h3 class="breadcrumb-header">Lupa Password</h3>
 					</div>
 				</div>
 				<!-- /row -->
@@ -96,28 +96,14 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="login">
-							<p>Masuk ke <strong>EXKOST</strong></p>
-							<?php
-							if (isset($regisSukses)) {
-								echo "Registrasi Berhasil";
-							}
-							if (isset($resetSukses)) {
-								if ($resetSukses=='ya') {
-									echo "Password anda telah berhasil diubah";
-								}else {
-									echo "Error, Password anda gagal diubah";
-								}
-							}
-							if (isset($login)) {
-								echo "Email atau Password Salah!!";
-							}
-							 ?>
-							<form class="" action="prosesLogin" method="post">
-								<input class="input" type="email" placeholder="Masukkan Email" name="email" required>
-                <input class="input" type="password" placeholder="Masukkan Password" name="password" required>
-								<button class="primary-btn">Masuk</button>
-                <a href="<?php echo base_url('main/lupa_password'); ?>">Lupa password</a>
+							<p>Lupa <strong>Password</strong></p>
+							<form class="" action="email_reset_password_validation" method="post">
+								<input class="input" type="email" placeholder="Masukkan Email Anda" name="email" required>
+								<button class="primary-btn">Reset Password</button>
 							</form>
+              <br>
+              <a href="<?php echo base_url('main/login'); ?>">Masuk sekarang</a>
+              <a href=""> / </a>
               <a href="<?php echo base_url('main/register'); ?>">Belum punya akun?</a>
 						</div>
 					</div>

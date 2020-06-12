@@ -108,10 +108,11 @@
                 <input class="input" type="number" placeholder="Masukkan Nomor Telepon" name="notelepon" required oninvalid="this.setCustomValidity('nomor telepon tidak boleh kosong')" oninput="setCustomValidity('')">
 								<input class="input" type="email" placeholder="Masukkan Email" name="email" required oninvalid="this.setCustomValidity('email tidak boleh kosong')" oninput="setCustomValidity('')">
 								<input class="input" type="text" placeholder="Masukkan Nomor Rekening" name="rekening" required oninvalid="this.setCustomValidity('nomor rekening tidak boleh kosong')" oninput="setCustomValidity('')">
-                <input class="input" type="password" placeholder="Masukkan Password" name="password" required oninvalid="this.setCustomValidity('password tidak boleh kosong')" oninput="setCustomValidity('')">
-								<button class="primary-btn">Daftar</button>
+                <input class="input" type="password" placeholder="Masukkan Password" id="txtPassword" name="password" required oninvalid="this.setCustomValidity('password tidak boleh kosong')" oninput="setCustomValidity('')">
+								<input class="input" type="password" placeholder="Konfirmasi Password" id="txtConfirmPassword" name="repassword" required oninvalid="this.setCustomValidity('ulangi password yang benar')" oninput="setCustomValidity('')"/>
+								<button class="primary-btn" id="updateprofile">Daftar</button>
 							</form>
-              <a href="login">Sudah punya akun?</a>
+              <a href="<?php echo base_url('main/login'); ?>">Sudah punya akun?</a>
 						</div>
 					</div>
 				</div>
@@ -206,6 +207,19 @@
 		<script src="<?php echo base_url('assets/js/nouislider.min.js'); ?>"></script>
 		<script src="<?php echo base_url('assets/js/jquery.zoom.min.js'); ?>"></script>
 		<script src="<?php echo base_url('assets/js/main.js'); ?>"></script>
+		<script type="text/javascript">
+		        $(function () {
+		            $("#updateprofile").click(function () {
+		                var password = $("#txtPassword").val();
+		                var confirmPassword = $("#txtConfirmPassword").val();
+		                if (password != confirmPassword) {
+		                    alert("Password tidak sama, ulangi..!!");
+		                    return false;
+		                }
+		                return true;
+		            });
+		        });
+		</script>
 
 	</body>
 </html>

@@ -163,13 +163,14 @@
 				<!-- row -->
 				<div class="row">
 					<?php
+					$g=1;
 					foreach ($jenlimcol as $kategolimcol) {
 					?>
 					<!-- shop -->
 					<div class="col-md-4 col-xs-6">
 						<div class="shop">
 							<div class="shop-img">
-								<img src="<?php echo base_url('assets/img/shop01.png'); ?>" alt="">
+								<img src="<?php echo base_url('assets/img/kat'.$g.'.png'); ?>" alt="" height="250" width="250">
 							</div>
 							<form method="post" name="f<?php echo $kategolimcol->nama_jenis_barang; ?>" action="<?php echo base_url('Cari/hasil'); ?>">
 								<input type="hidden" name="min" value="0">
@@ -185,6 +186,7 @@
 					</div>
 					<!-- /shop -->
 					<?php
+					$g++;
 					}
 					?>
 				</div>

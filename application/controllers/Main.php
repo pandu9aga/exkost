@@ -7,6 +7,9 @@ class Main extends CI_Controller {
     $this->load->model('Akun_model');
 		$this->load->model('Jenis_model');
 		$this->load->model('Barang_model');
+		$this->load->model('Reset_model');
+
+		$this->load->helper('string');
   }
 	public function index()
 	{
@@ -239,4 +242,70 @@ class Main extends CI_Controller {
 			$this->load->view('register',$data);
 		}
   }
+	function lupa_password(){
+		$this->load->view('lupa_password');
+	}
+	public function email_reset_password_validation(){
+		$email = $this->input->post('email');
+		$reset_key = random_string('alnum', 15);
+		if($this->Reset_model->update_reset_key($email,$reset_key))
+		{
+			$this->load->library('email');
+			$config = array();
+			$config['charset'] = 'utf-8';
+			$config['useragent'] = 'Codeigniter';
+			$config['protocol']= "smtp";
+			$config['mailtype']= "html";
+			$config['smtp_host']= "ssl://smtp.gmail.com";//pengaturan smtp
+			$config['smtp_port']= "465";
+			$config['smtp_timeout']= "5";
+			$config['smtp_user']= "exkost.decode@gmail.com"; // isi dengan email kamu
+			$config['smtp_pass']= "decode12345"; // isi dengan password kamu
+			$config['crlf']="\r\n";
+			$config['newline']="\r\n";
+			$config['wordwrap'] = TRUE;
+			//memanggil library email dan set konfigurasi untuk pengiriman email
+			$this->email->initialize($config);
+			//konfigurasi pengiriman
+			$this->email->from($config['smtp_user']);
+			$this->email->to($this->input->post('email'));
+			$this->email->subject("Reset your password");
+			$message = "<p>Anda melakukan permintaan reset password</p>";
+			$message .= "<a href='".base_url('main/reset_password/'.$reset_key)."'>klik reset password</a>";
+			$this->email->message($message);
+			if($this->email->send())
+			{
+				echo "silahkan cek email <b>".$this->input->post('email').'</b> untuk melakukan reset password';
+			}else
+			{
+				echo "Berhasil melakukan registrasi lupa password, gagal mengirim verifikasi email";
+			}
+			echo "<br><br><a href='".base_url('main/login')."'>Kembali ke Menu Login</a>";
+		}else {
+			die("Email yang anda masukan belum terdaftar");
+		}
+}
+public function reset_password(){
+	$reset_key = $this->uri->segment(3);
+	if(!$reset_key){
+		die('Jangan Dihapus');
+	}
+	if($this->Reset_model->check_reset_key($reset_key) == 1)
+	{
+		$this->load->view('reset_password');
+	} else{
+		die("reset key salah");
+	}
+}
+	public function reset_password_validation(){
+		$reset_key = $this->input->post('reset_key');
+		$password = $this->input->post('password');
+		if($this->Reset_model->reset_password($reset_key, $password)){
+			$data['resetSukses'] = "ya";
+			$this->load->view('login',$data);
+		}else{
+			$data['resetSukses'] = "tidak";
+			$this->load->view('login',$data);
+		}
+	}
 }

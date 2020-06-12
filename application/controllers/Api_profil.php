@@ -84,29 +84,30 @@ class Api_profil extends CI_Controller {
     $where = array( 'id_akun' => $id );
     $this->Akun_model->updateProfil($data,$where);
 
-		$foto = $this->input->post('foto');
-		// convert the image data from base64
-    $imgData = base64_decode($foto);
-    // set the image paths
-    $path = './assets/profil/';
-    $file = uniqid().'.png';
-    $file_path = $path.$file;
+		if ($this->input->post('foto')!=null) {
+			$foto = $this->input->post('foto');
+			// convert the image data from base64
+			$imgData = base64_decode($foto);
+			// set the image paths
+			$path = './assets/profil/';
+			$file = uniqid().'.png';
+			$file_path = $path.$file;
 
-		file_put_contents($file_path, $imgData);
+			file_put_contents($file_path, $imgData);
 
-		$data = array( 'pp_akun' => $file );
-		$where = array( 'id_akun' => $id );
-		$this->Akun_model->updateProfil($data,$where);
-		$config['source_image'] = './assets/profil/'.$file;
-		$config['create_thumb']= FALSE;
-		$config['maintain_ratio']= FALSE;
-		$config['quality']= '50%';
-		$config['width']= 600;
-		$config['height']= 600;
-		$config['new_image'] = './assets/profil/'.$file;
-		$this->load->library('image_lib', $config);
-		$this->image_lib->resize();
-
+			$data = array( 'pp_akun' => $file );
+			$where = array( 'id_akun' => $id );
+			$this->Akun_model->updateProfil($data,$where);
+			$config['source_image'] = './assets/profil/'.$file;
+			$config['create_thumb']= FALSE;
+			$config['maintain_ratio']= FALSE;
+			$config['quality']= '50%';
+			$config['width']= 600;
+			$config['height']= 600;
+			$config['new_image'] = './assets/profil/'.$file;
+			$this->load->library('image_lib', $config);
+			$this->image_lib->resize();
+		}
 		$idakun = array('id_akun' => $id);
 		$response = array(
       'data' => $idakun,

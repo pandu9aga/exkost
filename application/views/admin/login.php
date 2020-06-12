@@ -1,5 +1,9 @@
 <html>
+<head>
+	<link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url('assets/admin/assets/images/logo_min.png'); ?>">
+  <title>ExKost Admin</title>
 	<link href="<?php echo base_url('assets/admin/css/style.css'); ?>" rel="stylesheet">
+</head>
 <body class="login">
 <div class="login-box">
     <h2>Account Login</h2>

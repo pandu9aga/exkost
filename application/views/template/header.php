@@ -55,7 +55,7 @@
           <!-- LOGO -->
           <div class="col-md-3">
             <div class="header-logo">
-              <a href="#" class="logo">
+              <a href="<?php echo base_url('Home'); ?>" class="logo">
                 <img src="<?php echo base_url('assets/img/logo.png'); ?>" alt="">
               </a>
             </div>

@@ -79,7 +79,7 @@
 				<!-- row -->
 				<div class="row">
 					<div class="col-md-12">
-						<h3 class="breadcrumb-header">Login</h3>
+						<h3 class="breadcrumb-header">Reset Password</h3>
 					</div>
 				</div>
 				<!-- /row -->
@@ -96,28 +96,16 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="login">
-							<p>Masuk ke <strong>EXKOST</strong></p>
-							<?php
-							if (isset($regisSukses)) {
-								echo "Registrasi Berhasil";
-							}
-							if (isset($resetSukses)) {
-								if ($resetSukses=='ya') {
-									echo "Password anda telah berhasil diubah";
-								}else {
-									echo "Error, Password anda gagal diubah";
-								}
-							}
-							if (isset($login)) {
-								echo "Email atau Password Salah!!";
-							}
-							 ?>
-							<form class="" action="prosesLogin" method="post">
-								<input class="input" type="email" placeholder="Masukkan Email" name="email" required>
-                <input class="input" type="password" placeholder="Masukkan Password" name="password" required>
-								<button class="primary-btn">Masuk</button>
-                <a href="<?php echo base_url('main/lupa_password'); ?>">Lupa password</a>
+              <?php $reset_key = $this->uri->segment(3); ?>
+							<p>Reset <strong>Password</strong></p>
+							<form class="" action="<?php echo base_url('main/reset_password_validation'); ?>" method="post">
+                <input class="input" type="hidden" value="<?php echo $reset_key; ?>" placeholder="reset_key" name="reset_key" required oninvalid="this.setCustomValidity('reset_key tidak boleh kosong')" oninput="setCustomValidity('')">
+                <input class="input" type="password" placeholder="Masukkan Password" id="txtPassword" name="password" required oninvalid="this.setCustomValidity('password tidak boleh kosong')" oninput="setCustomValidity('')">
+								<input class="input" type="password" placeholder="Konfirmasi Password" id="txtConfirmPassword" name="repassword" required oninvalid="this.setCustomValidity('ulangi password yang benar')" oninput="setCustomValidity('')"/>
+								<button class="primary-btn" id="updateprofile">Reset Password</button>
 							</form>
+              <a href="<?php echo base_url('main/login'); ?>">Masuk sekarang</a>
+              <a href=""> / </a>
               <a href="<?php echo base_url('main/register'); ?>">Belum punya akun?</a>
 						</div>
 					</div>
@@ -206,7 +194,6 @@
 		</footer>
 		<!-- /FOOTER -->
 
-
 		<!-- jQuery Plugins -->
     <script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
 		<script src="<?php echo base_url('assets/js/bootstrap.min.js'); ?>"></script>
@@ -214,6 +201,19 @@
 		<script src="<?php echo base_url('assets/js/nouislider.min.js'); ?>"></script>
 		<script src="<?php echo base_url('assets/js/jquery.zoom.min.js'); ?>"></script>
 		<script src="<?php echo base_url('assets/js/main.js'); ?>"></script>
+    <script type="text/javascript">
+            $(function () {
+                $("#updateprofile").click(function () {
+                    var password = $("#txtPassword").val();
+                    var confirmPassword = $("#txtConfirmPassword").val();
+                    if (password != confirmPassword) {
+                        alert("Password tidak sama, ulangi..!!");
+                        return false;
+                    }
+                    return true;
+                });
+            });
+    </script>
 
 	</body>
 </html>
