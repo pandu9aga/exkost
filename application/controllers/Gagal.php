@@ -70,7 +70,7 @@ class Gagal extends CI_Controller {
     }
 
     $this->load->library('pagination');
-    $config['base_url'] = base_url().'index.php/Gagal/index/';
+    $config['base_url'] = base_url().'index.php/gagal/index/';
     $config['total_rows'] = $jumlah_data;
     $config['per_page'] = 5;
     $config['uri_segment'] = 3;

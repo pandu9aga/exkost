@@ -6,7 +6,7 @@ class Tawaran extends CI_Controller {
 		parent::__construct();
 
 		if($this->session->userdata('status') != "login"){
-			redirect(base_url('Main/login'));
+			redirect(base_url('main/login'));
 		}
 
     $this->load->model('Akun_model');
@@ -76,7 +76,7 @@ class Tawaran extends CI_Controller {
           $this->Tawaran_model->updateMybid($data);
           //echo "pernah nawar dan tertinggi";
           //echo $akunhigh." ".$saldo." ".$bidhigh;
-          redirect(base_url('Barang/index/'.$id_barang)); //done
+          redirect(base_url('barang/index/'.$id_barang)); //done
         }else { //jika tidak tertinggi
           if ($bidmax!=NULL) {
             $getakun = $this->Akun_model->dataAkun($akunhigh)->result(); //ambil data saldo penawar tertinggi
@@ -91,7 +91,7 @@ class Tawaran extends CI_Controller {
           $this->Tawaran_model->updateMybid($data);
           //echo "pernah nawar ga tertinggi";
           //echo $akunhigh." ".$saldo." ".$bidhigh;
-          redirect(base_url('Barang/index/'.$id_barang)); //done
+          redirect(base_url('barang/index/'.$id_barang)); //done
         }
       }else { //jika belum pernah nawar
         $cekbid = $this->Tawaran_model->getBid($id_barang)->num_rows();
@@ -106,13 +106,13 @@ class Tawaran extends CI_Controller {
           $this->Akun_model->bid($data);
           $this->Tawaran_model->insertMybid($data);
           //echo "belum pernah nawar tapi ada tawaran yg lain";
-          redirect(base_url('Barang/index/'.$id_barang)); //done
+          redirect(base_url('barang/index/'.$id_barang)); //done
         }else { //jika tidak ada tawaran
           $data['change'] = $saldo-$jumlah; //kurangi saldo user
           $this->Akun_model->bid($data);
           $this->Tawaran_model->insertMybid($data);
           //echo "belum pernah nawar ga ada tawaran lain";
-          redirect(base_url('Barang/index/'.$id_barang)); //done
+          redirect(base_url('barang/index/'.$id_barang)); //done
         }
       }
     }else { //jika saldo lebih kecil
@@ -124,18 +124,18 @@ class Tawaran extends CI_Controller {
             $this->Akun_model->bid($data);
             $this->Tawaran_model->updateMybid($data);
             //echo "saldo cukup untuk selisih";
-            redirect(base_url('Barang/index/'.$id_barang)); //done
+            redirect(base_url('barang/index/'.$id_barang)); //done
           }else { //saldo gak cukup
             $pesan = 'kurang';
-            redirect(base_url('Barang/index/'.$id_barang.'/'.$pesan)); //done
+            redirect(base_url('barang/index/'.$id_barang.'/'.$pesan)); //done
           }
         }else { //bukan yang tertinggi
           $pesan = 'kurang';
-          redirect(base_url('Barang/index/'.$id_barang.'/'.$pesan)); //done
+          redirect(base_url('barang/index/'.$id_barang.'/'.$pesan)); //done
         }
       }else {
         $pesan = 'kurang';
-        redirect(base_url('Barang/index/'.$id_barang.'/'.$pesan)); //done
+        redirect(base_url('barang/index/'.$id_barang.'/'.$pesan)); //done
       }
     }
   }

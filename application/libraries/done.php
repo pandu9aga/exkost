@@ -1,5 +1,5 @@
 <?php
-class done{
+class Done{
   function selesai($data){
     $selesai = [];
     foreach ($data['now'] as $key) {

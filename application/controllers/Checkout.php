@@ -6,7 +6,7 @@ class Checkout extends CI_Controller {
 		parent::__construct();
 
 		if($this->session->userdata('status') != "login"){
-			redirect(base_url('Main/login'));
+			redirect(base_url('main/login'));
 		}
 
     $this->load->model('Akun_model');
@@ -50,13 +50,13 @@ class Checkout extends CI_Controller {
     $data['qtytopup'] = $this->Topup_model->jmlQtyBayar($id_akun);
     if ($nominal>=1) {
       if ($nominal>6) {
-        redirect(base_url('Topup'));
+        redirect(base_url('topup'));
       }
       $data['nominal'] = $nominal;
       $data['bankadmin'] = $this->Bankadmin_model->bankAdmin()->result();
   		$this->template->checkout('checkout',$data);
     }else {
-      redirect(base_url('Topup'));
+      redirect(base_url('topup'));
     }
 	}
   function prosesCheckout(){
@@ -108,6 +108,6 @@ class Checkout extends CI_Controller {
     foreach ($gettopup as $cektopup) {
       $idtopup = $cektopup->id_topup;
     }
-    redirect(base_url('Pembayaran/detail_pembayaran/'.$idtopup));
+    redirect(base_url('pembayaran/detail_pembayaran/'.$idtopup));
   }
 }

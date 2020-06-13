@@ -6,7 +6,7 @@ class Riwayat_Topup extends CI_Controller {
 		parent::__construct();
 
 		if($this->session->userdata('status') != "login"){
-			redirect(base_url('Main/login'));
+			redirect(base_url('main/login'));
 		}
 
     $this->load->model('Akun_model');
@@ -54,7 +54,7 @@ class Riwayat_Topup extends CI_Controller {
 
     $jumlah_data = $this->Topup_model->jmlMyriwayat($id_akun);
     $this->load->library('pagination');
-    $config['base_url'] = base_url().'index.php/Riwayat_Topup/index/';
+    $config['base_url'] = base_url().'index.php/riwayat_Topup/index/';
     $config['total_rows'] = $jumlah_data;
     $config['per_page'] = 5;
     $config['uri_segment'] = 3;

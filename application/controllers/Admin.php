@@ -88,7 +88,7 @@ class Admin extends CI_Controller {
 				'status' => "login"
 			);
 			$this->session->set_userdata($data_session);
-			redirect(base_url('Admin/topup_user'));
+			redirect(base_url('admin/topup_user'));
 		}
 		else{
 			$data['login'] = "salah";
@@ -122,7 +122,7 @@ class Admin extends CI_Controller {
       }
     }
 		$this->session->sess_destroy();
-		redirect(base_url('Admin/login'));
+		redirect(base_url('admin/login'));
 	}
 	public function register()
 	{
@@ -151,7 +151,7 @@ class Admin extends CI_Controller {
         }
       }
     }
-		$this->load->view('Admin/register');
+		$this->load->view('admin/register');
 	}
 	public function prosesRegister(){
     $this->Now->updateNow();
@@ -226,14 +226,14 @@ class Admin extends CI_Controller {
     }
 
     if($this->session->userdata('status') != "login"){
-		redirect(base_url('Admin/login'));
+		redirect(base_url('admin/login'));
 		}
 
     $id_admin = $this->session->userdata('id_admin');
 
     $jumlah_data = $this->Topup_model->getAll()->num_rows();
     $this->load->library('pagination');
-    $config['base_url'] = base_url().'index.php/Admin/topup_user/';
+    $config['base_url'] = base_url().'index.php/admin/topup_user/';
     $config['total_rows'] = $jumlah_data;
     $config['per_page'] = 5;
     $config['uri_segment'] = 3;
@@ -304,7 +304,7 @@ class Admin extends CI_Controller {
     }
 
     if($this->session->userdata('status') != "login"){
-		redirect(base_url('Admin/login'));
+		redirect(base_url('admin/login'));
 		}
 
     $id_admin = $this->session->userdata('id_admin');
@@ -326,7 +326,7 @@ class Admin extends CI_Controller {
     $this->Topup_model->changeTopup($data);
     $this->Notif_model->topupNotif($data);
 
-    redirect(base_url('Admin/topup_user'));
+    redirect(base_url('admin/topup_user'));
   }
   function batal_topup($idtopup){
     $this->Now->updateNow();
@@ -356,7 +356,7 @@ class Admin extends CI_Controller {
     }
 
     if($this->session->userdata('status') != "login"){
-		redirect(base_url('Admin/login'));
+		redirect(base_url('admin/login'));
 		}
 
     $id_admin = $this->session->userdata('id_admin');
@@ -406,14 +406,14 @@ class Admin extends CI_Controller {
     }
 
     if($this->session->userdata('status') != "login"){
-		redirect(base_url('Admin/login'));
+		redirect(base_url('admin/login'));
 		}
 
     $id_admin = $this->session->userdata('id_admin');
 
     $jumlah_data = $this->Transfer_model->getAlltrans()->num_rows();
     $this->load->library('pagination');
-    $config['base_url'] = base_url().'index.php/Admin/transfer_pelelang/';
+    $config['base_url'] = base_url().'index.php/admin/transfer_pelelang/';
     $config['total_rows'] = $jumlah_data;
     $config['per_page'] = 5;
     $config['uri_segment'] = 3;
@@ -484,7 +484,7 @@ class Admin extends CI_Controller {
     }
 
     if($this->session->userdata('status') != "login"){
-		redirect(base_url('Admin/login'));
+		redirect(base_url('admin/login'));
 		}
 
     $id_admin = $this->session->userdata('id_admin');
@@ -522,7 +522,7 @@ class Admin extends CI_Controller {
     }
 
     if($this->session->userdata('status') != "login"){
-		redirect(base_url('Admin/login'));
+		redirect(base_url('admin/login'));
 		}
 
     $id_admin = $this->session->userdata('id_admin');
@@ -560,7 +560,7 @@ class Admin extends CI_Controller {
           $this->Transfer_model->chBarang($ib);
       }
     }
-    redirect(base_url('Admin/detail_transfer/'.$id));
+    redirect(base_url('admin/detail_transfer/'.$id));
   }
   function edit_jenis(){
     $this->Now->updateNow();
@@ -649,11 +649,11 @@ class Admin extends CI_Controller {
       $this->Jenis_model->tambahJenis($insertdata);
 
       $msg = "sukses";
-      redirect(base_url('Admin/edit_jenis/'.$msg.'/'.$nama));
+      redirect(base_url('admin/edit_jenis/'.$msg.'/'.$nama));
     }
     else {
       $msg = "ada";
-      redirect(base_url('Admin/edit_jenis/'.$msg.'/'.$nama));
+      redirect(base_url('admin/edit_jenis/'.$msg.'/'.$nama));
     }
   }
   function proses_ujenis(){
@@ -692,7 +692,7 @@ class Admin extends CI_Controller {
       $this->Jenis_model->editJenis($updatedata,$id);
 
       $msg = "suksesu";
-      redirect(base_url('Admin/edit_jenis/'.$msg.'/'.$nama));
+      redirect(base_url('admin/edit_jenis/'.$msg.'/'.$nama));
     }
   }
   function proses_djenis($id){
@@ -728,7 +728,7 @@ class Admin extends CI_Controller {
     }
     $this->Jenis_model->hapusJenis($id);
     $msg = "suksesd";
-    redirect(base_url('Admin/edit_jenis/'.$msg.'/'.$nama));
+    redirect(base_url('admin/edit_jenis/'.$msg.'/'.$nama));
   }
   function coba(){
     $this->load->view('bantuan');

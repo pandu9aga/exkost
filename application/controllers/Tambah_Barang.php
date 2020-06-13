@@ -6,7 +6,7 @@ class Tambah_Barang extends CI_Controller {
 		parent::__construct();
 
 		if($this->session->userdata('status') != "login"){
-			redirect(base_url('Main/login'));
+			redirect(base_url('main/login'));
 		}
 
     $this->load->model('Akun_model');
@@ -137,7 +137,7 @@ class Tambah_Barang extends CI_Controller {
           );
 
           $this->Barang_model->uploadGambar($gbr);
-          redirect(base_url('Lelang/barang/'.$idbarang));
+          redirect(base_url('lelang/barang/'.$idbarang));
       }
 
     }else{

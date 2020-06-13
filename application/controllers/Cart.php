@@ -6,7 +6,7 @@ class Cart extends CI_Controller {
 		parent::__construct();
 
 		if($this->session->userdata('status') != "login"){
-			redirect(base_url('Main/login'));
+			redirect(base_url('main/login'));
 		}
 
     $this->load->model('Akun_model');
@@ -52,7 +52,7 @@ class Cart extends CI_Controller {
 
     $jumlah_data = $this->Cart_model->getCartb($id_akun);
     $this->load->library('pagination');
-    $config['base_url'] = base_url().'index.php/Cart/berlangsung/';
+    $config['base_url'] = base_url().'index.php/cart/berlangsung/';
     $config['total_rows'] = $jumlah_data;
     $config['per_page'] = 5;
     $config['uri_segment'] = 3;
@@ -135,7 +135,7 @@ class Cart extends CI_Controller {
   function hapus($id){
     $akun = $this->session->userdata('id_akun');
 		$this->Tawaran_model->delBid($akun,$id);
-    redirect(base_url('Cart/berlangsung'));
+    redirect(base_url('cart/berlangsung'));
   }
 }
 ?>

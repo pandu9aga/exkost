@@ -6,7 +6,7 @@ class Menang extends CI_Controller {
 		parent::__construct();
 
 		if($this->session->userdata('status') != "login"){
-			redirect(base_url('Main/login'));
+			redirect(base_url('main/login'));
 		}
 
     $this->load->model('Akun_model');
@@ -67,7 +67,7 @@ class Menang extends CI_Controller {
       $idselesai[] = 0;
     }
     $this->load->library('pagination');
-    $config['base_url'] = base_url().'index.php/Menang/tunggu_kirim/';
+    $config['base_url'] = base_url().'index.php/menang/tunggu_kirim/';
     $config['total_rows'] = $jumlah_data;
     $config['per_page'] = 5;
     $config['uri_segment'] = 3;
@@ -157,7 +157,7 @@ class Menang extends CI_Controller {
       $idselesai[] = 0;
     }
     $this->load->library('pagination');
-    $config['base_url'] = base_url().'index.php/Menang/dikirim/';
+    $config['base_url'] = base_url().'index.php/menang/dikirim/';
     $config['total_rows'] = $jumlah_data;
     $config['per_page'] = 5;
     $config['uri_segment'] = 3;
@@ -202,7 +202,7 @@ class Menang extends CI_Controller {
     $change = array('status_lelang' => 'terima' );
     $this->Barang_model->chStat($id,$change);
     $this->Transfer_model->insTrans($id);
-    redirect('Barang/index/'.$id);
+    redirect('barang/index/'.$id);
   }
   function selesai(){
     $this->Now->updateNow();
@@ -253,7 +253,7 @@ class Menang extends CI_Controller {
       $idselesai[] = 0;
     }
     $this->load->library('pagination');
-    $config['base_url'] = base_url().'index.php/Menang/selesai/';
+    $config['base_url'] = base_url().'index.php/menang/selesai/';
     $config['total_rows'] = $jumlah_data;
     $config['per_page'] = 5;
     $config['uri_segment'] = 3;

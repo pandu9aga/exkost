@@ -6,7 +6,7 @@ class Profil extends CI_Controller {
 		parent::__construct();
 
 		if($this->session->userdata('status') != "login"){
-			redirect(base_url('Main/login'));
+			redirect(base_url('main/login'));
 		}
 
     $this->load->model('Akun_model');
@@ -97,7 +97,7 @@ class Profil extends CI_Controller {
     $where = array( 'id_akun' => $id );
 
     $this->Akun_model->updateProfil($data,$where);
-    redirect(base_url('Profil'));
+    redirect(base_url('profil'));
   }
   function uploadPP(){
     $this->Now->updateNow();
@@ -156,6 +156,6 @@ class Profil extends CI_Controller {
           $this->Akun_model->updateProfil($data,$where);
       }
     }
-    redirect(base_url('Profil'));
+    redirect(base_url('profil'));
   }
 }

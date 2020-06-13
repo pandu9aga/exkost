@@ -6,7 +6,7 @@ class Cari extends CI_Controller {
 		parent::__construct();
 
 		if($this->session->userdata('status') != "login"){
-			redirect(base_url('Main/login'));
+			redirect(base_url('main/login'));
 		}
 
     $this->load->model('Akun_model');
@@ -61,7 +61,7 @@ class Cari extends CI_Controller {
     $this->load->library('pagination');
     $config['base_url'] = base_url().'index.php/cari/index/';
     $config['total_rows'] = $jumlah_data;
-    $config['per_page'] = 12;
+    $config['per_page'] = 30;
     $config['uri_segment'] = 3;
     //$config['num_links'] = 3;
     $config['use_page_numbers'] = TRUE;
@@ -185,7 +185,7 @@ class Cari extends CI_Controller {
     $this->load->library('pagination');
     $config['base_url'] = base_url().'index.php/cari/hasil/';
     $config['total_rows'] = $jumlah_data;
-    $config['per_page'] = 12;
+    $config['per_page'] = 30;
     $config['uri_segment'] = 3;
     //$config['num_links'] = 3;
     $config['use_page_numbers'] = TRUE;
@@ -316,7 +316,7 @@ class Cari extends CI_Controller {
     $this->load->library('pagination');
     $config['base_url'] = base_url().'index.php/cari/keyword/';
     $config['total_rows'] = $jumlah_data;
-    $config['per_page'] = 12;
+    $config['per_page'] = 30;
     $config['uri_segment'] = 3;
     //$config['num_links'] = 3;
     $config['use_page_numbers'] = TRUE;

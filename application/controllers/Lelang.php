@@ -6,7 +6,7 @@ class Lelang extends CI_Controller {
 		parent::__construct();
 
 		if($this->session->userdata('status') != "login"){
-			redirect(base_url('Main/login'));
+			redirect(base_url('main/login'));
 		}
 
     $this->load->model('Akun_model');
@@ -63,7 +63,7 @@ class Lelang extends CI_Controller {
     $this->load->library('pagination');
     $config['base_url'] = base_url().'index.php/lelang/index/';
     $config['total_rows'] = $jumlah_data;
-    $config['per_page'] = 5;
+    $config['per_page'] = 15;
     $config['uri_segment'] = 3;
     //$config['num_links'] = 3;
     $config['use_page_numbers'] = TRUE;
@@ -190,7 +190,7 @@ class Lelang extends CI_Controller {
     $this->load->library('pagination');
     $config['base_url'] = base_url().'index.php/lelang/hasil/';
     $config['total_rows'] = $jumlah_data;
-    $config['per_page'] = 5;
+    $config['per_page'] = 15;
     $config['uri_segment'] = 3;
     //$config['num_links'] = 3;
     $config['use_page_numbers'] = TRUE;
@@ -334,7 +334,7 @@ class Lelang extends CI_Controller {
     $this->load->library('pagination');
     $config['base_url'] = base_url().'index.php/lelang/selesai/';
     $config['total_rows'] = $jumlah_data;
-    $config['per_page'] = 5;
+    $config['per_page'] = 15;
     $config['uri_segment'] = 3;
     //$config['num_links'] = 3;
     $config['use_page_numbers'] = TRUE;
@@ -461,7 +461,7 @@ class Lelang extends CI_Controller {
     $this->load->library('pagination');
     $config['base_url'] = base_url().'index.php/lelang/selesai_hasil/';
     $config['total_rows'] = $jumlah_data;
-    $config['per_page'] = 5;
+    $config['per_page'] = 15;
     $config['uri_segment'] = 3;
     //$config['num_links'] = 3;
     $config['use_page_numbers'] = TRUE;
@@ -553,7 +553,7 @@ class Lelang extends CI_Controller {
     $this->load->library('pagination');
     $config['base_url'] = base_url().'index.php/lelang/kirim/';
     $config['total_rows'] = $jumlah_data;
-    $config['per_page'] = 5;
+    $config['per_page'] = 15;
     $config['uri_segment'] = 3;
     //$config['num_links'] = 3;
     $config['use_page_numbers'] = TRUE;
@@ -680,7 +680,7 @@ class Lelang extends CI_Controller {
     $this->load->library('pagination');
     $config['base_url'] = base_url().'index.php/lelang/kirim_hasil/';
     $config['total_rows'] = $jumlah_data;
-    $config['per_page'] = 5;
+    $config['per_page'] = 15;
     $config['uri_segment'] = 3;
     //$config['num_links'] = 3;
     $config['use_page_numbers'] = TRUE;
@@ -727,7 +727,7 @@ class Lelang extends CI_Controller {
   function proses_kirim($id){
     $change = array('status_lelang' => 'kirim' );
     $this->Barang_model->chStat($id,$change);
-    redirect('Lelang/barang/'.$id);
+    redirect('lelang/barang/'.$id);
   }
   function dikirim(){
     $this->Now->updateNow();
@@ -776,7 +776,7 @@ class Lelang extends CI_Controller {
     $this->load->library('pagination');
     $config['base_url'] = base_url().'index.php/lelang/dikirim/';
     $config['total_rows'] = $jumlah_data;
-    $config['per_page'] = 5;
+    $config['per_page'] = 15;
     $config['uri_segment'] = 3;
     //$config['num_links'] = 3;
     $config['use_page_numbers'] = TRUE;
@@ -903,7 +903,7 @@ class Lelang extends CI_Controller {
     $this->load->library('pagination');
     $config['base_url'] = base_url().'index.php/lelang/dikirim_hasil/';
     $config['total_rows'] = $jumlah_data;
-    $config['per_page'] = 5;
+    $config['per_page'] = 15;
     $config['uri_segment'] = 3;
     //$config['num_links'] = 3;
     $config['use_page_numbers'] = TRUE;
@@ -994,7 +994,7 @@ class Lelang extends CI_Controller {
     $this->load->library('pagination');
     $config['base_url'] = base_url().'index.php/lelang/konfirm_transfer/';
     $config['total_rows'] = $jumlah_data;
-    $config['per_page'] = 5;
+    $config['per_page'] = 15;
     $config['uri_segment'] = 3;
     //$config['num_links'] = 3;
     $config['use_page_numbers'] = TRUE;
@@ -1121,7 +1121,7 @@ class Lelang extends CI_Controller {
     $this->load->library('pagination');
     $config['base_url'] = base_url().'index.php/lelang/konfirm_transfer_hasil/';
     $config['total_rows'] = $jumlah_data;
-    $config['per_page'] = 5;
+    $config['per_page'] = 15;
     $config['uri_segment'] = 3;
     //$config['num_links'] = 3;
     $config['use_page_numbers'] = TRUE;
@@ -1168,6 +1168,6 @@ class Lelang extends CI_Controller {
   function proses_konfirmtrans($id){
     $change = array('status_transfer' => 'terima' );
     $this->Barang_model->chStat($id,$change);
-    redirect('Lelang/barang/'.$id);
+    redirect('lelang/barang/'.$id);
   }
 }

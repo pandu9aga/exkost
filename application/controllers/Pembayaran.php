@@ -6,7 +6,7 @@ class Pembayaran extends CI_Controller {
 		parent::__construct();
 
 		if($this->session->userdata('status') != "login"){
-			redirect(base_url('Main/login'));
+			redirect(base_url('main/login'));
 		}
 
     $this->load->model('Akun_model');
@@ -52,7 +52,7 @@ class Pembayaran extends CI_Controller {
 
     $jumlah_data = $this->Topup_model->jmlMybayar($id_akun);
     $this->load->library('pagination');
-    $config['base_url'] = base_url().'index.php/Pembayaran/index/';
+    $config['base_url'] = base_url().'index.php/pembayaran/index/';
     $config['total_rows'] = $jumlah_data;
     $config['per_page'] = 5;
     $config['uri_segment'] = 3;
@@ -196,7 +196,7 @@ class Pembayaran extends CI_Controller {
           $this->Topup_model->updateTopup($data,$where);
       }
     }
-    redirect(base_url('Pembayaran/detail_pembayaran/'.$id));
+    redirect(base_url('pembayaran/detail_pembayaran/'.$id));
   }
   function hapus($idtopup){
     $this->Now->updateNow();
@@ -225,6 +225,6 @@ class Pembayaran extends CI_Controller {
       }
     }
     $this->Topup_model->deleteTopup($idtopup);
-    redirect(base_url('Pembayaran/index/'));
+    redirect(base_url('pembayaran/index/'));
   }
 }
