@@ -721,7 +721,7 @@ class Admin extends CI_Controller {
         }
       }
     }
-    
+
     $cek = $this->Jenis_model->getjenis($id)->result();
     foreach ($cek as $key) {
       $nama = $key->nama_jenis_barang;
@@ -729,5 +729,8 @@ class Admin extends CI_Controller {
     $this->Jenis_model->hapusJenis($id);
     $msg = "suksesd";
     redirect(base_url('Admin/edit_jenis/'.$msg.'/'.$nama));
+  }
+  function coba(){
+    $this->load->view('bantuan');
   }
 }

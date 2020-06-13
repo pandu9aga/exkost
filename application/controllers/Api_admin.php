@@ -141,6 +141,31 @@ class Api_admin extends CI_Controller {
 		}
 	}
   function update_profil(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
     $nama = $this->input->post('nama');
     $password = $this->input->post('password');
     $id = $this->input->post('id');
@@ -160,15 +185,90 @@ class Api_admin extends CI_Controller {
     echo json_encode($response);
   }
 	function data_jenis(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
     $data = $this->Jenis_model->jenisBarang()->result();
 		echo json_encode($data);
   }
 	function get_jenis(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
 		$id = $this->input->post('id_jenis');
 		$data = $this->Jenis_model->getjenis($id)->row();
 		echo json_encode($data);
 	}
   function proses_cjenis(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
     $nama = $this->input->post('nama_jenis');
 
     $cek = $this->Jenis_model->idJenis2($nama)->num_rows();
@@ -192,6 +292,31 @@ class Api_admin extends CI_Controller {
     }
   }
   function proses_ujenis(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
     $nama = $this->input->post('nama_jenis');
     $id = $this->input->post('id_jenis');
 
@@ -207,6 +332,31 @@ class Api_admin extends CI_Controller {
     }
   }
   function proses_djenis(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
 		$id = $this->input->post('id_jenis');
     $cek = $this->Jenis_model->getjenis($id)->result();
     foreach ($cek as $key) {
@@ -219,6 +369,31 @@ class Api_admin extends CI_Controller {
 		echo json_encode($response);
   }
 	function allTopup(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
 		$keyword = $this->input->post('keyword');
 		if ($keyword=='semua') {
 			$topup = $this->Topup_model->getAll()->result_array();
@@ -229,6 +404,31 @@ class Api_admin extends CI_Controller {
 		}
 	}
 	function changestatTop(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
 		$idtopup = $this->input->post('id');
 		$stat = $this->input->post('status');
 		if ($stat=='sukses') {
@@ -271,17 +471,92 @@ class Api_admin extends CI_Controller {
 		echo json_encode($response);
 	}
 	function getTransLim(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
 		$key = $this->input->post('key');
 		$data = $this->Transfer_model->getAlltranslim($key)->result_array();
 		echo json_encode($data);
 	}
 	function getTransLimId(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
 		$id = $this->input->post('id');
 		$data = $this->Transfer_model->getAlltranslimId($id)->row();
 		$response = array('data' => $data );
 		echo json_encode($response);
 	}
 	function upBuktiTrans(){
+		$this->Now->updateNow();
+    $done['now'] = $this->Now->getNow()->result();
+    $done['all'] = $this->Done_model->allLelang()->result();
+    $selesai = $this->done->selesai($done);
+    if ($selesai!=NULL) {
+      foreach ($selesai as $value) {
+        $ids[] = $value;
+      }
+      $this->Done_model->changeStat($ids);
+      foreach ($ids as $thisid) {
+        $win = $this->Done_model->listTawaran($thisid)->num_rows();
+        if ($win!=0) {
+          $wins = $this->Done_model->winnerBid($thisid)->result();
+          foreach ($wins as $datawin) {
+            $jumbid = $datawin->jumlah_tawaran;
+          }
+          $winner = $this->Done_model->winnerData($jumbid,$thisid)->result();
+          foreach ($winner as $w) {
+            $this->Done_model->insertWinner($w->id_tawaran);
+          }
+        }else {
+          $this->Done_model->changeStatl($thisid);
+        }
+      }
+    }
 		$id = $this->input->post('idtrans');
     $ib = $this->input->post('idbar');
 

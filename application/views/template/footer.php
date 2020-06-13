@@ -13,7 +13,7 @@
             <ul class="footer-links">
               <li><a href="#"><i class="fa fa-map-marker"></i>MIF-JTI, POLIJE</a></li>
               <li><a href="#"><i class="fa fa-phone"></i>+6282234885169</a></li>
-              <li><a href="#"><i class="fa fa-envelope-o"></i>exkost@gmail.com</a></li>
+              <li><a href="http://exkost.decode@gmail.com"><i class="fa fa-envelope-o"></i>exkost.decode@gmail.com</a></li>
             </ul>
           </div>
         </div>
@@ -64,23 +64,23 @@
 
         <div class="col-md-3 col-xs-6">
           <div class="footer">
-            <h3 class="footer-title">Informasi</h3>
+            <h3 class="footer-title" id="Informasi">Informasi</h3>
             <ul class="footer-links">
-              <li><a href="#">Tentang Kami</a></li>
-              <li><a href="#">Kontak Kami</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Terms & Conditions</a></li>
+              <li><a href="<?php echo base_url('Informasi/tentang_kami'); ?>">Tentang Kami</a></li>
+              <li><a href="<?php echo base_url('Informasi/kontak_kami'); ?>">Kontak Kami</a></li>
+              <li><a href="<?php echo base_url('Informasi/privacy_policy'); ?>">Privacy Policy</a></li>
+              <li><a href="<?php echo base_url('Informasi/term_condition'); ?>">Terms & Conditions</a></li>
             </ul>
           </div>
         </div>
 
         <div class="col-md-3 col-xs-6">
           <div class="footer">
-            <h3 class="footer-title">Servis</h3>
+            <h3 class="footer-title" id="Servis">Servis</h3>
             <ul class="footer-links">
               <li><a href="<?php echo base_url('Profil'); ?>">Profil</a></li>
               <li><a href="<?php echo base_url('Cart/berlangsung'); ?>">Cart</a></li>
-              <li><a href="#">Bantuan</a></li>
+              <li><a href="<?php echo base_url('Servis/Bantuan'); ?>">Bantuan</a></li>
             </ul>
           </div>
         </div>
