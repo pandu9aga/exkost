@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Main extends CI_Controller {
 	function __construct(){
     parent::__construct();
+
     $this->load->model('Akun_model');
 		$this->load->model('Jenis_model');
 		$this->load->model('Barang_model');
@@ -13,6 +14,9 @@ class Main extends CI_Controller {
   }
 	public function index()
 	{
+		if($this->session->userdata('status') == "login"){
+			redirect(base_url('Home'));
+		}
 		$this->Now->updateNow();
     $done['now'] = $this->Now->getNow()->result();
     $done['all'] = $this->Done_model->allLelang()->result();
@@ -52,6 +56,9 @@ class Main extends CI_Controller {
 	}
 	public function login()
 	{
+		if($this->session->userdata('status') == "login"){
+			redirect(base_url('Home'));
+		}
 		$this->Now->updateNow();
     $done['now'] = $this->Now->getNow()->result();
     $done['all'] = $this->Done_model->allLelang()->result();
@@ -80,6 +87,9 @@ class Main extends CI_Controller {
 		$this->load->view('login');
 	}
 	public function prosesLogin(){
+		if($this->session->userdata('status') == "login"){
+			redirect(base_url('Home'));
+		}
 		$this->Now->updateNow();
     $done['now'] = $this->Now->getNow()->result();
     $done['all'] = $this->Done_model->allLelang()->result();
@@ -162,6 +172,9 @@ class Main extends CI_Controller {
 	}
 	public function register()
 	{
+		if($this->session->userdata('status') == "login"){
+			redirect(base_url('Home'));
+		}
 		$this->Now->updateNow();
     $done['now'] = $this->Now->getNow()->result();
     $done['all'] = $this->Done_model->allLelang()->result();
@@ -190,6 +203,9 @@ class Main extends CI_Controller {
 		$this->load->view('register');
 	}
 	public function prosesRegister(){
+		if($this->session->userdata('status') == "login"){
+			redirect(base_url('Home'));
+		}
 		$this->Now->updateNow();
     $done['now'] = $this->Now->getNow()->result();
     $done['all'] = $this->Done_model->allLelang()->result();
@@ -243,9 +259,15 @@ class Main extends CI_Controller {
 		}
   }
 	function lupa_password(){
+		if($this->session->userdata('status') == "login"){
+			redirect(base_url('Home'));
+		}
 		$this->load->view('lupa_password');
 	}
 	public function email_reset_password_validation(){
+		if($this->session->userdata('status') == "login"){
+			redirect(base_url('Home'));
+		}
 		$email = $this->input->post('email');
 		$reset_key = random_string('alnum', 15);
 		if($this->Reset_model->update_reset_key($email,$reset_key))
@@ -286,6 +308,9 @@ class Main extends CI_Controller {
 		}
 }
 public function reset_password(){
+	if($this->session->userdata('status') == "login"){
+		redirect(base_url('Home'));
+	}
 	$reset_key = $this->uri->segment(3);
 	if(!$reset_key){
 		die('Jangan Dihapus');
@@ -298,6 +323,9 @@ public function reset_password(){
 	}
 }
 	public function reset_password_validation(){
+		if($this->session->userdata('status') == "login"){
+			redirect(base_url('Home'));
+		}
 		$reset_key = $this->input->post('reset_key');
 		$password = $this->input->post('password');
 		if($this->Reset_model->reset_password($reset_key, $password)){
