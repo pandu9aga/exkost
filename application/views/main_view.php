@@ -501,23 +501,27 @@
 						<div class="products-widget-slick" data-nav="#slick-nav-<?php echo $valjl; ?>">
 							<div>
 								<?php
+								$limslick = 1;
 								foreach ($barang as $jl) {
 									if ($jl->nama_jenis_barang==$jen->nama_jenis_barang) {
 										if ($jl->status_lelang=='berlangsung') {
-								?>
-								<!-- product widget -->
-								<div class="product-widget">
-									<div class="product-img">
-										<img src="<?php echo base_url('assets/barang/'.$jl->nama_gambar_barang); ?>" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category"><?php echo $jl->nama_jenis_barang; ?></p>
-										<h3 class="product-name"><a href="<?php echo base_url('Barang/index/'.$jl->id_barang); ?>"><?php echo $jl->nama_barang; ?></a></h3>
-										<h4 class="product-price">Rp. <?php echo $jl->harga_barang; ?></h4>
-									</div>
-								</div>
-								<!-- /product widget -->
-								<?php
+											if ($limslick<=3) {
+												?>
+												<!-- product widget -->
+												<div class="product-widget">
+													<div class="product-img">
+														<img src="<?php echo base_url('assets/barang/'.$jl->nama_gambar_barang); ?>" alt="">
+													</div>
+													<div class="product-body">
+														<p class="product-category"><?php echo $jl->nama_jenis_barang; ?></p>
+														<h3 class="product-name"><a href="<?php echo base_url('Barang/index/'.$jl->id_barang); ?>"><?php echo $jl->nama_barang; ?></a></h3>
+														<h4 class="product-price">Rp. <?php echo $jl->harga_barang; ?></h4>
+													</div>
+												</div>
+												<!-- /product widget -->
+												<?php
+												$limslick++;
+											}
 										}
 									}
 								}
