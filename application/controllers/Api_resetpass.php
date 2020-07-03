@@ -46,9 +46,9 @@ class Api_resetpass extends CI_Controller {
 		$config = array();
 		$config['charset'] = 'utf-8';
 		$config['useragent'] = 'Codeigniter';
-		$config['protocol']= "smtp";
+		$config['protocol']= "ssmtp";
 		$config['mailtype']= "html";
-		$config['smtp_host']= "ssl://smtp.gmail.com";//pengaturan smtp
+		$config['smtp_host']= "ssl://ssmtp.googlemail.com";//pengaturan smtp
 		$config['smtp_port']= "465";
 		$config['smtp_timeout']= "5";
 		$config['smtp_user']= "exkost.decode@gmail.com"; // isi dengan email kamu
